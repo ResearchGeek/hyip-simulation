@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<sweep runs="10">
+
+<parameter name="generation_number" type="constant" constant_type="number" value="100"/>
+<parameter name="iteration_number" type="constant" constant_type="number" value="100"/>
+
+<parameter name="consumer_population_size" type="constant" constant_type="number" value="1000"/>
+<parameter name="consumer_type_l" type="constant" constant_type="number" value="0"/>
+<parameter name="consumer_type_h" type="constant" constant_type="number" value="9"/>
+<parameter name="consumer_payoffs" type="constant" constant_type="string" value="0,0,0,0,-2,-2,2,2"/>
+<parameter name="consumer_max_threshold_mutation" type="constant" constant_type="number" value="0.05"/>
+<parameter name="expertise_levels" type="constant" constant_type="string" value="0.05,0.66,0.66,0.66,0.66,0.66,0.66,0.66,0.66,0.66"/>
+
+<parameter name="producer_population_size" type="constant" constant_type="number" value="100"/>
+<parameter name="producer_type_l" type="constant" constant_type="number" value="0"/>
+<parameter name="producer_type_h" type="constant" constant_type="number" value="1"/>
+<parameter name="producer_rating_l" type="constant" constant_type="number" value="0"/>
+<parameter name="producer_rating_h" type="constant" constant_type="number" value="0"/>
+                                              <!-- "FBR", "FGR", "TBR", "TGR", "FBA", "FGA", "TBA", "TGA" -->
+<parameter name="producer_honest_payoffs" type="constant" constant_type="string" value="-2,-3,0,-1,2,1,5,4"/> 
+<parameter name="producer_liar_payoffs" type="constant" constant_type="string" value="-2,-3,0,-1,5,4,2,1"/>
+
+<parameter name="signal_constant" type="constant" constant_type="boolean" value="false"/>
+<parameter name="signal_value" type="constant" constant_type="number" value="0.5"/>
+<parameter name="signal_truthfulness_weight" type="constant" constant_type="number" value="0.33"/>
+<parameter name="signal_look_weight" type="constant" constant_type="number" value="0.66"/>
+
+<parameter name="producer_liar_rate" type="constant" constant_type="number" value="0.2"/>
+<parameter name="producer_reset_threshold" type="constant" constant_type="number" value="0"/>
+
+<parameter name="producer_choice_strategy" type="constant" constant_type="string" value="CredibilityGame.producerchoice.strategy.RandomProducerStrategy"/>
+<parameter name="consumer_rating_strategy" type="constant" constant_type="string" value="CredibilityGame.rating.strategy.PayoffDependentRatingStrategy"/>
+<parameter name="consumer_acceptance_strategy" type="constant" constant_type="number" value="-1"/>
+
+</sweep>

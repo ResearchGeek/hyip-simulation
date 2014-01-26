@@ -1,0 +1,6 @@
+<context id="CredibilityGame">
+  	
+	<context id="Strategies">
+		<projection id="StrategiesToTypes" type="network"></projection></context>
+	<context id="Players"></context></context>
+	

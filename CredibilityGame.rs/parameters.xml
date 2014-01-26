@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<parameters>
+					<parameter name="producer_choice_strategy" displayName="producer_choice_strategy" type="java.lang.String" 
+						defaultValue="CredibilityGame.producerchoice.strategy.RandomProducerStrategy" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+									
+		/>
+				<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
+						defaultValue="__NULL__"
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="producer_type_h" displayName="producer_type_h" type="int" 
+						defaultValue="1" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="producer_honest_payoffs" displayName="producer_honest_payoffs" type="java.lang.String" 
+						defaultValue="-2,-3,0,-1,2,1,5,4" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+									
+		/>
+				<parameter name="consumer_type_l" displayName="consumer_type_l" type="int" 
+						defaultValue="3" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="signal_constant" displayName="signal_constant" type="boolean" 
+						defaultValue="false" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter"
+									
+		/>
+				<parameter name="producer_type_l" displayName="producer_type_l" type="int" 
+						defaultValue="-2" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="producer_population_size" displayName="producer_population_size" type="int" 
+						defaultValue="100" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="iteration_number" displayName="iteration_number" type="int" 
+						defaultValue="100" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="consumer_max_threshold_mutation" displayName="consumer_max_threshold_mutation" type="double" 
+						defaultValue="0.05" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="consumer_payoffs" displayName="consumer_payoffs" type="java.lang.String" 
+						defaultValue="0,0,0,0,-2,-2,2,2" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+									
+		/>
+				<parameter name="consumer_type_h" displayName="consumer_type_h" type="int" 
+						defaultValue="4" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="producer_rating_l" displayName="producer_rating_l" type="int" 
+						defaultValue="0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="producer_liar_payoffs" displayName="producer_liar_payoffs" type="java.lang.String" 
+						defaultValue="-2,-3,0,-1,5,4,2,1" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+									
+		/>
+				<parameter name="signal_truthfulness_weight" displayName="signal_truthfulness_weight" type="double" 
+						defaultValue="0.33" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="consumer_rating_strategy" displayName="consumer_rating_strategy" type="java.lang.String" 
+						defaultValue="CredibilityGame.rating.strategy.PayoffDependentRatingStrategy" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+									
+		/>
+				<parameter name="producer_rating_h" displayName="producer_rating_h" type="int" 
+						defaultValue="0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="signal_look_weight" displayName="signal_look_weight" type="double" 
+						defaultValue="0.66" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="expertise_levels" displayName="expertise_levels" type="java.lang.String" 
+						defaultValue="0.05, 0.083, 0.16, 0.33, 0.66, 1" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+									
+		/>
+				<parameter name="consumer_population_size" displayName="consumer_population_size" type="int" 
+						defaultValue="1000" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="signal_value" displayName="signal_value" type="double" 
+						defaultValue="0.5" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="consumer_acceptance_strategy" displayName="consumer_acceptance_strategy" type="int" 
+						defaultValue="0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="producer_reset_threshold" displayName="producer_reset_threshold" type="int" 
+						defaultValue="0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="generation_number" displayName="generation_number" type="int" 
+						defaultValue="100" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="producer_liar_rate" displayName="producer_liar_rate" type="double" 
+						defaultValue="0.2" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+		</parameters>
+
+

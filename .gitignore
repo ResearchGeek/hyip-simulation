@@ -1,6 +1,25 @@
 *.class
 
+simulation_logs.txt
+velocity_log*
+debug_log*
+debug.log
+validation.log*
+validation.log
+
+HYIP_results*
+Producer Strategy*
+
+/bin
+/output
+
 # Package Files #
 *.jar
 *.war
 *.ear
+
+/velocity.log
+/velocity.log.1
+/input_a1.csv
+/testbin
+/batch.log
