@@ -30,6 +30,7 @@ public class HYIPowner extends Player {
 	static int look; // wygl¹d strony
 
 	int marketing; // 0-basic 1-expert 2-proffesional
+	double mktg_skumulowany;
 	static int e_cost; // marketing cost expert
 	static int p_cost; // marketing cost prof
 	public static double e_eff; // marketing efect expert
@@ -96,9 +97,9 @@ public class HYIPowner extends Player {
 	public void step() {
 		// System.out.print(".");
 		// ((ProducerStrategy)getStrategy()).generateInformation();
-
+		// przy ka¿dym tiku HYIP decyduje czy chce zainwestowac tego dnia
+		// w marketing typu expert/prof. (w zaleznosci od tego, co wczesniej wylosowal)
 		setMarketing();
-
 	}
 
 	public void setMarketing() {
@@ -106,13 +107,19 @@ public class HYIPowner extends Player {
 		if (r < 0.33) {
 			marketing = 0;
 			changeMoney(0);
+			mktg_skumulowany -= mktg_skumulowany*0.02;
 		} else if (r < 0.66) {
 			marketing = 1;
 			changeMoney(-e_cost);
+			// mozna dodac ten wylosowany poziom do skumulowanego
+			mktg_skumulowany += marketing; //tak?
 		} else {
 			marketing = 2;
 			changeMoney(-p_cost);
+			// mozna dodac ten wylosowany poziom do skumulowanego
+			mktg_skumulowany += marketing; //tak?
 		}
+		
 	}
 
 	/*
