@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="CredibilityGame/Information.java|CredibilityGame/ProducerStrategy.java|CredibilityGame/ProducerStrategyType.java|CredibilityGame/producerchoice/strategy/ByReputationProducerStrategy.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="REPAST_SIMPHONY_SUPPORT"/>
