@@ -2,10 +2,8 @@ package CredibilityGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import CredibilityGame.rating.Rating;
 import CredibilityGame.rating.UpDownRating;
-
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -14,46 +12,48 @@ import repast.simphony.random.RandomHelper;
 import repast.simphony.util.ContextUtils;
 import repast.simphony.util.collections.IndexedIterable;
 
-public class HYIPowner extends Player {
-	public static HashMap<String, Double> HONEST_PAYOFFS = new HashMap<String, Double>();
-	public static HashMap<String, Double> LIAR_PAYOFFS = new HashMap<String, Double>();
-	// public static double PRODUCER_LIAR_RATE;
-	// private static int PRODUCER_TYPE_H;
-	// private static int PRODUCER_TYPE_L;
+public class Hyip extends Player {
+	
+	// ********************* Credibility game variables ***********************
+	public static HashMap<String, Double> HONEST_PAYOFFS = 
+			new HashMap<String, Double>();
+	public static HashMap<String, Double> LIAR_PAYOFFS = 
+			new HashMap<String, Double>();
+	public static double PRODUCER_LIAR_RATE;
+	private static int PRODUCER_TYPE_H;
+	private static int PRODUCER_TYPE_L;
 	private boolean isHonest;
-
 	private Rating currentRating;
 	private Rating pendingRating;
+	// ********************* End of credibility game variables ***************
 
+	private HyipAccount hyipAccount;
+	private ArrayList<HyipOffert> hyipOfferts;
+	
 	public static double perc; // oprocentowanie
-	int cash;
 	static int look; // wygl¹d strony
-
 	int marketing; // 0-basic 1-expert 2-proffesional
-	double mktg_skumulowany;
+	double mktg_cumulated; // wzrost albo spadek wydajnosci mktg w zaleznosci od
+							// wydatkow w turze
 	static int e_cost; // marketing cost expert
 	static int p_cost; // marketing cost prof
+	static int l_cost; // marketing cost prof
 	public static double e_eff; // marketing efect expert
 	public static double p_eff; // marketing efect prof
 	public static double l_eff; // look efect prof
+	public static double e_use;
+	public static double p_use;
 
 	public static void initialize() {
-		// ArrayList<Double> hpayoffs =
-		// Utils.readDoubleList("producer_honest_payoffs");
-		// ArrayList<Double> lpayoffs =
-		// Utils.readDoubleList("producer_liar_payoffs");
-		// for(int i=0; i<Utils.PAYOFFS_KEYS.length; i++){
-		// HONEST_PAYOFFS.put(Utils.PAYOFFS_KEYS[i], hpayoffs.get(i));
-		// LIAR_PAYOFFS.put(Utils.PAYOFFS_KEYS[i], lpayoffs.get(i));
-		// }
-		// System.out.println("HONEST_PAYOFFS: "+HONEST_PAYOFFS);
-		// System.out.println("LIAR_PAYOFFS: "+LIAR_PAYOFFS);
+
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		perc = (Double) params.getValue("hyip_perc");
-		// marketing = (int)params.getValue("hyip_marketing");
+		e_use = (double) params.getValue("e_use");
+		p_use = (double) params.getValue("p_use");
 		look = (Integer) params.getValue("hyip_look");
 		e_cost = (Integer) params.getValue("e_cost");
 		p_cost = (Integer) params.getValue("p_cost");
+		l_cost = (Integer) params.getValue("l_cost");
 
 		e_eff = (Double) params.getValue("e_eff");
 		p_eff = (Double) params.getValue("p_eff");
@@ -64,7 +64,7 @@ public class HYIPowner extends Player {
 		// PRODUCER_LIAR_RATE = (Double)params.getValue("producer_liar_rate");
 	}
 
-	public HYIPowner() {
+	public Hyip() {
 		// int rnd = RandomHelper.createUniform(PRODUCER_TYPE_L,
 		// PRODUCER_TYPE_H).nextInt();//random.nextInt(PRODUCER_TYPE_H)-PRODUCER_TYPE_L;
 		// this.isHonest = rnd<=0?false:true;
@@ -72,85 +72,74 @@ public class HYIPowner extends Player {
 		// this.currentRating = new UpDownRating();
 		// this.pendingRating = this.currentRating.clone();
 		// setStrategy(new ProducerStrategy(this));
+		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
+		this.hyipOfferts = createOfferts();
+	}
+	
+	private ArrayList<HyipOffert> createOfferts(){
+		ArrayList<HyipOffert> offerts = new ArrayList<HyipOffert>();
+		offerts.add(HyipOffert.TypicalHyipOffer.LOW_RISK);
+		offerts.add(HyipOffert.TypicalHyipOffer.MEDIUM_RISK);
+		offerts.add(HyipOffert.TypicalHyipOffer.HIGH_RISK);
+		return offerts;
+	}
+	
+	public HyipOffert getOffert(int i){
+		return hyipOfferts.get(i);
 	}
 
 	public double getAdvert() {
-		double adv = look * l_eff;
-
-		switch (marketing) {
-		case 1:
-			adv += e_eff;
-			break;
-		case 2:
-			adv += p_eff;
-			break;
-		}
+		double mark_temp = mktg_cumulated * 12 - 6;
+		double adv = look * l_eff
+				+ (1 / (1 + Math.pow(Math.E, mark_temp * (-1)))) * l_eff;
+		if (adv > 1)
+			adv = 1;
 		return adv;
 
 	}
 
-	public void changeMoney(int value) {
-		cash = cash + value;
-	}
-
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
 	public void step() {
-		// System.out.print(".");
-		// ((ProducerStrategy)getStrategy()).generateInformation();
-		// przy ka¿dym tiku HYIP decyduje czy chce zainwestowac tego dnia
-		// w marketing typu expert/prof. (w zaleznosci od tego, co wczesniej wylosowal)
 		setMarketing();
 	}
 
 	public void setMarketing() {
 		double r = Math.random();
-		if (r < 0.33) {
+		if (r > e_use + p_use) {
 			marketing = 0;
-			changeMoney(0);
-			mktg_skumulowany -= mktg_skumulowany*0.02;
-		} else if (r < 0.66) {
+			hyipAccount.addMoney(0);
+		} else if (r < e_use) {
 			marketing = 1;
-			changeMoney(-e_cost);
-			// mozna dodac ten wylosowany poziom do skumulowanego
-			mktg_skumulowany += marketing; //tak?
+			hyipAccount.addMoney(-e_cost);
 		} else {
 			marketing = 2;
-			changeMoney(-p_cost);
-			// mozna dodac ten wylosowany poziom do skumulowanego
-			mktg_skumulowany += marketing; //tak?
+			hyipAccount.addMoney(-p_cost);
 		}
-		
+		switch (marketing) {
+			case 0:
+				mktg_cumulated -= e_eff;
+				break;
+			case 1:
+				mktg_cumulated += e_eff;
+				break;
+			case 2:
+				mktg_cumulated += p_eff;
+				break;
+		}
+		if (mktg_cumulated < 0)
+			mktg_cumulated = 0;
+		if (mktg_cumulated > 1)
+			mktg_cumulated = 1;
 	}
-
-	/*
-	 * public static void evolve(){ IndexedIterable<Player> allProducers =
-	 * CredibilityGame.PLAYERS.getObjects(HYIPowner.class); //ArrayList<Player>
-	 * producersListHonest = new ArrayList<Player>(); //ArrayList<Player>
-	 * producersListLiar = new ArrayList<Player>(); //for(Object
-	 * producer:allProducers){ // if(((HYIPowner)producer).isHonest()) //
-	 * producersListHonest.add(((HYIPowner)producer)); // else //
-	 * producersListLiar.add(((HYIPowner)producer)); }
-	 * //Player.stochasticSampling(producersListHonest);
-	 * //Player.stochasticSampling(producersListLiar);
-	 * 
-	 * Iterable<Player> mutatedProducers =
-	 * CredibilityGame.PLAYERS.getRandomObjects(HYIPowner.class,
-	 * (int)(allProducers.size()*0.01)); for(Object p:mutatedProducers){
-	 * ((ProducerStrategy
-	 * )((HYIPowner)p).getStrategy()).setLook(random.nextInt(2)); } }
-	 */
 
 	public static void reset() {
-		for (Object p : CredibilityGame.PLAYERS.getObjects(HYIPowner.class)) {
-
-			((HYIPowner) p).getStrategy().clear();
+		for (Object p : CredibilityGame.PLAYERS.getObjects(Hyip.class)) {
+			((Hyip) p).getStrategy().clear();
 		}
 	}
 
-	// Methods for the file outputters
-
-	public int getCash() {
-		return cash;
+	public double getCash() {
+		return hyipAccount.getCash();
 	}
 
 	public String getStrategyAsString() {
@@ -200,5 +189,21 @@ public class HYIPowner extends Player {
 
 	public void setHonest(boolean isHonest) {
 		this.isHonest = isHonest;
+	}
+
+	public static int getProducerTypeH() {
+		return PRODUCER_TYPE_H;
+	}
+
+	public static int getProducerTypeL() {
+		return PRODUCER_TYPE_L;
+	}
+
+	public void makeWithdrawal(int invest_money) {
+		hyipAccount.addMoney(-invest_money);
+	}
+
+	public void acceptDeposit(int invest) {
+		hyipAccount.addMoney(invest);
 	}
 }

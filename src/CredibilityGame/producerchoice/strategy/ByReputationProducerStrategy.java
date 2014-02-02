@@ -4,17 +4,17 @@ import java.util.Iterator;
 
 import repast.simphony.context.Context;
 import CredibilityGame.Player;
-import CredibilityGame.HYIPowner;
+import CredibilityGame.Hyip;
 
 public class ByReputationProducerStrategy extends ProducerChoiceStrategy{
 
 	@Override
-	public HYIPowner choose(Context<Player> context) {
-		HYIPowner chosenProducer = null;
-		HYIPowner temp = null;
-		Iterator<Player> iterator = context.getRandomObjects(HYIPowner.class, 3).iterator();
+	public Hyip choose(Context<Player> context) {
+		Hyip chosenProducer = null;
+		Hyip temp = null;
+		Iterator<Player> iterator = context.getRandomObjects(Hyip.class, 3).iterator();
 		while(iterator.hasNext()){
-			temp = (HYIPowner)iterator.next();
+			temp = (Hyip)iterator.next();
 			if(chosenProducer == null)
 				chosenProducer = temp;
 			else{

@@ -13,15 +13,15 @@ public class ProducerStrategy implements Strategy{
 	
 	private double truthfulness;
 	private double look;
-	private HYIPowner producer;
+	private Hyip producer;
 	private ArrayList<Information> generatedInformation;
 	private int resetThreshold;
 	
-	public ProducerStrategy(HYIPowner producer){
+	public ProducerStrategy(Hyip producer){
 		/*
 		 * TODO: Dodaæ losowanie wg rozk³adów!!!
 		 */
-		//this.truthfulness = RandomHelper.createUniform(HYIPowner.getProducerTypeL(), HYIPowner.getProducerTypeH()).nextInt()>0?1.0:0.0;//producer.isHonest()?1:0;
+		this.truthfulness = RandomHelper.createUniform(Hyip.getProducerTypeL(), Hyip.getProducerTypeH()).nextInt()>0?1.0:0.0;//producer.isHonest()?1:0;
 		this.look = random.nextInt(2);
 		this.producer = producer;
 		generatedInformation = new ArrayList<Information>();
@@ -56,7 +56,7 @@ public class ProducerStrategy implements Strategy{
 		this.look = look;
 	}
 	
-	public HYIPowner getProducer() {
+	public Hyip getProducer() {
 		return producer;
 	}
 	

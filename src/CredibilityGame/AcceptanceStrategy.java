@@ -16,14 +16,14 @@ public class AcceptanceStrategy implements Strategy {
 	private static double signalLookWeight;
 	private static boolean signalConstant;
 	private static double signalValue;
+	
+	private final double normalDistributionStandardDevation = 0;
 
 	private double threshold;
 	private double signal; // stores current signal value (for data analysis)
 	private double reputationThreshold;
 	private Investor consumer;
 	private Integer acceptanceStrategy;
-	
-	private final double normalDistributionStandardDevation = 0;
 
 	public static void initialize() {
 		// Parameters params = RunEnvironment.getInstance().getParameters();
@@ -139,7 +139,7 @@ public class AcceptanceStrategy implements Strategy {
 			Normal normal = RandomHelper.createNormal(
 					((signalTruthfulnessWeight) * i.getTruthfulness())
 							+ ((signalLookWeight) * i.getLook()),
-					normalDistributionStandardDevation);
+							normalDistributionStandardDevation);
 			signal = normal.nextDouble();
 		}
 		return signal > threshold;

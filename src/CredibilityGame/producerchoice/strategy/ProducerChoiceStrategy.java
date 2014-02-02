@@ -2,9 +2,9 @@ package CredibilityGame.producerchoice.strategy;
 
 import repast.simphony.context.Context;
 import CredibilityGame.Player;
-import CredibilityGame.HYIPowner;
+import CredibilityGame.Hyip;
 
 public abstract class ProducerChoiceStrategy {
 	
-	public abstract HYIPowner choose(Context<Player> context);
+	public abstract Hyip choose(Context<Player> context);
 }

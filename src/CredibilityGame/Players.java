@@ -16,13 +16,13 @@ public class Players extends DefaultContext<Player> {
 		int inv_1 = (Integer)params.getValue("inv_1");
 		int inv_2 = (Integer)params.getValue("inv_2");
 		
-		HYIPowner.initialize();
+		Hyip.initialize();
 		Investor.initialize();
 		
 		//int numberOfLiars = (int)(producerPopulationSize*producerLiarRate);
 		
 		for(int i=0; i<(producerPopulationSize); i++){
-			this.add(new HYIPowner());
+			this.add(new Hyip());
 		}
 		
 		for(int i=0; i<inv_0; i++){

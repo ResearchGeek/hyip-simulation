@@ -1,7 +1,6 @@
 package CredibilityGame;
 
 import repast.simphony.context.Context;
-import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.space.graph.Network;
 import repast.simphony.space.graph.RepastEdge;
 import repast.simphony.util.ContextUtils;
@@ -36,8 +35,7 @@ public class ProducerStrategyType {
 	//data for the data gatherers and outputters
 	
 	public int getCurrentRun(){
-		return (int) RunEnvironment.getInstance().getCurrentSchedule()
-				.getTickCount();
+		return CredibilityGame.CURRENT_RUN;
 	}
 	
 	public double getTruthfulnessWeight(){
@@ -49,11 +47,11 @@ public class ProducerStrategyType {
 	}
 	/*
 	public int getProducerTypeLow(){
-		return HYIPowner.getProducerTypeL();
+		return Hyip.getProducerTypeL();
 	}
 	
 	public int getProducerTypeHigh(){
-		return HYIPowner.getProducerTypeH();
+		return Hyip.getProducerTypeH();
 	}
 	
 	public int getConsumerTypeLow(){
@@ -103,7 +101,7 @@ public class ProducerStrategyType {
 		Context<Player> context = CredibilityGame.PLAYERS;
 		double sum = 0;
 		int counter = 0;
-		for(Player c:context.getObjects(HYIPowner.class)){
+		for(Player c:context.getObjects(Hyip.class)){
 			sum += c.getGain();
 			counter++;
 		}
@@ -127,8 +125,8 @@ public class ProducerStrategyType {
 		Context<Player> context = CredibilityGame.PLAYERS;
 		double sum = 0;
 		int counter = 0;
-		for(Player p:context.getObjects(HYIPowner.class)){
-			sum += ((HYIPowner)p).getCurrentRating().getRatingAsDouble();
+		for(Player p:context.getObjects(Hyip.class)){
+			sum += ((Hyip)p).getCurrentRating().getRatingAsDouble();
 			counter++;
 		}
 		return sum/counter;
@@ -527,22 +525,22 @@ public class ProducerStrategyType {
 		return ratedByRange;
 	}
 	
-//	public int getHonestRate(){
-//		Context<Object> context = ContextUtils.getContext(this);
-//		Network<Object> strategiesToTypes = (Network<Object>)context.getProjection("StrategiesToTypes");
-//		int all = strategiesToTypes.getDegree(this);
-//		if(all == 0){
-//			return 0;
-//		}
-//		else{
-//			int honest = 0;
-//			for(Object producerStrategy:strategiesToTypes.getAdjacent(this)){
-//				if(((ProducerStrategy)producerStrategy).getProducer().isHonest())
-//					honest++;
-//			}
-//			return (int)(((double)honest/(double)all)*100);
-//		}
-//	}
+	public int getHonestRate(){
+		Context<Object> context = ContextUtils.getContext(this);
+		Network<Object> strategiesToTypes = (Network<Object>)context.getProjection("StrategiesToTypes");
+		int all = strategiesToTypes.getDegree(this);
+		if(all == 0){
+			return 0;
+		}
+		else{
+			int honest = 0;
+			for(Object producerStrategy:strategiesToTypes.getAdjacent(this)){
+				if(((ProducerStrategy)producerStrategy).getProducer().isHonest())
+					honest++;
+			}
+			return (int)(((double)honest/(double)all)*100);
+		}
+	}
 	
 	public int getProducedBy(){
 		Context<Object> context = ContextUtils.getContext(this);

@@ -30,7 +30,7 @@ public class GameController {
 	@ScheduledMethod(start=1.0, interval=1.0, priority=ScheduleParameters.FIRST_PRIORITY)
 	public void firstStep(){
 		if(currentIteration==(iterationNumber-1)){
-		//	HYIPowner.reset();
+		//	Hyip.reset();
 			//TODO: usun¹æ, kiedy po³¹czê z typami konsumentów
 		//	Investor.evolve();
 		//	Investor.reset();
@@ -40,7 +40,7 @@ public class GameController {
 	@ScheduledMethod(start=1.0, interval=1.0, priority=ScheduleParameters.LAST_PRIORITY)
 	public void step(){
 		//calculate payoffs
-		//HYIPowner.calculatePayoffs();
+		//Hyip.calculatePayoffs();
 		
 		//update iteration/generation numbers for file outputter
 		currentIteration = counterIteration;
@@ -48,13 +48,13 @@ public class GameController {
 		
 		//check whether this is the last generation/iteration
 		if(counterIteration==(iterationNumber-1)){
-			//HYIPowner.recalculateRatings();
+			//Hyip.recalculateRatings();
 			counterIteration=0;
 			if(counterGeneration==(generationNumber-1)){
 				RunEnvironment.getInstance().endRun();
 			}
 			//else{
-			//	HYIPowner.evolve();
+			//	Hyip.evolve();
 				//TODO: wrzuciæ tu typy konsumentów, ¿eby efekty ewolucji zapisywa³y siê
 				//do pliku dopiero po reset()!!!
 				//Consumer.evolve();
@@ -65,7 +65,7 @@ public class GameController {
 		{
 			counterIteration++;
 		//	if(isWarmedUp())
-			//	HYIPowner.recalculateRatings();
+			//	Hyip.recalculateRatings();
 			//else
 				//System.out.println("Skipping reputation aggregation");
 		}

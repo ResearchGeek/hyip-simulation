@@ -139,15 +139,15 @@ public class Information {
 	    double payoff = 0;
 		if(getTruthfulness()==1){
 			if(getLook()==1){
-				payoff = (getStrategy().getProducer().isHonest()?HYIPowner.HONEST_PAYOFFS.get("TGA"):HYIPowner.LIAR_PAYOFFS.get("TGA"))*getAcceptingConsumers().size();
+				payoff = (getStrategy().getProducer().isHonest()?Hyip.HONEST_PAYOFFS.get("TGA"):Hyip.LIAR_PAYOFFS.get("TGA"))*getAcceptingConsumers().size();
 			}else{
-				payoff = (getStrategy().getProducer().isHonest()?HYIPowner.HONEST_PAYOFFS.get("TBA"):HYIPowner.LIAR_PAYOFFS.get("TBA"))*getAcceptingConsumers().size();
+				payoff = (getStrategy().getProducer().isHonest()?Hyip.HONEST_PAYOFFS.get("TBA"):Hyip.LIAR_PAYOFFS.get("TBA"))*getAcceptingConsumers().size();
 			}
 		}else{
 			if(getLook()==1){
-				payoff = (getStrategy().getProducer().isHonest()?HYIPowner.HONEST_PAYOFFS.get("FGA"):HYIPowner.LIAR_PAYOFFS.get("FGA"))*getAcceptingConsumers().size();
+				payoff = (getStrategy().getProducer().isHonest()?Hyip.HONEST_PAYOFFS.get("FGA"):Hyip.LIAR_PAYOFFS.get("FGA"))*getAcceptingConsumers().size();
 			}else{
-				payoff = (getStrategy().getProducer().isHonest()?HYIPowner.HONEST_PAYOFFS.get("FBA"):HYIPowner.LIAR_PAYOFFS.get("FBA"))*getAcceptingConsumers().size();
+				payoff = (getStrategy().getProducer().isHonest()?Hyip.HONEST_PAYOFFS.get("FBA"):Hyip.LIAR_PAYOFFS.get("FBA"))*getAcceptingConsumers().size();
 			}
 		}
 		return payoff;
@@ -157,15 +157,15 @@ public class Information {
 		double payoff = 0;
 		if(getTruthfulness()==1){
 			if(getLook()==1){
-				payoff = (getStrategy().getProducer().isHonest()?HYIPowner.HONEST_PAYOFFS.get("TGR"):HYIPowner.LIAR_PAYOFFS.get("TGR"))*getRejectingConsumers().size();
+				payoff = (getStrategy().getProducer().isHonest()?Hyip.HONEST_PAYOFFS.get("TGR"):Hyip.LIAR_PAYOFFS.get("TGR"))*getRejectingConsumers().size();
 			}else{
-				payoff = (getStrategy().getProducer().isHonest()?HYIPowner.HONEST_PAYOFFS.get("TBR"):HYIPowner.LIAR_PAYOFFS.get("TBR"))*getRejectingConsumers().size();
+				payoff = (getStrategy().getProducer().isHonest()?Hyip.HONEST_PAYOFFS.get("TBR"):Hyip.LIAR_PAYOFFS.get("TBR"))*getRejectingConsumers().size();
 			}
 		}else{
 			if(getLook()==1){
-				payoff = (getStrategy().getProducer().isHonest()?HYIPowner.HONEST_PAYOFFS.get("FGR"):HYIPowner.LIAR_PAYOFFS.get("FGR"))*getRejectingConsumers().size();
+				payoff = (getStrategy().getProducer().isHonest()?Hyip.HONEST_PAYOFFS.get("FGR"):Hyip.LIAR_PAYOFFS.get("FGR"))*getRejectingConsumers().size();
 			}else{
-				payoff = (getStrategy().getProducer().isHonest()?HYIPowner.HONEST_PAYOFFS.get("FBR"):HYIPowner.LIAR_PAYOFFS.get("FBR"))*getRejectingConsumers().size();
+				payoff = (getStrategy().getProducer().isHonest()?Hyip.HONEST_PAYOFFS.get("FBR"):Hyip.LIAR_PAYOFFS.get("FBR"))*getRejectingConsumers().size();
 			}
 		}
 		return payoff;

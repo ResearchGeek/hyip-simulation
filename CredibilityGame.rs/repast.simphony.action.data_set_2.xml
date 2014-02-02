@@ -16,7 +16,7 @@
       <string>HYIP_saldo</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>HYIP_saldo</id>
-        <className>CredibilityGame.HYIPowner</className>
+        <className>CredibilityGame.Hyip</className>
         <methodName>getCash</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
