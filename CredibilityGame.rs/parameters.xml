@@ -6,6 +6,17 @@
 	<parameter name="inv_invest" displayName="inv_invest" type="double"
 		defaultValue="50" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+
+	<parameter name="e_use" displayName="e_use" type="double"
+		defaultValue="0.33" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="p_use" displayName="p_use" type="double"
+		defaultValue="0.33" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="l_cost" displayName="l_cost" type="double"
+		defaultValue="600" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+
 	<parameter name="inv_rec" displayName="inv_rec" type="double"
 		defaultValue="10" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />

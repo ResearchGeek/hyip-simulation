@@ -105,13 +105,13 @@ public class Hyip extends Player {
 
 	public void setMarketing() {
 		double r = Math.random();
-		if (r > e_use + p_use) {
+		if (r > e_use + p_use) { // bez marketingu
 			marketing = 0;
 			hyipAccount.addMoney(0);
-		} else if (r < e_use) {
+		} else if (r < e_use) {// marketing na poziomie expert (srednim)
 			marketing = 1;
 			hyipAccount.addMoney(-e_cost);
-		} else {
+		} else {// marketing na poziomie proffessional (najwyzszym)
 			marketing = 2;
 			hyipAccount.addMoney(-p_cost);
 		}
