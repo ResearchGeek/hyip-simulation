@@ -10,12 +10,25 @@ public class Invest {
 	
 	private Hyip hyip;
 	private HyipOffert hyipOffert;
+	private Investor investor;
 	
-	public Invest(Hyip hyip, int invest, InvestorType investorType) {
+	public Invest(Investor investor, Hyip hyip, int invest, HyipOffert hyipOffert) {
 		this.hyip = hyip;
 		this.money = invest;
-		this.hyipOffert = hyip.getOffert(investorType);
+		this.hyipOffert = hyipOffert;
+		this.investor = investor;
 	}
-	
+
+	public Investor getInvestor() {
+		return investor;
+	}
+
+	public HyipOffert getHyipOffert() {
+		return hyipOffert;
+	}
+
+	public Hyip getHyip() {
+		return hyip;
+	}
 
 }

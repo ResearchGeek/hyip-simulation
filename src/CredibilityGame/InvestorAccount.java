@@ -16,6 +16,14 @@ public class InvestorAccount {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
+	public Boolean hasMoney(){
+		return (balance > 0);
+	}
+	
+	public Boolean hasMoney(double howMuch){
+		return (balance >= howMuch);
+	}
 
 	public Boolean spendMoney(double investMoney) {
 		if (balance - investMoney < 0) {

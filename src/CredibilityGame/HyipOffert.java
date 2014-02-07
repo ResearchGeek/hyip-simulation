@@ -1,5 +1,12 @@
 package CredibilityGame;
 
+/**
+ * Represents a single type of a Hyip offer.
+ * Can be shared between Hyips.
+ * 
+ * @author Oskar Jarczyk
+ * @since 1.0
+ */
 public class HyipOffert {
 	
 	private double percent;

@@ -135,7 +135,6 @@ public class Hyip extends Player {
 		if (adv > 1)
 			adv = 1;
 		return adv;
-
 	}
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
