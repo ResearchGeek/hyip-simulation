@@ -69,12 +69,14 @@ public class Hyip extends Player {
 		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(1750, 3000) : l_cost;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = createOfferts(true, goodLooking, null);
+		this.hyipSoldInvestments = new ArrayList<Invest>();
 	}
 
 	public Hyip(BadLooking badLooking) {
 		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(500, 1749) : l_cost;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = createOfferts(false, null, badLooking);
+		this.hyipSoldInvestments = new ArrayList<Invest>();
 	}
 
 	private ArrayList<HyipOffert> createOfferts(boolean isGoodLooking,

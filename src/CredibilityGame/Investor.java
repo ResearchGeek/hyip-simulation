@@ -106,7 +106,7 @@ public class Investor extends Player {
 
 	private List<Hyip> chooseProducers(int howMany) {
 		Context<Player> context = ContextUtils.getContext(this);
-		Iterable<Player> it = context.getRandomObjects(Hyip.class, 3);
+		Iterable<Player> it = context.getRandomObjects(Hyip.class, howMany);
 		List<Hyip> result = new ArrayList<Hyip>();
 		Iterator<Player> iterator = it.iterator();
 		for (int i = 0; i < howMany; i++) {
