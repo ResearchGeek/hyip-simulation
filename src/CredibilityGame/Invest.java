@@ -11,10 +11,10 @@ public class Invest {
 	private Hyip hyip;
 	private HyipOffert hyipOffert;
 	
-	public Invest(Hyip hyip, int invest, int risk_level) {
+	public Invest(Hyip hyip, int invest, InvestorType investorType) {
 		this.hyip = hyip;
 		this.money = invest;
-		this.hyipOffert = hyip.getOffert(risk_level);
+		this.hyipOffert = hyip.getOffert(investorType);
 	}
 	
 

@@ -29,24 +29,24 @@ public class Hyip extends Player {
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
 
-	public static double perc; // oprocentowanie
-	private static int look; // wygl¹d strony
+	//public static double perc; // oprocentowanie
+	private static int look; // wyglad strony
 	private int marketing; // 0-basic 1-expert 2-proffesional
 	private double mktg_cumulated; // wzrost albo spadek wydajnosci mktg
 									// w zaleznosci od wydatkow w turze
 	private static int e_cost; // marketing cost expert
 	private static int p_cost; // marketing cost prof
 	private static int l_cost; // marketing cost prof
-	public static double e_eff; // marketing efect expert
-	public static double p_eff; // marketing efect prof
-	public static double l_eff; // look efect prof
-	public static double e_use;
-	public static double p_use;
+	private static double e_eff; // marketing efect expert
+	private static double p_eff; // marketing efect prof
+	private static double l_eff; // look efect prof
+	private static double e_use;
+	private static double p_use;
 
 	public static void initialize() {
 
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		perc = (Double) params.getValue("hyip_perc");
+		//perc = (Double) params.getValue("hyip_perc");
 		e_use = (double) params.getValue("e_use");
 		p_use = (double) params.getValue("p_use");
 		look = (Integer) params.getValue("hyip_look");
