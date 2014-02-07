@@ -7,6 +7,7 @@ import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.parameter.Parameters;
+import repast.simphony.random.RandomHelper;
 import repast.simphony.util.ContextUtils;
 import CredibilityGame.HyipType.BadLooking;
 import CredibilityGame.HyipType.GoodLooking;
@@ -29,7 +30,7 @@ public class Hyip extends Player {
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
 
-	//public static double perc; // oprocentowanie
+	private static boolean l_cost_rand;
 	private static int look; // wyglad strony
 	private int marketing; // 0-basic 1-expert 2-proffesional
 	private double mktg_cumulated; // wzrost albo spadek wydajnosci mktg
@@ -44,7 +45,6 @@ public class Hyip extends Player {
 	private static double p_use;
 
 	public static void initialize() {
-
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		//perc = (Double) params.getValue("hyip_perc");
 		e_use = (double) params.getValue("e_use");
@@ -53,14 +53,11 @@ public class Hyip extends Player {
 		e_cost = (Integer) params.getValue("e_cost");
 		p_cost = (Integer) params.getValue("p_cost");
 		l_cost = (Integer) params.getValue("l_cost");
+		l_cost_rand = (Boolean) params.getValue("l_cost_rand");
 
 		e_eff = (Double) params.getValue("e_eff");
 		p_eff = (Double) params.getValue("p_eff");
 		l_eff = (Double) params.getValue("l_eff");
-
-		// PRODUCER_TYPE_H = (Integer)params.getValue("producer_type_h");
-		// PRODUCER_TYPE_L = (Integer)params.getValue("producer_type_l");
-		// PRODUCER_LIAR_RATE = (Double)params.getValue("producer_liar_rate");
 	}
 
 	@Deprecated
@@ -71,11 +68,13 @@ public class Hyip extends Player {
 	}
 
 	public Hyip(GoodLooking goodLooking) {
+		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(1750, 3000) : l_cost;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = createOfferts(true, goodLooking, null);
 	}
 
 	public Hyip(BadLooking badLooking) {
+		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(500, 1749) : l_cost;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = createOfferts(false, null, badLooking);
 	}
@@ -123,6 +122,10 @@ public class Hyip extends Player {
 
 	public HyipOffert getOffert(int i) {
 		return hyipOfferts.get(i);
+	}
+	
+	public HyipOffert getFirstOffert() {
+		return hyipOfferts.get(0);
 	}
 
 	public double getAdvert() {

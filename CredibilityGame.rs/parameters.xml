@@ -13,9 +13,14 @@
 	<parameter name="p_use" displayName="p_use" type="double"
 		defaultValue="0.33" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+		
 	<parameter name="l_cost" displayName="l_cost" type="double"
-		defaultValue="600" isReadOnly="false"
+		defaultValue="2000" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="l_cost_rand" displayName="Randomize l_cost within threeshold"
+		type="boolean" defaultValue="true" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
+	
 
 	<parameter name="inv_rec" displayName="inv_rec" type="double"
 		defaultValue="10" isReadOnly="false"
@@ -23,6 +28,7 @@
 	<parameter name="hyip_perc" displayName="hyip_perc" type="double"
 		defaultValue="2" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+		
 	<parameter name="e_eff" displayName="e_eff" type="double"
 		defaultValue="10" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
@@ -38,6 +44,7 @@
 	<parameter name="p_cost" displayName="p_cost" type="int"
 		defaultValue="1500" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
+		
 	<parameter name="hyip_look" displayName="hyip_look" type="int"
 		defaultValue="1" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
