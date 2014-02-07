@@ -39,13 +39,13 @@ public class Investor extends Player {
 			invest_money = new InvestorAccount(this);
 			switch (risk_level) {
 			case HIGH_AVERSION:
-				invest_money.setInvest_money(50 * 5);
+				invest_money.setBalance(50 * 5);
 				break;
 			case MEDIUM_AVERSION:
-				invest_money.setInvest_money(50 * 50);
+				invest_money.setBalance(50 * 50);
 				break;
 			case LOW_AVERSION:
-				invest_money.setInvest_money(50 * 1000);
+				invest_money.setBalance(50 * 1000);
 				break;
 			}
 		}
@@ -54,25 +54,29 @@ public class Investor extends Player {
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 100)
 	public void step() {
 		Hyip hyipOwner = chooseProducer();
-		invest_money = (int) (invest_money * (1 + hyipOwner.perc));
+		//invest_money = (int) (invest_money * (1 + hyipOwner.perc));
 		if (Math.random() < inv_invest + hyipOwner.getAdvert())
-			invest(hyipOwner);
+			chooseOffert(hyipOwner);
 		if (Math.random() < inv_rec)
 			hyipOwner.makeWithdrawal(invest_money);
 	}
 
-	private void invest(Hyip hyip) {
+	private void chooseOffert(Hyip hyip) {
+		
+	}
+	
+	private void invest(Hyip hyip, HyipOffert hyipOffert){
 		int invest = 0;
 		if (risk_level == InvestorType.HIGH_AVERSION)
 			invest = (int) (Math.random() * 4) + 1;
 		new Invest(hyip, invest, risk_level);
 		if (risk_level == InvestorType.MEDIUM_AVERSION)
-			invest = (int) (Math.random() * 10) + 5;
+			invest = (int) (Math.random() * 45) + 5;
 		new Invest(hyip, invest, risk_level);
 		if (risk_level == InvestorType.LOW_AVERSION)
-			invest = (int) (Math.random() * 985) + 15;
+			invest = (int) (Math.random() * 950) + 50;
 		new Invest(hyip, invest, risk_level);
-		invest_money = invest_money + invest;
+		invest_money.spendMoney(invest);
 		hyip.acceptDeposit(invest);
 	}
 
