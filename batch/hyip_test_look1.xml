@@ -19,7 +19,9 @@
 <parameter name="l_eff" type="constant" constant_type="number" value="0.1"/>
 <parameter name="e_use" type="constant" constant_type="number" value="0.33"/>
 <parameter name="p_use" type="constant" constant_type="number" value="0.33"/>
+
 <parameter name="l_cost" type="constant" constant_type="number" value="600"/>
+<parameter name="l_cost_rand" type="constant" constant_type="java.lang.Boolean" value="true"/>
 
 <parameter name="inv_invest" type="constant" constant_type="number" value="0.1"/>
 <parameter name="inv_rec" type="constant" constant_type="number" value="0.05"/>
