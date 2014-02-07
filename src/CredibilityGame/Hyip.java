@@ -29,6 +29,7 @@ public class Hyip extends Player {
 
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
+	private ArrayList<Invest> hyipSoldInvestments;
 
 	private static boolean l_cost_rand;
 	private static int look; // wyglad strony
@@ -46,7 +47,6 @@ public class Hyip extends Player {
 
 	public static void initialize() {
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		//perc = (Double) params.getValue("hyip_perc");
 		e_use = (double) params.getValue("e_use");
 		p_use = (double) params.getValue("p_use");
 		look = (Integer) params.getValue("hyip_look");
@@ -63,8 +63,6 @@ public class Hyip extends Player {
 	@Deprecated
 	public Hyip() {
 		throw new UnsupportedOperationException("Initialize with enum!");
-		//this.hyipAccount = new HyipAccount(this, 0 - l_cost);
-		//this.hyipOfferts = createOfferts();
 	}
 
 	public Hyip(GoodLooking goodLooking) {
@@ -140,6 +138,18 @@ public class Hyip extends Player {
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
 	public void step() {
 		setMarketing();
+	}
+	
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)
+	public void payPercent() {
+		for(Invest invest : hyipSoldInvestments){
+			
+		}
+	}
+	
+	public void registerInvestment(Invest invest){
+		hyipSoldInvestments.add(invest);
+		acceptDeposit(invest.getMoney());
 	}
 
 	public void setMarketing() {
@@ -242,7 +252,7 @@ public class Hyip extends Player {
 		hyipAccount.addMoney(-invest_money);
 	}
 
-	public void acceptDeposit(int invest) {
+	private void acceptDeposit(double invest) {
 		hyipAccount.addMoney(invest);
 	}
 }

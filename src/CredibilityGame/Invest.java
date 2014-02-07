@@ -5,18 +5,18 @@ import java.util.Date;
 public class Invest {
 	
 	private double money;
-	private Date time;
-	private double howLong;
+	private double tickCount;
 	
 	private Hyip hyip;
 	private HyipOffert hyipOffert;
 	private Investor investor;
 	
-	public Invest(Investor investor, Hyip hyip, int invest, HyipOffert hyipOffert) {
+	public Invest(Investor investor, Hyip hyip, double money, HyipOffert hyipOffert) {
 		this.hyip = hyip;
-		this.money = invest;
+		this.money = money;
 		this.hyipOffert = hyipOffert;
 		this.investor = investor;
+		this.tickCount = 0;
 	}
 
 	public Investor getInvestor() {
@@ -29,6 +29,22 @@ public class Invest {
 
 	public Hyip getHyip() {
 		return hyip;
+	}
+
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
+	}
+
+	public double getTickCount() {
+		return tickCount;
+	}
+
+	public void setTickCount(double tickCount) {
+		this.tickCount = tickCount;
 	}
 
 }
