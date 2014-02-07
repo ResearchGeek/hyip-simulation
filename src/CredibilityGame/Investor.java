@@ -72,12 +72,6 @@ public class Investor extends Player {
 				chooseOffert(chosen);
 			}
 		}
-
-		// // invest_money = (int) (invest_money * (1 + hyipOwner.perc));
-		// if (Math.random() < inv_invest + hyipOwner.getAdvert())
-		// chooseOffert(hyipOwner);
-		// if (Math.random() < inv_rec)
-		// hyipOwner.makeWithdrawal(invest_money);
 	}
 
 	private void chooseOffert(Hyip hyip) {
@@ -100,6 +94,10 @@ public class Investor extends Player {
 		investorAccount.spendMoney(invest);
 		hyip.registerInvestment(investment);
 	}
+	
+	public void acceptReward(double moneyTransfer){
+		this.investorAccount.addFunds(moneyTransfer);
+	}
 
 	private Hyip chooseProducer() {
 		Context<Player> context = ContextUtils.getContext(this);
@@ -117,26 +115,26 @@ public class Investor extends Player {
 		return result;
 	}
 
-	public static void reset() {
-		for (Object p : CredibilityGame.PLAYERS.getObjects(Investor.class)) {
-			((Investor) p).setGain(0);
-			((Investor) p).getStrategy().clear();
-		}
-	}
-
+//	public static void reset() {
+//		for (Object p : CredibilityGame.PLAYERS.getObjects(Investor.class)) {
+//			((Investor) p).setGain(0);
+//			((Investor) p).getStrategy().clear();
+//		}
+//	}
+//
 	public int getExpertise() {
 		return expertise;
 	}
-
-	public void setExpertise(int expertise) {
-		this.expertise = expertise;
-	}
-
+//
+//	public void setExpertise(int expertise) {
+//		this.expertise = expertise;
+//	}
+//
 	public RatingStrategy getRatingStrategy() {
 		return ratingStrategy;
 	}
-
-	public void setRatingStrategy(RatingStrategy ratingStrategy) {
-		this.ratingStrategy = ratingStrategy;
-	}
+//
+//	public void setRatingStrategy(RatingStrategy ratingStrategy) {
+//		this.ratingStrategy = ratingStrategy;
+//	}
 }

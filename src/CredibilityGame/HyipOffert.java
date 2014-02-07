@@ -9,14 +9,14 @@ package CredibilityGame;
  */
 public class HyipOffert {
 	
-	private double percent;
-	private double minimum;
-	private boolean noMinimum;
-	private double forHowLong;
-	private double penalty;
+	private double percent; // procent
+	private double minimum; // minimalna wplata [opcjonalne, patrz dalej]
+	private boolean noMinimum; // czy jest minimalna wplata
+	private int forHowLong; // czas trwania "inwestycji" (w dniach)
+	private double penalty; // kara za zerwanie (na razie nie uzywane)
 	
 	public HyipOffert(double percent, double minimum, boolean noMinimum, 
-			double forHowLong, double penalty){
+			int forHowLong, double penalty){
 		this.percent = percent;
 		this.minimum = minimum;
 		this.noMinimum = noMinimum;
@@ -42,10 +42,10 @@ public class HyipOffert {
 	public void setNoMinimum(boolean noMinimum) {
 		this.noMinimum = noMinimum;
 	}
-	public double getForHowLong() {
+	public int getForHowLong() {
 		return forHowLong;
 	}
-	public void setForHowLong(double forHowLong) {
+	public void setForHowLong(int forHowLong) {
 		this.forHowLong = forHowLong;
 	}
 	public double getPenalty() {

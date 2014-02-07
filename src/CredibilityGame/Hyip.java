@@ -143,7 +143,14 @@ public class Hyip extends Player {
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)
 	public void payPercent() {
 		for(Invest invest : hyipSoldInvestments){
-			
+			invest.incrementTickCount();
+			invest.calculateInterest();
+			if (invest.getTickCount() >= invest.getHyipOffert().getForHowLong()){
+				// zamknij i rozlicz..
+				hyipSoldInvestments.remove(invest);
+				invest.getInvestor().acceptReward(invest.getMoney());
+				// juz, inwestycja zostaje archiwizowana a komputer ja posprzata
+			}
 		}
 	}
 	

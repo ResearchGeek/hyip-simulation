@@ -33,6 +33,10 @@ public class InvestorAccount {
 			return true;
 		}
 	}
+	
+	public void addFunds(double money){
+		this.balance += money;
+	}
 
 	public Investor getOwner() {
 		return owner;
