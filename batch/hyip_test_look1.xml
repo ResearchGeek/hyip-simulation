@@ -1,32 +1,26 @@
 <?xml version="1.0"?>
 <sweep runs="1">
-
 <parameter name="generation_number" type="constant" constant_type="number" value="1"/>
 <parameter name="iteration_number" type="constant" constant_type="number" value="100"/>
-
 <parameter name="inv_0" type="constant" constant_type="number" value="100"/> 
 <parameter name="inv_1" type="constant" constant_type="number" value="100"/>
 <parameter name="inv_2" type="constant" constant_type="number" value="100"/>
 <parameter name="consumer_max_threshold_mutation" type="constant" constant_type="number" value="0.05"/>
 
-
-<parameter name="hyip_population_size" type="constant" constant_type="number" value="1"/>
-
+<parameter name="hyip_population_size" type="constant" constant_type="number" value="8"/>
 <parameter name="hyip_perc" type="constant" constant_type="number" value="0.02"/>
 <parameter name="hyip_marketing" type="constant" constant_type="number" value="0"/>
 <parameter name="hyip_look" type="constant" constant_type="number" value="1"/>
+
 <parameter name="e_cost" type="constant" constant_type="number" value="5"/>
 <parameter name="p_cost" type="constant" constant_type="number" value="10"/>
 <parameter name="e_eff" type="constant" constant_type="number" value="0.2"/>
 <parameter name="p_eff" type="constant" constant_type="number" value="0.4"/>
 <parameter name="l_eff" type="constant" constant_type="number" value="0.1"/>
-
 <parameter name="e_use" type="constant" constant_type="number" value="0.33"/>
 <parameter name="p_use" type="constant" constant_type="number" value="0.33"/>
 <parameter name="l_cost" type="constant" constant_type="number" value="600"/>
 
 <parameter name="inv_invest" type="constant" constant_type="number" value="0.1"/>
-
 <parameter name="inv_rec" type="constant" constant_type="number" value="0.05"/>
-
 </sweep>

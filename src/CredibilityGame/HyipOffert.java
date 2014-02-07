@@ -47,11 +47,5 @@ public class HyipOffert {
 	public void setPenalty(double penalty) {
 		this.penalty = penalty;
 	}
-	
-	static class TypicalHyipOffer{
-		public static final HyipOffert LOW_RISK = new HyipOffert(2.0, 5.0, true, 1, 20);
-		public static final HyipOffert MEDIUM_RISK = new HyipOffert(2.0, 15.0, true, 2, 20);
-		public static final HyipOffert HIGH_RISK = new HyipOffert(2.0, 1000.0, true, 3, 20);
-	}
 
 }

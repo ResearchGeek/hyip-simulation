@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
 	<parameter name="hyip_population_size" displayName="hyip_population_size"
-		type="int" defaultValue="1" isReadOnly="false"
+		type="int" defaultValue="8" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
 	<parameter name="inv_invest" displayName="inv_invest" type="double"
 		defaultValue="50" isReadOnly="false"

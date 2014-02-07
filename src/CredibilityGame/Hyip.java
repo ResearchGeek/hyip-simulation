@@ -2,23 +2,22 @@ package CredibilityGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import CredibilityGame.rating.Rating;
-import CredibilityGame.rating.UpDownRating;
+
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.parameter.Parameters;
-import repast.simphony.random.RandomHelper;
 import repast.simphony.util.ContextUtils;
-import repast.simphony.util.collections.IndexedIterable;
+import CredibilityGame.HyipType.BadLooking;
+import CredibilityGame.HyipType.GoodLooking;
+import CredibilityGame.rating.Rating;
+import CredibilityGame.rating.UpDownRating;
 
 public class Hyip extends Player {
-	
+
 	// ********************* Credibility game variables ***********************
-	public static HashMap<String, Double> HONEST_PAYOFFS = 
-			new HashMap<String, Double>();
-	public static HashMap<String, Double> LIAR_PAYOFFS = 
-			new HashMap<String, Double>();
+	public static HashMap<String, Double> HONEST_PAYOFFS = new HashMap<String, Double>();
+	public static HashMap<String, Double> LIAR_PAYOFFS = new HashMap<String, Double>();
 	public static double PRODUCER_LIAR_RATE;
 	private static int PRODUCER_TYPE_H;
 	private static int PRODUCER_TYPE_L;
@@ -29,15 +28,15 @@ public class Hyip extends Player {
 
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
-	
+
 	public static double perc; // oprocentowanie
-	static int look; // wygl¹d strony
-	int marketing; // 0-basic 1-expert 2-proffesional
-	double mktg_cumulated; // wzrost albo spadek wydajnosci mktg w zaleznosci od
-							// wydatkow w turze
-	static int e_cost; // marketing cost expert
-	static int p_cost; // marketing cost prof
-	static int l_cost; // marketing cost prof
+	private static int look; // wygl¹d strony
+	private int marketing; // 0-basic 1-expert 2-proffesional
+	private double mktg_cumulated; // wzrost albo spadek wydajnosci mktg
+									// w zaleznosci od wydatkow w turze
+	private static int e_cost; // marketing cost expert
+	private static int p_cost; // marketing cost prof
+	private static int l_cost; // marketing cost prof
 	public static double e_eff; // marketing efect expert
 	public static double p_eff; // marketing efect prof
 	public static double l_eff; // look efect prof
@@ -64,27 +63,65 @@ public class Hyip extends Player {
 		// PRODUCER_LIAR_RATE = (Double)params.getValue("producer_liar_rate");
 	}
 
+	@Deprecated
 	public Hyip() {
-		// int rnd = RandomHelper.createUniform(PRODUCER_TYPE_L,
-		// PRODUCER_TYPE_H).nextInt();//random.nextInt(PRODUCER_TYPE_H)-PRODUCER_TYPE_L;
-		// this.isHonest = rnd<=0?false:true;
-		// this.isHonest = isHonest;
-		// this.currentRating = new UpDownRating();
-		// this.pendingRating = this.currentRating.clone();
-		// setStrategy(new ProducerStrategy(this));
-		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
-		this.hyipOfferts = createOfferts();
+		throw new UnsupportedOperationException("Initialize with enum!");
+		//this.hyipAccount = new HyipAccount(this, 0 - l_cost);
+		//this.hyipOfferts = createOfferts();
 	}
-	
-	private ArrayList<HyipOffert> createOfferts(){
+
+	public Hyip(GoodLooking goodLooking) {
+		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
+		this.hyipOfferts = createOfferts(true, goodLooking, null);
+	}
+
+	public Hyip(BadLooking badLooking) {
+		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
+		this.hyipOfferts = createOfferts(false, null, badLooking);
+	}
+
+	private ArrayList<HyipOffert> createOfferts(boolean isGoodLooking,
+			GoodLooking goodLooking, BadLooking badLooking) {
 		ArrayList<HyipOffert> offerts = new ArrayList<HyipOffert>();
-		offerts.add(HyipOffert.TypicalHyipOffer.LOW_RISK);
-		offerts.add(HyipOffert.TypicalHyipOffer.MEDIUM_RISK);
-		offerts.add(HyipOffert.TypicalHyipOffer.HIGH_RISK);
+		if (isGoodLooking) {
+			switch (goodLooking) {
+			case GOOD_LOOKING_1A:
+				offerts.add(HyipTypicalOffert.MEDIUM_RISK_1D);
+				break;
+			case GOOD_LOOKING_2A:
+				offerts.add(HyipTypicalOffert.MEDIUM_RISK_7D);
+				break;
+			case GOOD_LOOKING_3A:
+				offerts.add(HyipTypicalOffert.LOW_RISK_1D);
+				break;
+			case GOOD_LOOKING_4A:
+				offerts.add(HyipTypicalOffert.LOW_RISK_7D);
+				break;
+			default:
+				break;
+			}
+		} else {
+			switch (badLooking) {
+			case BAD_LOOKING_1B:
+				offerts.add(HyipTypicalOffert.HIGH_RISK_1D);
+				break;
+			case BAD_LOOKING_2B:
+				offerts.add(HyipTypicalOffert.HIGH_RISK_7D);
+				break;
+			case BAD_LOOKING_3B:
+				offerts.add(HyipTypicalOffert.MEDIUM_RISK_1D);
+				break;
+			case BAD_LOOKING_4B:
+				offerts.add(HyipTypicalOffert.MEDIUM_RISK_7D);
+				break;
+			default:
+				break;
+			}
+		}
 		return offerts;
 	}
-	
-	public HyipOffert getOffert(int i){
+
+	public HyipOffert getOffert(int i) {
 		return hyipOfferts.get(i);
 	}
 
@@ -116,15 +153,15 @@ public class Hyip extends Player {
 			hyipAccount.addMoney(-p_cost);
 		}
 		switch (marketing) {
-			case 0:
-				mktg_cumulated -= e_eff;
-				break;
-			case 1:
-				mktg_cumulated += e_eff;
-				break;
-			case 2:
-				mktg_cumulated += p_eff;
-				break;
+		case 0:
+			mktg_cumulated -= e_eff;
+			break;
+		case 1:
+			mktg_cumulated += e_eff;
+			break;
+		case 2:
+			mktg_cumulated += p_eff;
+			break;
 		}
 		if (mktg_cumulated < 0)
 			mktg_cumulated = 0;
