@@ -35,7 +35,7 @@ public class Hyip extends Player {
 
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
-	private ArrayList<Invest> hyipSoldInvestments;
+	private volatile ArrayList<Invest> hyipSoldInvestments;
 
 	private static boolean l_cost_rand;
 	private static int look; // wyglad strony
@@ -164,7 +164,7 @@ public class Hyip extends Player {
 	}
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)
-	public void payPercent() {
+	public synchronized void payPercent() {
 		CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
 				hyipSoldInvestments);
 		for (Invest invest : cp) {
@@ -323,7 +323,7 @@ public class Hyip extends Player {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (((Hyip) obj).id == this.id) {
+		if (((Hyip) obj).id.equals( this.id )) {
 			return true;
 		} else
 			return false;
