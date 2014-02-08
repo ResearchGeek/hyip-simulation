@@ -7,6 +7,9 @@
     <string>tick</string>
     <string>Cash</string>
     <string>Id</string>
+    <string>Advert</string>
+    <string>Count Investments</string>
+    <string>Good Looking</string>
   </sourceIds>
   <fileName>hyip_cash.csv</fileName>
   <addTimeStamp>true</addTimeStamp>

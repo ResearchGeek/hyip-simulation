@@ -14,8 +14,9 @@
 
 <parameter name="e_cost" type="constant" constant_type="number" value="5"/>
 <parameter name="p_cost" type="constant" constant_type="number" value="10"/>
-<parameter name="e_eff" type="constant" constant_type="number" value="0.2"/>
-<parameter name="p_eff" type="constant" constant_type="number" value="0.4"/>
+
+<parameter name="e_eff" type="constant" constant_type="number" value="0.01"/>
+<parameter name="p_eff" type="constant" constant_type="number" value="0.04"/>
 <parameter name="l_eff" type="constant" constant_type="number" value="0.1"/>
 <parameter name="e_use" type="constant" constant_type="number" value="0.33"/>
 <parameter name="p_use" type="constant" constant_type="number" value="0.33"/>
@@ -24,5 +25,5 @@
 <parameter name="l_cost_rand" type="constant" constant_type="java.lang.Boolean" value="true"/>
 
 <parameter name="inv_invest" type="constant" constant_type="number" value="0.1"/>
-<parameter name="inv_rec" type="constant" constant_type="number" value="0.05"/>
+<parameter name="inv_rec" type="constant" constant_type="number" value="0.5"/>
 </sweep>

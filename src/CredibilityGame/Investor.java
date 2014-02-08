@@ -60,28 +60,26 @@ public class Investor extends Player {
 		List<Hyip> allHyips = chooseAllProducers();
 		for (Hyip hyip : allHyips) {
 			if (investorAccount.hasMoney()) {
-				int invChances = 0;
+				double invChances = 0;
 				switch (this.risk_level) {
 				case HIGH_AVERSION:
-					invChances = hyip.isGoodLooking() ? 90 : 10;
+					invChances = hyip.isGoodLooking() ? 0.9 : 0.1;
 					break;
 				case MEDIUM_AVERSION:
-					invChances = hyip.isGoodLooking() ? 90 : 30;
+					invChances = hyip.isGoodLooking() ? 0.9 : 0.3;
 					break;
 				case LOW_AVERSION:
-					invChances = hyip.isGoodLooking() ? 90 : 50;
+					invChances = hyip.isGoodLooking() ? 0.9 : 0.5;
 					break;
 				default:
 					throw new UnsupportedOperationException(
 							"should never happen");
 				}
-				if (!(RandomHelper.nextDoubleFromTo(0, 100) < invChances)){
-					// tests failed
-					break;
-				}
-				if (RandomHelper.nextDoubleFromTo(0, 100) < hyip.getAdvert()){
-					// test passed
-					hyipsChosen.add(hyip);
+				if (RandomHelper.nextDoubleFromTo(0, 1) < invChances){
+					if (RandomHelper.nextDoubleFromTo(0, 1) < hyip.getAdvert()){
+						// test passed
+						hyipsChosen.add(hyip);
+					}
 				}
 			}
 		}

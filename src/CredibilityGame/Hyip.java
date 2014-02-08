@@ -31,10 +31,10 @@ public class Hyip extends Player {
 	private static volatile long COUNT_INVESTS = 0;
 	private Long id;
 	private boolean isGoodLooking;
-	
+
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
-	private CopyOnWriteArrayList<Invest> hyipSoldInvestments;
+	private ArrayList<Invest> hyipSoldInvestments;
 
 	private static boolean l_cost_rand;
 	private static int look; // wyglad strony
@@ -49,6 +49,7 @@ public class Hyip extends Player {
 	private static double l_eff; // look efect prof
 	private static double e_use;
 	private static double p_use;
+	private static double inv_rec;
 
 	public static void initialize() {
 		Parameters params = RunEnvironment.getInstance().getParameters();
@@ -63,6 +64,8 @@ public class Hyip extends Player {
 		e_eff = (Double) params.getValue("e_eff");
 		p_eff = (Double) params.getValue("p_eff");
 		l_eff = (Double) params.getValue("l_eff");
+
+		inv_rec = (Double) params.getValue("inv_rec");
 	}
 
 	@Deprecated
@@ -74,7 +77,7 @@ public class Hyip extends Player {
 		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(1750, 3000) : l_cost;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = createOfferts(true, goodLooking, null);
-		this.hyipSoldInvestments = new CopyOnWriteArrayList<Invest>();
+		this.hyipSoldInvestments = new ArrayList<Invest>();
 		++COUNT_INVESTS;
 		id = COUNT_INVESTS;
 		isGoodLooking = true;
@@ -84,7 +87,7 @@ public class Hyip extends Player {
 		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(500, 1749) : l_cost;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = createOfferts(false, null, badLooking);
-		this.hyipSoldInvestments = new CopyOnWriteArrayList<Invest>();
+		this.hyipSoldInvestments = new ArrayList<Invest>();
 		++COUNT_INVESTS;
 		id = COUNT_INVESTS;
 		isGoodLooking = false;
@@ -134,17 +137,19 @@ public class Hyip extends Player {
 	public HyipOffert getOffert(int i) {
 		return hyipOfferts.get(i);
 	}
-	
+
 	public HyipOffert getFirstOffert() {
 		return hyipOfferts.get(0);
 	}
 
 	public double getAdvert() {
 		double mark_temp = mktg_cumulated * 12 - 6;
-		double adv = look * l_eff
-				+ (1 / (1 + Math.pow(Math.E, mark_temp * (-1)))) * l_eff;
+		double adv = // look * l_eff
+		+(1 / (1 + Math.pow(Math.E, mark_temp * (-1))));
 		if (adv > 1)
 			adv = 1;
+		assert adv >= 0;
+		assert adv <= 1;
 		return adv;
 	}
 
@@ -156,27 +161,38 @@ public class Hyip extends Player {
 	public void step() {
 		setMarketing();
 	}
-	
+
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)
 	public void payPercent() {
-		for(Invest invest : hyipSoldInvestments){
+		CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
+				hyipSoldInvestments);
+		for (Invest invest : cp) {
 			invest.incrementTickCount();
 			invest.calculateInterest();
-			if (invest.getTickCount() >= invest.getHyipOffert().getForHowLong()){
-				// zamknij i rozlicz..
-				hyipSoldInvestments.remove(invest);
-				transferFunds(invest);
-				// juz, inwestycja zostaje archiwizowana a komputer ja posprzata
+			if (invest.getTickCount() >= invest.getHyipOffert().getForHowLong()) {
+				if (RandomHelper.nextDoubleFromTo(0, 1) < inv_rec) {
+					invest.setTickCount(0);
+				} else {
+					// zamknij i rozlicz..
+					hyipSoldInvestments.remove(invest);
+					transferFunds(invest);
+					// juz, inwestycja zostaje archiwizowana a komputer ja
+					// posprzata
+				}
 			}
 		}
 	}
-	
-	private void transferFunds(Invest invest){
+
+	public int countOngoingInvestments() {
+		return hyipSoldInvestments.size();
+	}
+
+	private void transferFunds(Invest invest) {
 		this.hyipAccount.withdrawMoney(invest.getMoney());
 		invest.getInvestor().acceptReward(invest.getMoney());
 	}
-	
-	public void registerInvestment(Invest invest){
+
+	public void registerInvestment(Invest invest) {
 		hyipSoldInvestments.add(invest);
 		acceptDeposit(invest.getMoney());
 	}
@@ -284,11 +300,11 @@ public class Hyip extends Player {
 	private void acceptDeposit(double invest) {
 		hyipAccount.addMoney(invest);
 	}
-	
+
 	public boolean isGoodLooking() {
 		return isGoodLooking;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return id.hashCode();
@@ -296,7 +312,7 @@ public class Hyip extends Player {
 
 	@Override
 	public boolean equals(Object obj) {
-		if ( ((Hyip)obj).id == this.id ){
+		if (((Hyip) obj).id == this.id) {
 			return true;
 		} else
 			return false;

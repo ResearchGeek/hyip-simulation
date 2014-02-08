@@ -62,12 +62,12 @@ public class Invest {
 	
 	@Override
 	public int hashCode() {
-		return InvestId.hashCode() * investor.hashCode() * hyip.hashCode();
+		return InvestId.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if ( ((Invest)obj).InvestId == this.InvestId ){
+		if ( ((Invest)obj).InvestId.equals(this.InvestId) ){
 			return true;
 		} else
 			return false;

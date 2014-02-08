@@ -32,6 +32,30 @@
         <methodName>getId</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Advert</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Advert</id>
+        <className>CredibilityGame.Hyip</className>
+        <methodName>getAdvert</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Count Investments</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Count Investments</id>
+        <className>CredibilityGame.Hyip</className>
+        <methodName>countOngoingInvestments</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Good Looking</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Good Looking</id>
+        <className>CredibilityGame.Hyip</className>
+        <methodName>isGoodLooking</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>
