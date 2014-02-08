@@ -171,7 +171,8 @@ public class Hyip extends Player {
 			invest.incrementTickCount();
 			invest.calculateInterest();
 			if (invest.getTickCount() >= invest.getHyipOffert().getForHowLong()) {
-				if (RandomHelper.nextDoubleFromTo(0, 1) < inv_rec) {
+				if (RandomHelper.nextDoubleFromTo(0, 1) > inv_rec) {
+					// nic nie wyplacono, odnow oferte
 					invest.setTickCount(0);
 				} else {
 					// zamknij i rozlicz..

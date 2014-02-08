@@ -25,6 +25,6 @@
 <parameter name="l_cost_rand" type="constant" constant_type="java.lang.Boolean" value="true"/>
 
 <parameter name="inv_invest" type="constant" constant_type="number" value="0.1"/>
-<parameter name="inv_rec" type="constant" constant_type="number" value="0.5"/>
+<parameter name="inv_rec" type="constant" constant_type="number" value="0.08"/>
 <parameter name="unlimited_i_funds" type="constant" constant_type="java.lang.Boolean" value="true"/>
 </sweep>
