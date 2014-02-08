@@ -28,7 +28,8 @@ public class Hyip extends Player {
 	private Rating pendingRating;
 	// ********************* End of credibility game variables ***************
 
-	private static volatile long COUNT_INVESTS = 0;
+	private static volatile long COUNT_HYIPS = 0;
+	private long totalNumberOfInvestments = 0;
 	private Long id;
 	private boolean isGoodLooking;
 
@@ -74,29 +75,29 @@ public class Hyip extends Player {
 	}
 
 	public Hyip(GoodLooking goodLooking) {
+		isGoodLooking = true;
 		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(1750, 3000) : l_cost;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
-		this.hyipOfferts = createOfferts(true, goodLooking, null);
+		this.hyipOfferts = createOfferts(goodLooking, null);
 		this.hyipSoldInvestments = new ArrayList<Invest>();
-		++COUNT_INVESTS;
-		id = COUNT_INVESTS;
-		isGoodLooking = true;
+		++COUNT_HYIPS;
+		id = COUNT_HYIPS;
 	}
 
 	public Hyip(BadLooking badLooking) {
+		isGoodLooking = false;
 		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(500, 1749) : l_cost;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
-		this.hyipOfferts = createOfferts(false, null, badLooking);
+		this.hyipOfferts = createOfferts(null, badLooking);
 		this.hyipSoldInvestments = new ArrayList<Invest>();
-		++COUNT_INVESTS;
-		id = COUNT_INVESTS;
-		isGoodLooking = false;
+		++COUNT_HYIPS;
+		id = COUNT_HYIPS;
 	}
 
-	private ArrayList<HyipOffert> createOfferts(boolean isGoodLooking,
-			GoodLooking goodLooking, BadLooking badLooking) {
+	private ArrayList<HyipOffert> createOfferts(GoodLooking goodLooking, 
+			BadLooking badLooking) {
 		ArrayList<HyipOffert> offerts = new ArrayList<HyipOffert>();
-		if (isGoodLooking) {
+		if (this.isGoodLooking) {
 			switch (goodLooking) {
 			case GOOD_LOOKING_1A:
 				offerts.add(HyipTypicalOffert.MEDIUM_RISK_1D);
@@ -194,6 +195,7 @@ public class Hyip extends Player {
 
 	public void registerInvestment(Invest invest) {
 		hyipSoldInvestments.add(invest);
+		setTotalNumberOfInvestments(totalNumberOfInvestments+1);
 		acceptDeposit(invest.getMoney());
 	}
 
@@ -234,6 +236,14 @@ public class Hyip extends Player {
 
 	public double getCash() {
 		return hyipAccount.getCash();
+	}
+
+	public long getTotalNumberOfInvestments() {
+		return totalNumberOfInvestments;
+	}
+
+	public void setTotalNumberOfInvestments(long totalNumberOfInvestments) {
+		this.totalNumberOfInvestments = totalNumberOfInvestments;
 	}
 
 	public String getStrategyAsString() {
