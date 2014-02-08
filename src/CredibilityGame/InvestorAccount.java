@@ -1,9 +1,14 @@
 package CredibilityGame;
 
+import repast.simphony.engine.environment.RunEnvironment;
+
 public class InvestorAccount {
 
 	private Investor owner;
 	private double balance;
+	
+	private static boolean unlimited = 
+			RunEnvironment.getInstance().getParameters().getBoolean("unlimited_i_funds");
 
 	public InvestorAccount(Investor owner) {
 		this.owner = owner;
@@ -18,7 +23,7 @@ public class InvestorAccount {
 	}
 	
 	public Boolean hasMoney(){
-		return (balance > 0);
+		return ( unlimited ? true : (balance > 0) );
 	}
 	
 	public Boolean hasMoney(double howMuch){
@@ -26,11 +31,11 @@ public class InvestorAccount {
 	}
 
 	public Boolean spendMoney(double investMoney) {
-		if (balance - investMoney < 0) {
-			return false; // invest failed, no money in user funds !
-		} else {
+		if ( (unlimited) || (balance - investMoney >= 0)){
 			balance -= investMoney;
 			return true;
+		} else {
+			return false; // invest failed, no money in user funds !
 		}
 	}
 	
