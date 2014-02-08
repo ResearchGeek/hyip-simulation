@@ -26,12 +26,12 @@ public class Players extends DefaultContext<Player> {
 		Iterator<GoodLooking> goodLookingHyips = HyipType.goodLooking
 				.iterator();
 		for (int i = 0; i < (producerPopulationSize / 2); i++) {
-			this.add(new Hyip(goodLookingHyips.next()));
+			this.add(new GoodLookingHyip(goodLookingHyips.next()));
 		}
 
 		Iterator<BadLooking> badLookingHyips = HyipType.badLooking.iterator();
 		for (int i = producerPopulationSize / 2; i < (producerPopulationSize); i++) {
-			this.add(new Hyip(badLookingHyips.next()));
+			this.add(new BadLookingHyip(badLookingHyips.next()));
 		}
 
 		for (int i = 0; i < inv_0; i++) {

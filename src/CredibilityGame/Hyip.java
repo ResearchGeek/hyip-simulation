@@ -30,6 +30,7 @@ public class Hyip extends Player {
 
 	private static volatile long COUNT_INVESTS = 0;
 	private Long id;
+	private boolean isGoodLooking;
 	
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
@@ -76,6 +77,7 @@ public class Hyip extends Player {
 		this.hyipSoldInvestments = new CopyOnWriteArrayList<Invest>();
 		++COUNT_INVESTS;
 		id = COUNT_INVESTS;
+		isGoodLooking = true;
 	}
 
 	public Hyip(BadLooking badLooking) {
@@ -85,6 +87,7 @@ public class Hyip extends Player {
 		this.hyipSoldInvestments = new CopyOnWriteArrayList<Invest>();
 		++COUNT_INVESTS;
 		id = COUNT_INVESTS;
+		isGoodLooking = false;
 	}
 
 	private ArrayList<HyipOffert> createOfferts(boolean isGoodLooking,
@@ -280,6 +283,10 @@ public class Hyip extends Player {
 
 	private void acceptDeposit(double invest) {
 		hyipAccount.addMoney(invest);
+	}
+	
+	public boolean isGoodLooking() {
+		return isGoodLooking;
 	}
 	
 	@Override

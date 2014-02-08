@@ -56,23 +56,58 @@ public class Investor extends Player {
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 100)
 	public void step() {
-		if (investorAccount.hasMoney()) {
-			int howManyInvests = RandomHelper.nextIntFromTo(0, 5);
-			// (inwestr losuje, ile inwestycji chce dokonac w danym ticku)
-			for (int i = 0; i < howManyInvests; i++) {
-				// losuje 3 hyip-y, z ktorych wybiera ten z najlepszym
-				// marketingiem
-				List<Hyip> hyipsConsiderated = chooseProducers(3);
-				Hyip chosen = hyipsConsiderated.get(0);
-				// teraz wybierz ten z najlepszym marketingiem
-				for (Hyip hyip : hyipsConsiderated) {
-					if (hyip.getAdvert() > chosen.getAdvert())
-						chosen = hyip;
+		List<Hyip> hyipsChosen = new ArrayList<Hyip>();
+		List<Hyip> allHyips = chooseAllProducers();
+		for (Hyip hyip : allHyips) {
+			if (investorAccount.hasMoney()) {
+				int invChances = 0;
+				switch (this.risk_level) {
+				case HIGH_AVERSION:
+					invChances = hyip.isGoodLooking() ? 90 : 10;
+					break;
+				case MEDIUM_AVERSION:
+					invChances = hyip.isGoodLooking() ? 90 : 30;
+					break;
+				case LOW_AVERSION:
+					invChances = hyip.isGoodLooking() ? 90 : 50;
+					break;
+				default:
+					throw new UnsupportedOperationException(
+							"should never happen");
 				}
-				chooseOffert(chosen);
+				if (!(RandomHelper.nextDoubleFromTo(0, 100) < invChances)){
+					// tests failed
+					break;
+				}
+				if (RandomHelper.nextDoubleFromTo(0, 100) < hyip.getAdvert()){
+					// test passed
+					hyipsChosen.add(hyip);
+				}
 			}
 		}
+		for (Hyip hyip : hyipsChosen){
+			chooseOffert(hyip);
+		}
 	}
+
+	// public void step() {
+	// if (investorAccount.hasMoney()) {
+	// int howManyInvests = RandomHelper.nextIntFromTo(0, 5);
+	// // (inwestr losuje, ile inwestycji chce dokonac w danym ticku)
+	// for (int i = 0; i < howManyInvests; i++) {
+	// // losuje 3 hyip-y, z ktorych wybiera ten z najlepszym
+	// // marketingiem
+	// List<Hyip> hyipsConsiderated = chooseProducers(3);
+	// Hyip chosen = hyipsConsiderated.get(0);
+	// // teraz wybierz ten z najlepszym marketingiem
+	// for (Hyip hyip : hyipsConsiderated) {
+	// if (hyip.getAdvert() > chosen.getAdvert())
+	// chosen = hyip;
+	// }
+	// chooseOffert(chosen);
+	// }
+	// }
+	// }
 
 	private void chooseOffert(Hyip hyip) {
 		invest(hyip, hyip.getFirstOffert());
@@ -94,8 +129,8 @@ public class Investor extends Player {
 		investorAccount.spendMoney(invest);
 		hyip.registerInvestment(investment);
 	}
-	
-	public void acceptReward(double moneyTransfer){
+
+	public void acceptReward(double moneyTransfer) {
 		this.investorAccount.addFunds(moneyTransfer);
 	}
 
@@ -115,26 +150,23 @@ public class Investor extends Player {
 		return result;
 	}
 
-//	public static void reset() {
-//		for (Object p : CredibilityGame.PLAYERS.getObjects(Investor.class)) {
-//			((Investor) p).setGain(0);
-//			((Investor) p).getStrategy().clear();
-//		}
-//	}
-//
+	private List<Hyip> chooseAllProducers() {
+		Context<Player> context = ContextUtils.getContext(this);
+		Iterable<Player> it = context.getObjects(Hyip.class);
+		List<Hyip> result = new ArrayList<Hyip>();
+		Iterator<Player> iterator = it.iterator();
+		while (iterator.hasNext()) {
+			result.add((Hyip) iterator.next());
+		}
+		return result;
+	}
+
 	public int getExpertise() {
 		return expertise;
 	}
-//
-//	public void setExpertise(int expertise) {
-//		this.expertise = expertise;
-//	}
-//
+
 	public RatingStrategy getRatingStrategy() {
 		return ratingStrategy;
 	}
-//
-//	public void setRatingStrategy(RatingStrategy ratingStrategy) {
-//		this.ratingStrategy = ratingStrategy;
-//	}
+
 }
