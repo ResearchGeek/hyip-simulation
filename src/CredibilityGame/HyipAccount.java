@@ -17,6 +17,10 @@ public class HyipAccount {
 	public void addMoney(double value) {
 		cash += value;
 	}
+	
+	public void withdrawMoney(double value) {
+		cash -= value;
+	}
 
 	public double getCash() {
 		return cash;

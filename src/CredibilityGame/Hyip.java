@@ -162,10 +162,15 @@ public class Hyip extends Player {
 			if (invest.getTickCount() >= invest.getHyipOffert().getForHowLong()){
 				// zamknij i rozlicz..
 				hyipSoldInvestments.remove(invest);
-				invest.getInvestor().acceptReward(invest.getMoney());
+				transferFunds(invest);
 				// juz, inwestycja zostaje archiwizowana a komputer ja posprzata
 			}
 		}
+	}
+	
+	private void transferFunds(Invest invest){
+		this.hyipAccount.withdrawMoney(invest.getMoney());
+		invest.getInvestor().acceptReward(invest.getMoney());
 	}
 	
 	public void registerInvestment(Invest invest){
