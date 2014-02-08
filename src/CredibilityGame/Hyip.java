@@ -28,6 +28,9 @@ public class Hyip extends Player {
 	private Rating pendingRating;
 	// ********************* End of credibility game variables ***************
 
+	private static volatile long COUNT_INVESTS = 0;
+	private Long id;
+	
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
 	private CopyOnWriteArrayList<Invest> hyipSoldInvestments;
@@ -71,6 +74,8 @@ public class Hyip extends Player {
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = createOfferts(true, goodLooking, null);
 		this.hyipSoldInvestments = new CopyOnWriteArrayList<Invest>();
+		++COUNT_INVESTS;
+		id = COUNT_INVESTS;
 	}
 
 	public Hyip(BadLooking badLooking) {
@@ -78,6 +83,8 @@ public class Hyip extends Player {
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = createOfferts(false, null, badLooking);
 		this.hyipSoldInvestments = new CopyOnWriteArrayList<Invest>();
+		++COUNT_INVESTS;
+		id = COUNT_INVESTS;
 	}
 
 	private ArrayList<HyipOffert> createOfferts(boolean isGoodLooking,
@@ -136,6 +143,10 @@ public class Hyip extends Player {
 		if (adv > 1)
 			adv = 1;
 		return adv;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
@@ -264,5 +275,18 @@ public class Hyip extends Player {
 
 	private void acceptDeposit(double invest) {
 		hyipAccount.addMoney(invest);
+	}
+	
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if ( ((Hyip)obj).id == this.id ){
+			return true;
+		} else
+			return false;
 	}
 }

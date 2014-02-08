@@ -1,6 +1,7 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>A Data Set</name>
-  <type>AGGREGATE</type>
+  <name>Hyips_money_separate</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>CredibilityGame.Hyip</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -8,19 +9,27 @@
     <start>1.0</start>
     <interval>1.0</interval>
     <priority>-Infinity</priority>
+    <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>0</hashCode>
+    <hashCode>1004304550</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>HYIP_saldo</string>
+      <string>Cash</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>HYIP_saldo</id>
+        <id>Cash</id>
         <className>CredibilityGame.Hyip</className>
         <methodName>getCash</methodName>
-        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Id</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Id</id>
+        <className>CredibilityGame.Hyip</className>
+        <methodName>getId</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

@@ -1,11 +1,13 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>A File Sink</name>
-  <dataSet>A Data Set</dataSet>
-  <delimiter>,</delimiter>
+  <name>Hyips money output</name>
+  <dataSet>Hyips_money_separate</dataSet>
+  <delimiter>;</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
-    <string>HYIP_saldo</string>
+    <string>tick</string>
+    <string>Cash</string>
+    <string>Id</string>
   </sourceIds>
-  <fileName>HYIP_results.csv</fileName>
+  <fileName>hyip_cash.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>
