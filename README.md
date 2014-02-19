@@ -16,7 +16,11 @@ Repast License: The Repast suite software and documentation is licensed under a 
 **Dictionary**
 
 *ROI* - return of investment
-*HYIP*
+
+*HYIP* - High Yield Investment Program
+
 *PONZI SCHEME*
+
 *MONITOR*
+
 *OFFER*
