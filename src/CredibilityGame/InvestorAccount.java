@@ -27,7 +27,7 @@ public class InvestorAccount {
 	}
 	
 	public Boolean hasMoney(double howMuch){
-		return (balance >= howMuch);
+		return ( unlimited ? true : (balance >= howMuch) );
 	}
 
 	public Boolean spendMoney(double investMoney) {
