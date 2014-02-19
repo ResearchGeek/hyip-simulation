@@ -15,7 +15,7 @@ public class Players extends DefaultContext<Player> {
 		System.out.println("Players context loaded");
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		int producerPopulationSize = (Integer) params
-				.getValue("hyip_population_size"); // 8
+				.getValue("hyip_population_size"); // 1600 (200x8)
 
 		int inv_0 = (Integer) params.getValue("inv_0");
 		int inv_1 = (Integer) params.getValue("inv_1");
@@ -25,13 +25,23 @@ public class Players extends DefaultContext<Player> {
 
 		Iterator<GoodLooking> goodLookingHyips = HyipType.goodLooking
 				.iterator();
-		for (int i = 0; i < (producerPopulationSize / 2); i++) {
-			this.add(new GoodLookingHyip(goodLookingHyips.next()));
+		for (int x = 0 ; x < HyipType.goodLooking.size() ; x++){
+			assert goodLookingHyips.hasNext();
+			GoodLooking goodLooking = goodLookingHyips.next();
+			int z = (producerPopulationSize / 2) / HyipType.goodLooking.size();
+			for (int i = 0; i < z; i++) {
+				this.add(new GoodLookingHyip(goodLooking));
+			}
 		}
 
 		Iterator<BadLooking> badLookingHyips = HyipType.badLooking.iterator();
-		for (int i = producerPopulationSize / 2; i < (producerPopulationSize); i++) {
-			this.add(new BadLookingHyip(badLookingHyips.next()));
+		for (int x = 0 ; x < HyipType.badLooking.size() ; x++){
+			assert badLookingHyips.hasNext();
+			BadLooking badLooking = badLookingHyips.next();
+			int z = (producerPopulationSize / 2) / HyipType.badLooking.size();
+			for (int i = 0; i < z; i++) {
+				this.add(new BadLookingHyip(badLooking));
+			}
 		}
 
 		for (int i = 0; i < inv_0; i++) {
