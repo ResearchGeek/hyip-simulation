@@ -1,6 +1,5 @@
 package CredibilityGame;
 
-import java.util.Date;
 
 public class Invest {
 	

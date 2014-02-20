@@ -14,6 +14,7 @@ import CredibilityGame.HyipType.BadLooking;
 import CredibilityGame.HyipType.GoodLooking;
 import CredibilityGame.rating.Rating;
 import CredibilityGame.rating.UpDownRating;
+import HyipGame.ExitStrategy;
 import HyipGame.ExitStrategyOptions;
 
 public class Hyip extends Player {
@@ -33,14 +34,14 @@ public class Hyip extends Player {
 	private long totalNumberOfInvestments = 0;
 	private Long id;
 	private boolean isGoodLooking;
-	private ExitStrategyOptions exitStrategyOptions;
+	private ExitStrategy exitStrategy;
 
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
 	private volatile ArrayList<Invest> hyipSoldInvestments;
 
 	private static boolean l_cost_rand;
-	private static int look; // wyglad strony
+	//private static int look; // wyglad strony
 	private int marketing; // 0-basic 1-expert 2-proffesional
 	private double mktg_cumulated; // wzrost albo spadek wydajnosci mktg
 									// w zaleznosci od wydatkow w turze
@@ -49,7 +50,7 @@ public class Hyip extends Player {
 	private static int l_cost; // marketing cost prof
 	private static double e_eff; // marketing efect expert
 	private static double p_eff; // marketing efect prof
-	private static double l_eff; // look efect prof
+	//private static double l_eff; // look efect prof
 	private static double e_use;
 	private static double p_use;
 	private static double inv_rec;
@@ -58,7 +59,7 @@ public class Hyip extends Player {
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		e_use = (double) params.getValue("e_use");
 		p_use = (double) params.getValue("p_use");
-		look = (Integer) params.getValue("hyip_look");
+		//look = (Integer) params.getValue("hyip_look");
 		e_cost = (Integer) params.getValue("e_cost");
 		p_cost = (Integer) params.getValue("p_cost");
 		l_cost = (Integer) params.getValue("l_cost");
@@ -66,34 +67,27 @@ public class Hyip extends Player {
 
 		e_eff = (Double) params.getValue("e_eff");
 		p_eff = (Double) params.getValue("p_eff");
-		l_eff = (Double) params.getValue("l_eff");
-
+		//l_eff = (Double) params.getValue("l_eff");
 		inv_rec = (Double) params.getValue("inv_rec");
 	}
 
-	@Deprecated
-	public Hyip() {
-		throw new UnsupportedOperationException("Initialize with enum!");
+	public Hyip(boolean isGoodLooking, int costFrom, int costTo, Object goodOrBad) {
+		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(costFrom, costTo) : l_cost;
+		this.isGoodLooking = isGoodLooking;
+		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
+		this.hyipOfferts = isGoodLooking ? createOfferts((GoodLooking) goodOrBad, null) : 
+			createOfferts(null, (BadLooking) goodOrBad);
+		this.hyipSoldInvestments = new ArrayList<Invest>();
+		++COUNT_HYIPS;
+		id = COUNT_HYIPS;
 	}
 
 	public Hyip(GoodLooking goodLooking) {
-		isGoodLooking = true;
-		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(1750, 3000) : l_cost;
-		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
-		this.hyipOfferts = createOfferts(goodLooking, null);
-		this.hyipSoldInvestments = new ArrayList<Invest>();
-		++COUNT_HYIPS;
-		id = COUNT_HYIPS;
+		this(true, 1750, 3000, goodLooking);
 	}
 
 	public Hyip(BadLooking badLooking) {
-		isGoodLooking = false;
-		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(500, 1749) : l_cost;
-		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
-		this.hyipOfferts = createOfferts(null, badLooking);
-		this.hyipSoldInvestments = new ArrayList<Invest>();
-		++COUNT_HYIPS;
-		id = COUNT_HYIPS;
+		this(false, 500, 1749, badLooking);
 	}
 
 	private ArrayList<HyipOffert> createOfferts(GoodLooking goodLooking, 
@@ -318,12 +312,12 @@ public class Hyip extends Player {
 		return isGoodLooking;
 	}
 
-	public ExitStrategyOptions getExitStrategyOptions() {
-		return exitStrategyOptions;
+	public ExitStrategy getExitStrategy() {
+		return exitStrategy;
 	}
 
-	public void setExitStrategyOptions(ExitStrategyOptions exitStrategyOptions) {
-		this.exitStrategyOptions = exitStrategyOptions;
+	public void setExitStrategy(ExitStrategy exitStrategy) {
+		this.exitStrategy = exitStrategy;
 	}
 
 	@Override

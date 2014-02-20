@@ -30,7 +30,8 @@ public class Players extends DefaultContext<Player> {
 			GoodLooking goodLooking = goodLookingHyips.next();
 			int z = (producerPopulationSize / 2) / HyipType.goodLooking.size();
 			for (int i = 0; i < z; i++) {
-				this.add(new GoodLookingHyip(goodLooking));
+				GoodLookingHyip goodLookingHyip = new GoodLookingHyip(goodLooking);
+				this.add(goodLookingHyip);
 			}
 		}
 
@@ -40,7 +41,8 @@ public class Players extends DefaultContext<Player> {
 			BadLooking badLooking = badLookingHyips.next();
 			int z = (producerPopulationSize / 2) / HyipType.badLooking.size();
 			for (int i = 0; i < z; i++) {
-				this.add(new BadLookingHyip(badLooking));
+				BadLookingHyip badLookingHyip = new BadLookingHyip(badLooking);
+				this.add(badLookingHyip);
 			}
 		}
 
