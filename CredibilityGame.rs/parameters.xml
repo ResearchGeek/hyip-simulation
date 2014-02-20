@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
+	<parameter name="iteration_number" displayName="iteration_number"
+		type="int" defaultValue="200" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
+	<parameter name="generation_number" displayName="generation_number"
+		type="int" defaultValue="10" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
+		
 	<parameter name="hyip_population_size" displayName="hyip_population_size"
 		type="int" defaultValue="1600" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
@@ -85,9 +92,6 @@
 	<parameter name="producer_population_size" displayName="producer_population_size"
 		type="int" defaultValue="100" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
-	<parameter name="iteration_number" displayName="iteration_number"
-		type="int" defaultValue="100" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
 	<parameter name="consumer_max_threshold_mutation"
 		displayName="consumer_max_threshold_mutation" type="double"
 		defaultValue="0.05" isReadOnly="false"
@@ -133,9 +137,7 @@
 	<parameter name="producer_reset_threshold" displayName="producer_reset_threshold"
 		type="int" defaultValue="0" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
-	<parameter name="generation_number" displayName="generation_number"
-		type="int" defaultValue="100" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
+
 	<parameter name="producer_liar_rate" displayName="producer_liar_rate"
 		type="double" defaultValue="0.2" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />

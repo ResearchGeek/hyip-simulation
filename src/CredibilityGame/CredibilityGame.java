@@ -14,10 +14,13 @@ public class CredibilityGame extends DefaultContext<Object> implements ContextBu
 	
 	@Override
 	public Context<Object> build(Context<Object> context) {
-		System.out.println("Context builder loaded");
+		System.out.println("Hyip game context builder loaded...");
+		
 		context.setId("CredibilityGame");
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		System.out.println("PARAM: "+params.getValue("generation_number"));
+		say("generation_number is set to: "+params.getValue("generation_number"));
+		say("iteration_number is set to: "+params.getValue("iteration_number"));
+		
 		STRATEGIES = new Strategies();
 		context.addSubContext(STRATEGIES);
 		PLAYERS = new Players();
@@ -26,6 +29,10 @@ public class CredibilityGame extends DefaultContext<Object> implements ContextBu
 		CURRENT_RUN++;
 		
 		return context;
+	}
+	
+	private void say(String s){
+		System.out.println(s);
 	}
 
 }
