@@ -14,6 +14,7 @@ import CredibilityGame.HyipType.BadLooking;
 import CredibilityGame.HyipType.GoodLooking;
 import CredibilityGame.rating.Rating;
 import CredibilityGame.rating.UpDownRating;
+import HyipGame.ExitStrategyOptions;
 
 public class Hyip extends Player {
 
@@ -32,6 +33,7 @@ public class Hyip extends Player {
 	private long totalNumberOfInvestments = 0;
 	private Long id;
 	private boolean isGoodLooking;
+	private ExitStrategyOptions exitStrategyOptions;
 
 	private HyipAccount hyipAccount;
 	private ArrayList<HyipOffert> hyipOfferts;
@@ -314,6 +316,14 @@ public class Hyip extends Player {
 
 	public boolean isGoodLooking() {
 		return isGoodLooking;
+	}
+
+	public ExitStrategyOptions getExitStrategyOptions() {
+		return exitStrategyOptions;
+	}
+
+	public void setExitStrategyOptions(ExitStrategyOptions exitStrategyOptions) {
+		this.exitStrategyOptions = exitStrategyOptions;
 	}
 
 	@Override
