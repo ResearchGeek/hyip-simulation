@@ -1,5 +1,6 @@
 package CredibilityGame;
 
+import HyipGame.HyipEvolve;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -16,16 +17,17 @@ public class GameController {
 	public GameController(){
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		iterationNumber = (Integer)params.getValue("iteration_number");
+		// zmienna oznacza po ilu tickach zakonczyn dany run
 		generationNumber = (Integer)params.getValue("generation_number");
+		// oznacza po ilu generacjach zakonczyc batch job
 	}
 	
 	@ScheduledMethod(start=1.0, interval=1.0, priority=ScheduleParameters.FIRST_PRIORITY)
 	public void firstStep(){
 		if(currentIteration==(iterationNumber-1)){
-		//	Hyip.reset();
-			//TODO: usun¹æ, kiedy po³¹czê z typami konsumentów
-		//	Investor.evolve();
-		//	Investor.reset();
+			HyipEvolve.evolve(this);
+			Hyip.reset();
+			Investor.reset();
 		}
 	}
 	

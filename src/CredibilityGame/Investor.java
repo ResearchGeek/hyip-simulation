@@ -88,24 +88,9 @@ public class Investor extends Player {
 		}
 	}
 
-	// public void step() {
-	// if (investorAccount.hasMoney()) {
-	// int howManyInvests = RandomHelper.nextIntFromTo(0, 5);
-	// // (inwestr losuje, ile inwestycji chce dokonac w danym ticku)
-	// for (int i = 0; i < howManyInvests; i++) {
-	// // losuje 3 hyip-y, z ktorych wybiera ten z najlepszym
-	// // marketingiem
-	// List<Hyip> hyipsConsiderated = chooseProducers(3);
-	// Hyip chosen = hyipsConsiderated.get(0);
-	// // teraz wybierz ten z najlepszym marketingiem
-	// for (Hyip hyip : hyipsConsiderated) {
-	// if (hyip.getAdvert() > chosen.getAdvert())
-	// chosen = hyip;
-	// }
-	// chooseOffert(chosen);
-	// }
-	// }
-	// }
+	public static void reset(){
+		// reset state of all investors ?
+	}
 
 	private void chooseOffert(Hyip hyip) {
 		invest(hyip, hyip.getFirstOffert());
@@ -132,11 +117,13 @@ public class Investor extends Player {
 		this.investorAccount.addFunds(moneyTransfer);
 	}
 
+	@SuppressWarnings({ "unused", "unchecked" })
 	private Hyip chooseProducer() {
 		Context<Player> context = ContextUtils.getContext(this);
 		return (Hyip) context.getRandomObjects(Hyip.class, 1).iterator().next();
 	}
 
+	@SuppressWarnings({ "unused", "unchecked" })
 	private List<Hyip> chooseProducers(int howMany) {
 		Context<Player> context = ContextUtils.getContext(this);
 		Iterable<Player> it = context.getRandomObjects(Hyip.class, howMany);
@@ -148,6 +135,7 @@ public class Investor extends Player {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<Hyip> chooseAllProducers() {
 		Context<Player> context = ContextUtils.getContext(this);
 		Iterable<Player> it = context.getObjects(Hyip.class);

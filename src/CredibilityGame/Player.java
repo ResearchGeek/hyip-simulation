@@ -31,7 +31,7 @@ public abstract class Player {
 	 * @since 1.1
 	 * @param population
 	 */
-	public static void stochasticSampling(ArrayList<Player> population){
+	public static void stochasticSampling(ArrayList<Hyip> population){
 		if(population.size()==0)
 			return;
 		
