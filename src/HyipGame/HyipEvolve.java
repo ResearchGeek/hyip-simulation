@@ -13,6 +13,7 @@ public class HyipEvolve {
 	
 	@SuppressWarnings("unchecked")
 	private static ArrayList<Hyip> chooseAllProducers(Object contextBeing) {
+		System.out.println("Choosing all HYIPs to participate in evolving");
 		Context<Player> context = ContextUtils.getContext(contextBeing);
 		Iterable<Player> it = context.getObjects(Hyip.class);
 		ArrayList<Hyip> result = new ArrayList<Hyip>();
@@ -24,6 +25,7 @@ public class HyipEvolve {
 	}
 	
 	public static void evolve(Object contextBeing){
+		System.out.println("Executing stochasting universal sampling");
 		Player.stochasticSampling(chooseAllProducers(contextBeing));
 	}
 

@@ -10,6 +10,9 @@ public class GoodLookingHyip extends Hyip {
 		initStrategy();
 	}
 	
+	/**
+	 * Assigning to the Hyip the initial exit strategy
+	 */
 	private void initStrategy(){
 		ExitStrategyUtilities.assignInitialStrategy(this);
 	}

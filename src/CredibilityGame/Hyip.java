@@ -16,12 +16,23 @@ import CredibilityGame.rating.Rating;
 import CredibilityGame.rating.UpDownRating;
 import HyipGame.ExitStrategy;
 import HyipGame.ExitStrategyOptions;
+import HyipGame.ExitStrategyUtilities;
 
+/**
+ * Represent a single instance of a Hyip, contains references to investments
+ * and have scheduled method for calculating percentage to pay
+ * 
+ * @author Oskar Jarczyk
+ * @since 1.0
+ * @version 1.1
+ */
 public class Hyip extends Player {
 
 	// ********************* Credibility game variables ***********************
-	public static HashMap<String, Double> HONEST_PAYOFFS = new HashMap<String, Double>();
-	public static HashMap<String, Double> LIAR_PAYOFFS = new HashMap<String, Double>();
+	public static HashMap<String, Double> HONEST_PAYOFFS = 
+			new HashMap<String, Double>();
+	public static HashMap<String, Double> LIAR_PAYOFFS = 
+			new HashMap<String, Double>();
 	public static double PRODUCER_LIAR_RATE;
 	private static int PRODUCER_TYPE_H;
 	private static int PRODUCER_TYPE_L;
@@ -158,6 +169,11 @@ public class Hyip extends Player {
 	public void step() {
 		setMarketing();
 	}
+	
+	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 5)
+	public synchronized void considerRunningAway(){
+		boolean runaway = ExitStrategyUtilities.checkForPass(this);
+	}
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)
 	public synchronized void payPercent() {
@@ -251,6 +267,7 @@ public class Hyip extends Player {
 		return getStrategy().toString();
 	}
 
+	@SuppressWarnings("unchecked")
 	public int getCurrentIteration() {
 		Context<Object> context = ContextUtils.getContext(this);
 		Context<Object> parentContext = ContextUtils.getParentContext(context);
@@ -259,6 +276,7 @@ public class Hyip extends Player {
 		return controller.getCurrentIteration();
 	}
 
+	@SuppressWarnings("unchecked")
 	public int getCurrentGeneration() {
 		Context<Object> context = ContextUtils.getContext(this);
 		Context<Object> parentContext = ContextUtils.getParentContext(context);
