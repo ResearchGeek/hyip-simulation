@@ -11,27 +11,28 @@ public class GameController {
 	private int iterationNumber;
 	private int currentGeneration;
 	private int currentIteration;
-	//private int counterGeneration;
-	//private int counterIteration;
-	
-	public GameController(){
+
+	// private int counterGeneration;
+	// private int counterIteration;
+
+	public GameController() {
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		iterationNumber = (Integer)params.getValue("iteration_number");
+		iterationNumber = (Integer) params.getValue("iteration_number");
 		// zmienna oznacza po ilu tickach zakonczyn dany run
 		// ustawione w jednym z batchy na 200
-		generationNumber = (Integer)params.getValue("generation_number");
+		generationNumber = (Integer) params.getValue("generation_number");
 		// oznacza po ilu generacjach zakonczyc batch job
 		// ustawione w jednym z batchy na 10
 		System.out.println("generationNumber: " + generationNumber);
 		System.out.println("iterationNumber: " + iterationNumber);
 	}
-	
-	@ScheduledMethod(start=1.0, interval=1.0, priority=ScheduleParameters.FIRST_PRIORITY)
-	public void firstStep(){
-		if(currentIteration==(iterationNumber-1)){
+
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = ScheduleParameters.FIRST_PRIORITY)
+	public void firstStep() {
+		if (currentIteration == (iterationNumber - 1)) {
 			System.out.println("counterIteration: " + currentIteration);
 			System.out.println("Execute generation end protocols");
-			// dochodzimy do konca trwania generacji, ewoluj
+			// dochodzimy do konca trwania generacji, ewuluj
 			HyipEvolve.evolve(this);
 			// niszcz obiekty - resetuj hyipy i inwestycje
 			Hyip.reset();
@@ -39,49 +40,47 @@ public class GameController {
 			Investor.reset();
 		}
 	}
-	
-	@ScheduledMethod(start=1.0, interval=1.0, priority=ScheduleParameters.LAST_PRIORITY)
-	public void step(){
-		//calculate roi
+
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = ScheduleParameters.LAST_PRIORITY)
+	public void step() {
+		// calculate ROI
 		System.out.println("Let's calculate some ROI's");
 		Hyip.calculateRois();
-		
-		//check whether this is the last generation/iteration
-		if(currentIteration==(iterationNumber-1)){
+
+		// check whether this is the last generation/iteration
+		if (currentIteration == (iterationNumber - 1)) {
 			System.out.println("This is the last iteration");
-			currentIteration=0;
-			if(currentGeneration==(generationNumber-1)){
+			currentIteration = 0;
+			if (currentGeneration == (generationNumber - 1)) {
 				System.out.println("Ending instance run");
 				RunEnvironment.getInstance().endRun();
-			}
-			else{
-				//Hyip.evolve();
+			} else {
+				// Hyip.evolve();
 				System.out.println("Ending current generation");
-				//Consumer.evolve();
+				// Consumer.evolve();
 				currentGeneration++;
 			}
-		}
-		else
-		{
-			System.out.println("Incrementing current iteration number");
+		} else {
+			System.out.println("Incrementing current iteration number to: "
+					+ (currentIteration + 1));
 			currentIteration++;
-			//	if(isWarmedUp())
-			//	Hyip.recalculateRatings();
-			//else
-				//System.out.println("Skipping reputation aggregation");
+			// if(isWarmedUp())
+			// Hyip.recalculateRatings();
+			// else
+			// System.out.println("Skipping reputation aggregation");
 		}
 	}
-	
-	public int getCurrentGeneration(){
+
+	public int getCurrentGeneration() {
 		return currentGeneration;
 	}
-	
-	public int getCurrentIteration(){
+
+	public int getCurrentIteration() {
 		return currentIteration;
 	}
-	
-	public boolean isWarmedUp(){
-		return currentIteration>=(iterationNumber*0.05);
+
+	public boolean isWarmedUp() {
+		return currentIteration >= (iterationNumber * 0.05);
 	}
-	
+
 }

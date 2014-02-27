@@ -196,6 +196,13 @@ public class Hyip extends Player {
 			}
 		}
 	}
+	
+	public double getIncome(){
+		double income = 0;
+		// TODO: implement
+		// zysk w poprzednim ticku minus wyplata w nastepnym ticku
+		return income;
+	}
 
 	public int countOngoingInvestments() {
 		return hyipSoldInvestments.size();
