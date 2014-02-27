@@ -11,54 +11,61 @@ public class GameController {
 	private int iterationNumber;
 	private int currentGeneration;
 	private int currentIteration;
-	private int counterGeneration;
-	private int counterIteration;
+	//private int counterGeneration;
+	//private int counterIteration;
 	
 	public GameController(){
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		iterationNumber = (Integer)params.getValue("iteration_number");
 		// zmienna oznacza po ilu tickach zakonczyn dany run
+		// ustawione w jednym z batchy na 200
 		generationNumber = (Integer)params.getValue("generation_number");
 		// oznacza po ilu generacjach zakonczyc batch job
+		// ustawione w jednym z batchy na 10
+		System.out.println("generationNumber: " + generationNumber);
+		System.out.println("iterationNumber: " + iterationNumber);
 	}
 	
 	@ScheduledMethod(start=1.0, interval=1.0, priority=ScheduleParameters.FIRST_PRIORITY)
 	public void firstStep(){
 		if(currentIteration==(iterationNumber-1)){
+			System.out.println("counterIteration: " + currentIteration);
+			System.out.println("Execute generation end protocols");
+			// dochodzimy do konca trwania generacji, ewoluj
 			HyipEvolve.evolve(this);
+			// niszcz obiekty - resetuj hyipy i inwestycje
 			Hyip.reset();
+			// resetuj inwestorow
 			Investor.reset();
 		}
 	}
 	
 	@ScheduledMethod(start=1.0, interval=1.0, priority=ScheduleParameters.LAST_PRIORITY)
 	public void step(){
-		//calculate payoffs
-		//Hyip.calculatePayoffs();
-		
-		//update iteration/generation numbers for file outputter
-		currentIteration = counterIteration;
-		currentGeneration = counterGeneration;
+		//calculate roi
+		System.out.println("Let's calculate some ROI's");
+		Hyip.calculateRois();
 		
 		//check whether this is the last generation/iteration
-		if(counterIteration==(iterationNumber-1)){
-			//Hyip.recalculateRatings();
-			counterIteration=0;
-			if(counterGeneration==(generationNumber-1)){
+		if(currentIteration==(iterationNumber-1)){
+			System.out.println("This is the last iteration");
+			currentIteration=0;
+			if(currentGeneration==(generationNumber-1)){
+				System.out.println("Ending instance run");
 				RunEnvironment.getInstance().endRun();
 			}
-			//else{
-			//	Hyip.evolve();
-				//TODO: wrzuciæ tu typy konsumentów, ¿eby efekty ewolucji zapisywa³y siê
-				//do pliku dopiero po reset()!!!
+			else{
+				//Hyip.evolve();
+				System.out.println("Ending current generation");
 				//Consumer.evolve();
-			//	counterGeneration++;
-			//}
+				currentGeneration++;
+			}
 		}
 		else
 		{
-			counterIteration++;
-		//	if(isWarmedUp())
+			System.out.println("Incrementing current iteration number");
+			currentIteration++;
+			//	if(isWarmedUp())
 			//	Hyip.recalculateRatings();
 			//else
 				//System.out.println("Skipping reputation aggregation");

@@ -230,6 +230,10 @@ public class Hyip extends Player {
 			((Hyip) p).getStrategy().clear();
 		}
 	}
+	
+	public static void calculateRois(){
+		System.out.println("calculateRois() executed");
+	}
 
 	public double getCash() {
 		return hyipAccount.getCash();
