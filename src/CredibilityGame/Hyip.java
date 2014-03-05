@@ -1,7 +1,11 @@
 package CredibilityGame;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import repast.simphony.context.Context;
@@ -177,6 +181,36 @@ public class Hyip extends Player {
 	public synchronized void considerRunningAway() {
 		this.income = hyipAccount.getIncome() - propablePayouts();
 		boolean runaway = ExitStrategyUtilities.checkForPass(this);
+		if (runaway)
+			freezeHyip();
+	}
+	
+	private void freezeHyip(){
+		// what to do ?
+	}
+	
+	private synchronized double propablePayouts(){
+		double result = 0;
+		
+		List<Double> sortedList = new ArrayList<Double>();
+		CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
+				hyipSoldInvestments);
+		
+		for (Invest invest : cp) {
+			if (invest.getTickCount() + 1 >= invest.getHyipOffert().getForHowLong()) {
+				sortedList.add(invest.forecastInterest());
+			}
+		}
+		Collections.sort(sortedList, new Comparator<Double>() {
+					public int compare(Double o1, Double o2) {
+						return -o1.compareTo(o2);
+					}
+				});
+		Iterator<Double> it = sortedList.iterator();
+		for(int i = 0 ; i < sortedList.size() * inv_rec ; i++){
+			result += it.next();
+		}
+		return result;
 	}
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)

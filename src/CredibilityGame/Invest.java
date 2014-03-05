@@ -59,6 +59,10 @@ public class Invest {
 		this.money += this.money * hyipOffert.getPercent();
 	}
 	
+	public double forecastInterest(){
+		return this.money + (this.money * hyipOffert.getPercent());
+	}
+	
 	@Override
 	public int hashCode() {
 		return InvestId.hashCode();
