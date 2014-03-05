@@ -1,6 +1,9 @@
 package HyipGame;
 
-public class ExitStrategy {
+import CredibilityGame.ProducerStrategy;
+import CredibilityGame.Strategy;
+
+public class ExitStrategy implements Strategy {
 
 	private ExitStrategyOptions exitStrategyOptions;
 
@@ -9,8 +12,8 @@ public class ExitStrategy {
 	private double balance;
 	private int time;
 
-	public ExitStrategy(double income, int investorCount, double balance, int time,
-			Boolean... enabled) {
+	public ExitStrategy(double income, int investorCount, double balance,
+			int time, Boolean... enabled) {
 		this.income = income;
 		this.investorCount = investorCount;
 		this.balance = balance;
@@ -36,7 +39,8 @@ public class ExitStrategy {
 		}
 	}
 
-	public ExitStrategy(double income, int investorCount, double balance, int time) {
+	public ExitStrategy(double income, int investorCount, double balance,
+			int time) {
 		this.income = income;
 		this.investorCount = investorCount;
 		this.balance = balance;
@@ -44,8 +48,8 @@ public class ExitStrategy {
 		this.exitStrategyOptions = new ExitStrategyOptions();
 	}
 
-	public ExitStrategy(double income, int investorCount, double balance, int time,
-			ExitStrategyOptions exitStrategyOptions) {
+	public ExitStrategy(double income, int investorCount, double balance,
+			int time, ExitStrategyOptions exitStrategyOptions) {
 		this.income = income;
 		this.investorCount = investorCount;
 		this.balance = balance;
@@ -97,4 +101,34 @@ public class ExitStrategy {
 		this.time = time;
 	}
 
+	@Override
+	public ExitStrategy copy() {
+		return new ExitStrategy(getIncome(), getInvestorCount(), getBalance(),
+				getTime(), getExitStrategyOptions());
+	}
+
+	@Override
+	public void clear() {
+		ExitStrategy typical = ExitStrategyUtilities.getTypicalStrategy();
+		this.exitStrategyOptions = typical.getExitStrategyOptions();
+		this.balance = typical.balance;
+		this.income = typical.income;
+		this.time = typical.time;
+		this.investorCount = typical.investorCount;
+	}
+
+	public void copyStrategy(ExitStrategy copyFrom) {
+		this.exitStrategyOptions = copyFrom.getExitStrategyOptions();
+		this.balance = copyFrom.balance;
+		this.income = copyFrom.income;
+		this.time = copyFrom.time;
+		this.investorCount = copyFrom.investorCount;
+	}
+
+	@Override
+	public void copyStrategy(Strategy copyFrom) {
+		// this will never happen whatso ever
+		throw new UnsupportedOperationException(
+				"We don't use producer/consumer game in Hyip simulation");
+	}
 }

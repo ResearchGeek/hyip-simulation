@@ -10,10 +10,14 @@ public class ExitStrategyUtilities {
 	private static final int TYPICAL_TIME = 100;
 
 	public static void assignInitialStrategy(Hyip hyip) {
+		hyip.setExitStrategy(getTypicalStrategy());
+	}
+	
+	public static ExitStrategy getTypicalStrategy() {
 		ExitStrategy exitStrategy = new ExitStrategy(TYPICAL_INCOME,
 				TYPICAL_INVESTORCOUNT, TYPICAL_BALANCE, TYPICAL_TIME, true,
 				true, true, true);
-		hyip.setExitStrategy(exitStrategy);
+		return exitStrategy;
 	}
 
 	public static Boolean checkForPass(Hyip hyip) {

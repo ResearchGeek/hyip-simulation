@@ -2,14 +2,15 @@ package CredibilityGame;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import repast.simphony.random.RandomHelper;
+import HyipGame.ExitStrategy;
 
 public abstract class Player {
 
 	private double gain;
 	private Strategy strategy;
+	private ExitStrategy exitStrategy;
 
 	public double getGain() {
 		return gain;
@@ -25,6 +26,14 @@ public abstract class Player {
 
 	public void setStrategy(Strategy strategy) {
 		this.strategy = strategy;
+	}
+	
+	public ExitStrategy getExitStrategy() {
+		return exitStrategy;
+	}
+
+	public void setExitStrategy(ExitStrategy exitStrategy) {
+		this.exitStrategy = exitStrategy;
 	}
 
 	/**
@@ -44,11 +53,11 @@ public abstract class Player {
 
 		double maxRange = 0;
 		ArrayList<Double> ranges = new ArrayList<Double>();
-		ArrayList<Strategy> strategiesBackup = new ArrayList<Strategy>();
+		ArrayList<ExitStrategy> strategiesBackup = new ArrayList<ExitStrategy>();
 		for (Hyip p : population) {
 			maxRange += (p.getIncome() + scaling);
 			ranges.add(maxRange);
-			strategiesBackup.add(p.getStrategy().copy());
+			strategiesBackup.add(p.getExitStrategy().copy());
 		}
 		double step = maxRange / population.size();
 		double start = RandomHelper.nextDoubleFromTo(0, 1) * step;
@@ -61,7 +70,7 @@ public abstract class Player {
 					break;
 				}
 			}
-			population.get(i).getStrategy()
+			population.get(i).getExitStrategy()
 					.copyStrategy(strategiesBackup.get(selectedPlayer));
 		}
 	}
