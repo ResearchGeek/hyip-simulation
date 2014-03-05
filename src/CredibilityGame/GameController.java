@@ -12,9 +12,6 @@ public class GameController {
 	private int currentGeneration;
 	private int currentIteration;
 
-	// private int counterGeneration;
-	// private int counterIteration;
-
 	public GameController() {
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		iterationNumber = (Integer) params.getValue("iteration_number");
