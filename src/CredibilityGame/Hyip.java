@@ -28,16 +28,10 @@ import HyipGame.ExitStrategyUtilities;
 public class Hyip extends Player {
 
 	// ********************* Credibility game variables ************************
-	public static HashMap<String, Double> HONEST_PAYOFFS = new HashMap<String, Double>(); // not
-																							// part
-																							// of
-																							// hyip
-																							// game
-	public static HashMap<String, Double> LIAR_PAYOFFS = new HashMap<String, Double>(); // not
-																						// part
-																						// of
-																						// hyip
-																						// game
+	public static HashMap<String, Double> HONEST_PAYOFFS = new HashMap<String, Double>();
+	// not part of a hyip game
+	public static HashMap<String, Double> LIAR_PAYOFFS = new HashMap<String, Double>();
+	// not part of hyip game
 	public static double PRODUCER_LIAR_RATE; // not part of hyip game
 	private static int PRODUCER_TYPE_H; // not part of hyip game
 	private static int PRODUCER_TYPE_L; // not part of hyip game
@@ -53,6 +47,7 @@ public class Hyip extends Player {
 	private ExitStrategy exitStrategy;
 
 	private HyipAccount hyipAccount;
+	private double income;
 	private ArrayList<HyipOffert> hyipOfferts;
 	private volatile ArrayList<Invest> hyipSoldInvestments;
 
@@ -180,6 +175,7 @@ public class Hyip extends Player {
 
 	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 5)
 	public synchronized void considerRunningAway() {
+		this.income = hyipAccount.getIncome() - propablePayouts();
 		boolean runaway = ExitStrategyUtilities.checkForPass(this);
 	}
 
@@ -207,7 +203,7 @@ public class Hyip extends Player {
 	}
 
 	public double getIncome() {
-		return hyipAccount.getIncome();
+		return this.income;
 	}
 
 	public int countOngoingInvestments() {
