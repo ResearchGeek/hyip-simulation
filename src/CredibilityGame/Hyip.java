@@ -52,6 +52,7 @@ public class Hyip extends Player {
 
 	private HyipAccount hyipAccount;
 	private double income;
+	private Boolean frozen;
 	private ArrayList<HyipOffert> hyipOfferts;
 	private volatile ArrayList<Invest> hyipSoldInvestments;
 
@@ -74,7 +75,6 @@ public class Hyip extends Player {
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		e_use = (double) params.getValue("e_use");
 		p_use = (double) params.getValue("p_use");
-		// look = (Integer) params.getValue("hyip_look");
 		e_cost = (Integer) params.getValue("e_cost");
 		p_cost = (Integer) params.getValue("p_cost");
 		l_cost = (Integer) params.getValue("l_cost");
@@ -82,7 +82,6 @@ public class Hyip extends Player {
 
 		e_eff = (Double) params.getValue("e_eff");
 		p_eff = (Double) params.getValue("p_eff");
-		// l_eff = (Double) params.getValue("l_eff");
 		inv_rec = (Double) params.getValue("inv_rec");
 	}
 
@@ -96,6 +95,7 @@ public class Hyip extends Player {
 				(GoodLooking) goodOrBad, null) : createOfferts(null,
 				(BadLooking) goodOrBad);
 		this.hyipSoldInvestments = new ArrayList<Invest>();
+		this.frozen = false;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
 	}
@@ -174,40 +174,45 @@ public class Hyip extends Player {
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
 	public void step() {
-		setMarketing();
+		if (!getFrozen())
+			setMarketing();
 	}
 
 	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 5)
 	public synchronized void considerRunningAway() {
-		this.income = hyipAccount.getIncome() - propablePayouts();
+		if (!getFrozen())
+			this.income = hyipAccount.getIncome() - propablePayouts();
 		boolean runaway = ExitStrategyUtilities.checkForPass(this);
 		if (runaway)
 			freezeHyip();
 	}
-	
-	private void freezeHyip(){
-		// what to do ?
+
+	private void freezeHyip() {
+		// running away to Bahamas, Hyips stops to show signs of life
+		this.frozen = true;
+		// but still in context
 	}
-	
-	private synchronized double propablePayouts(){
+
+	private synchronized double propablePayouts() {
 		double result = 0;
-		
+
 		List<Double> sortedList = new ArrayList<Double>();
 		CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
 				hyipSoldInvestments);
-		
+
 		for (Invest invest : cp) {
-			if (invest.getTickCount() + 1 >= invest.getHyipOffert().getForHowLong()) {
+			if (invest.getTickCount() + 1 >= invest.getHyipOffert()
+					.getForHowLong()) {
 				sortedList.add(invest.forecastInterest());
 			}
 		}
 		Collections.sort(sortedList, new Comparator<Double>() {
-					public int compare(Double o1, Double o2) {
-						return -o1.compareTo(o2);
-					}
-				});
+			public int compare(Double o1, Double o2) {
+				return -o1.compareTo(o2);
+			}
+		});
 		Iterator<Double> it = sortedList.iterator();
-		for(int i = 0 ; i < sortedList.size() * inv_rec ; i++){
+		for (int i = 0; i < sortedList.size() * inv_rec; i++) {
 			result += it.next();
 		}
 		return result;
@@ -215,22 +220,25 @@ public class Hyip extends Player {
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)
 	public synchronized void payPercent() {
-		hyipAccount.setIncome(0);
-		CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
-				hyipSoldInvestments);
-		for (Invest invest : cp) {
-			invest.incrementTickCount();
-			invest.calculateInterest();
-			if (invest.getTickCount() >= invest.getHyipOffert().getForHowLong()) {
-				if (RandomHelper.nextDoubleFromTo(0, 1) > inv_rec) {
-					// nic nie wyplacono, odnow oferte
-					invest.setTickCount(0);
-				} else {
-					// zamknij i rozlicz..
-					hyipSoldInvestments.remove(invest);
-					transferFunds(invest);
-					// juz, inwestycja zostaje archiwizowana a komputer ja
-					// posprzata
+		if (!getFrozen()) {
+			hyipAccount.setIncome(0);
+			CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
+					hyipSoldInvestments);
+			for (Invest invest : cp) {
+				invest.incrementTickCount();
+				invest.calculateInterest();
+				if (invest.getTickCount() >= invest.getHyipOffert()
+						.getForHowLong()) {
+					if (RandomHelper.nextDoubleFromTo(0, 1) > inv_rec) {
+						// nic nie wyplacono, odnow oferte
+						invest.setTickCount(0);
+					} else {
+						// zamknij i rozlicz..
+						hyipSoldInvestments.remove(invest);
+						transferFunds(invest);
+						// juz, inwestycja zostaje archiwizowana a komputer ja
+						// posprzata
+					}
 				}
 			}
 		}
@@ -385,6 +393,14 @@ public class Hyip extends Player {
 
 	public void setExitStrategy(ExitStrategy exitStrategy) {
 		this.exitStrategy = exitStrategy;
+	}
+
+	public Boolean getFrozen() {
+		return frozen;
+	}
+
+	public void setFrozen(Boolean frozen) {
+		this.frozen = frozen;
 	}
 
 	@Override

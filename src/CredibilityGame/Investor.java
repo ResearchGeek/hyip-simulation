@@ -57,7 +57,7 @@ public class Investor extends Player {
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 100)
 	public void step() {
 		List<Hyip> hyipsChosen = new ArrayList<Hyip>();
-		List<Hyip> allHyips = chooseAllProducers();
+		List<Hyip> allHyips = chooseAllProducers(false);
 		for (Hyip hyip : allHyips) {
 			if (investorAccount.hasMoney()) {
 				double invChances = 0;
@@ -117,32 +117,36 @@ public class Investor extends Player {
 		this.investorAccount.addFunds(moneyTransfer);
 	}
 
-	@SuppressWarnings({ "unused", "unchecked" })
-	private Hyip chooseProducer() {
-		Context<Player> context = ContextUtils.getContext(this);
-		return (Hyip) context.getRandomObjects(Hyip.class, 1).iterator().next();
-	}
-
-	@SuppressWarnings({ "unused", "unchecked" })
-	private List<Hyip> chooseProducers(int howMany) {
-		Context<Player> context = ContextUtils.getContext(this);
-		Iterable<Player> it = context.getRandomObjects(Hyip.class, howMany);
-		List<Hyip> result = new ArrayList<Hyip>();
-		Iterator<Player> iterator = it.iterator();
-		for (int i = 0; i < howMany; i++) {
-			result.add((Hyip) iterator.next());
-		}
-		return result;
-	}
+//	@SuppressWarnings({ "unused", "unchecked" })
+//	private Hyip chooseProducer(boolean allowFrozen) {
+//		Context<Player> context = ContextUtils.getContext(this);
+//		return (Hyip) context.getRandomObjects(Hyip.class, 1).iterator().next();
+//	}
+//
+//	@SuppressWarnings({ "unused", "unchecked" })
+//	private List<Hyip> chooseProducers(boolean allowFrozen, int howMany) {
+//		Context<Player> context = ContextUtils.getContext(this);
+//		Iterable<Player> it = context.getRandomObjects(Hyip.class, howMany);
+//		List<Hyip> result = new ArrayList<Hyip>();
+//		Iterator<Player> iterator = it.iterator();
+//		for (int i = 0; i < howMany; i++) {
+//			result.add((Hyip) iterator.next());
+//		}
+//		return result;
+//	}
 
 	@SuppressWarnings("unchecked")
-	private List<Hyip> chooseAllProducers() {
+	private List<Hyip> chooseAllProducers(boolean allowFrozen) {
 		Context<Player> context = ContextUtils.getContext(this);
 		Iterable<Player> it = context.getObjects(Hyip.class);
 		List<Hyip> result = new ArrayList<Hyip>();
 		Iterator<Player> iterator = it.iterator();
 		while (iterator.hasNext()) {
-			result.add((Hyip) iterator.next());
+			Hyip hyip = (Hyip) iterator.next();
+			if (allowFrozen)
+				result.add(hyip);
+			else if (!hyip.getFrozen())
+				result.add(hyip);
 		}
 		return result;
 	}
