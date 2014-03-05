@@ -15,12 +15,11 @@ import CredibilityGame.HyipType.GoodLooking;
 import CredibilityGame.rating.Rating;
 import CredibilityGame.rating.UpDownRating;
 import HyipGame.ExitStrategy;
-import HyipGame.ExitStrategyOptions;
 import HyipGame.ExitStrategyUtilities;
 
 /**
- * Represent a single instance of a Hyip, contains references to investments
- * and have scheduled method for calculating percentage to pay
+ * Represent a single instance of a Hyip, contains references to investments and
+ * have scheduled method for calculating percentage to pay
  * 
  * @author Oskar Jarczyk
  * @since 1.0
@@ -28,18 +27,24 @@ import HyipGame.ExitStrategyUtilities;
  */
 public class Hyip extends Player {
 
-	// ********************* Credibility game variables ***********************
-	public static HashMap<String, Double> HONEST_PAYOFFS = 
-			new HashMap<String, Double>();
-	public static HashMap<String, Double> LIAR_PAYOFFS = 
-			new HashMap<String, Double>();
-	public static double PRODUCER_LIAR_RATE;
-	private static int PRODUCER_TYPE_H;
-	private static int PRODUCER_TYPE_L;
-	private boolean isHonest;
-	private Rating currentRating;
-	private Rating pendingRating;
-	// ********************* End of credibility game variables ***************
+	// ********************* Credibility game variables ************************
+	public static HashMap<String, Double> HONEST_PAYOFFS = new HashMap<String, Double>(); // not
+																							// part
+																							// of
+																							// hyip
+																							// game
+	public static HashMap<String, Double> LIAR_PAYOFFS = new HashMap<String, Double>(); // not
+																						// part
+																						// of
+																						// hyip
+																						// game
+	public static double PRODUCER_LIAR_RATE; // not part of hyip game
+	private static int PRODUCER_TYPE_H; // not part of hyip game
+	private static int PRODUCER_TYPE_L; // not part of hyip game
+	private boolean isHonest; // not part of hyip game
+	private Rating currentRating; // not part of hyip game
+	private Rating pendingRating; // not part of hyip game
+	// ********************* End of credibility game variables *****************
 
 	private static volatile long COUNT_HYIPS = 0;
 	private long totalNumberOfInvestments = 0;
@@ -52,16 +57,16 @@ public class Hyip extends Player {
 	private volatile ArrayList<Invest> hyipSoldInvestments;
 
 	private static boolean l_cost_rand;
-	//private static int look; // wyglad strony
+	// private static int look; // wyglad strony
 	private int marketing; // 0-basic 1-expert 2-proffesional
 	private double mktg_cumulated; // wzrost albo spadek wydajnosci mktg
-									// w zaleznosci od wydatkow w turze
+	// w zaleznosci od wydatkow w turze
 	private static int e_cost; // marketing cost expert
 	private static int p_cost; // marketing cost prof
 	private static int l_cost; // marketing cost prof
 	private static double e_eff; // marketing efect expert
 	private static double p_eff; // marketing efect prof
-	//private static double l_eff; // look efect prof
+	// private static double l_eff; // look efect prof
 	private static double e_use;
 	private static double p_use;
 	private static double inv_rec;
@@ -70,7 +75,7 @@ public class Hyip extends Player {
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		e_use = (double) params.getValue("e_use");
 		p_use = (double) params.getValue("p_use");
-		//look = (Integer) params.getValue("hyip_look");
+		// look = (Integer) params.getValue("hyip_look");
 		e_cost = (Integer) params.getValue("e_cost");
 		p_cost = (Integer) params.getValue("p_cost");
 		l_cost = (Integer) params.getValue("l_cost");
@@ -78,16 +83,19 @@ public class Hyip extends Player {
 
 		e_eff = (Double) params.getValue("e_eff");
 		p_eff = (Double) params.getValue("p_eff");
-		//l_eff = (Double) params.getValue("l_eff");
+		// l_eff = (Double) params.getValue("l_eff");
 		inv_rec = (Double) params.getValue("inv_rec");
 	}
 
-	public Hyip(boolean isGoodLooking, int costFrom, int costTo, Object goodOrBad) {
-		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(costFrom, costTo) : l_cost;
+	public Hyip(boolean isGoodLooking, int costFrom, int costTo,
+			Object goodOrBad) {
+		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(costFrom, costTo)
+				: l_cost;
 		this.isGoodLooking = isGoodLooking;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
-		this.hyipOfferts = isGoodLooking ? createOfferts((GoodLooking) goodOrBad, null) : 
-			createOfferts(null, (BadLooking) goodOrBad);
+		this.hyipOfferts = isGoodLooking ? createOfferts(
+				(GoodLooking) goodOrBad, null) : createOfferts(null,
+				(BadLooking) goodOrBad);
 		this.hyipSoldInvestments = new ArrayList<Invest>();
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
@@ -101,7 +109,7 @@ public class Hyip extends Player {
 		this(false, 500, 1749, badLooking);
 	}
 
-	private ArrayList<HyipOffert> createOfferts(GoodLooking goodLooking, 
+	private ArrayList<HyipOffert> createOfferts(GoodLooking goodLooking,
 			BadLooking badLooking) {
 		ArrayList<HyipOffert> offerts = new ArrayList<HyipOffert>();
 		if (this.isGoodLooking) {
@@ -169,14 +177,15 @@ public class Hyip extends Player {
 	public void step() {
 		setMarketing();
 	}
-	
+
 	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 5)
-	public synchronized void considerRunningAway(){
+	public synchronized void considerRunningAway() {
 		boolean runaway = ExitStrategyUtilities.checkForPass(this);
 	}
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)
 	public synchronized void payPercent() {
+		hyipAccount.setIncome(0);
 		CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
 				hyipSoldInvestments);
 		for (Invest invest : cp) {
@@ -196,12 +205,9 @@ public class Hyip extends Player {
 			}
 		}
 	}
-	
-	public double getIncome(){
-		double income = 0;
-		// TODO: implement
-		// zysk w poprzednim ticku minus wyplata w nastepnym ticku
-		return income;
+
+	public double getIncome() {
+		return hyipAccount.getIncome();
 	}
 
 	public int countOngoingInvestments() {
@@ -209,14 +215,16 @@ public class Hyip extends Player {
 	}
 
 	private void transferFunds(Invest invest) {
-		this.hyipAccount.withdrawMoney(invest.getMoney());
-		invest.getInvestor().acceptReward(invest.getMoney());
+		double money = invest.getMoney();
+		this.hyipAccount.withdrawMoney(money);
+		invest.getInvestor().acceptReward(money);
 	}
 
 	public void registerInvestment(Invest invest) {
 		hyipSoldInvestments.add(invest);
-		setTotalNumberOfInvestments(totalNumberOfInvestments+1);
-		acceptDeposit(invest.getMoney());
+		setTotalNumberOfInvestments(totalNumberOfInvestments + 1);
+		double money = invest.getMoney();
+		acceptDeposit(money);
 	}
 
 	public void setMarketing() {
@@ -253,8 +261,8 @@ public class Hyip extends Player {
 			((Hyip) p).getStrategy().clear();
 		}
 	}
-	
-	public static void calculateRois(){
+
+	public static void calculateRois() {
 		System.out.println("calculateRois() executed");
 	}
 
@@ -356,7 +364,7 @@ public class Hyip extends Player {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (((Hyip) obj).id.equals( this.id )) {
+		if (((Hyip) obj).id.equals(this.id)) {
 			return true;
 		} else
 			return false;
