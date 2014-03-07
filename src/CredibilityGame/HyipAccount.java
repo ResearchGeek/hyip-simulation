@@ -49,6 +49,11 @@ public class HyipAccount {
 	public Hyip getOwner() {
 		return owner;
 	}
+	
+	public void clear(){
+		this.income = 0;
+		this.cash = 0;
+	}
 
 	public void setOwner(Hyip owner) {
 		throw new UnsupportedOperationException(

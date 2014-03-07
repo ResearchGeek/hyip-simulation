@@ -296,7 +296,12 @@ public class Hyip extends Player {
 
 	public static void reset() {
 		for (Object p : CredibilityGame.PLAYERS.getObjects(Hyip.class)) {
-			((Hyip) p).getStrategy().clear();
+			((Hyip) p).hyipAccount.clear();
+			((Hyip) p).income = 0;
+			((Hyip) p).frozen = false;
+			((Hyip) p).totalNumberOfInvestments = 0;
+			((Hyip) p).mktg_cumulated = 0;
+			((Hyip) p).hyipSoldInvestments.clear();
 		}
 	}
 
