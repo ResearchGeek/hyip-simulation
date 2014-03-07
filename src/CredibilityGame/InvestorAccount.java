@@ -50,5 +50,9 @@ public class InvestorAccount {
 	public void setOwner(Investor owner) {
 		this.owner = owner;
 	}
+	
+	public void clear(){
+		this.balance = 0;
+	}
 
 }

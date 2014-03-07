@@ -19,9 +19,9 @@ public class Investor extends Player {
 	private static int CONSUMER_TYPE_H;
 	private static int CONSUMER_TYPE_L;
 	private InvestorType risk_level;
-	private InvestorAccount investorAccount; // do zmiany
-	private double inv_invest;
-	private double inv_rec;
+	private InvestorAccount investorAccount;
+	//private double inv_invest;
+	//private double inv_rec;
 	private int expertise;
 	private RatingStrategy ratingStrategy;
 
@@ -29,28 +29,28 @@ public class Investor extends Player {
 		this.expertise = RandomHelper.createUniform(CONSUMER_TYPE_L,
 				CONSUMER_TYPE_H).nextInt();
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		inv_invest = (Double) params.getValue("inv_invest");
-		inv_rec = (Double) params.getValue("inv_rec");
+		//inv_invest = (Double) params.getValue("inv_invest");
+		//inv_rec = (Double) params.getValue("inv_rec");
 		risk_level = investorType;
 	}
 
 	public void initializeWallet() {
 		if (investorAccount != null) {
-			throw new UnsupportedOperationException(
-					"Agent (investor) already charged his account!");
-		} else {
+			// throw new UnsupportedOperationException(
+			// "Agent (investor) already charged his account!");
+			investorAccount.clear();
+		} else
 			investorAccount = new InvestorAccount(this);
-			switch (risk_level) {
-			case HIGH_AVERSION:
-				investorAccount.setBalance(50 * 5);
-				break;
-			case MEDIUM_AVERSION:
-				investorAccount.setBalance(50 * 50);
-				break;
-			case LOW_AVERSION:
-				investorAccount.setBalance(50 * 1000);
-				break;
-			}
+		switch (risk_level) {
+		case HIGH_AVERSION:
+			investorAccount.setBalance(50 * 5);
+			break;
+		case MEDIUM_AVERSION:
+			investorAccount.setBalance(50 * 50);
+			break;
+		case LOW_AVERSION:
+			investorAccount.setBalance(50 * 1000);
+			break;
 		}
 	}
 
@@ -75,21 +75,24 @@ public class Investor extends Player {
 					throw new UnsupportedOperationException(
 							"should never happen");
 				}
-				if (RandomHelper.nextDoubleFromTo(0, 1) < invChances){
-					if (RandomHelper.nextDoubleFromTo(0, 1) < hyip.getAdvert()){
+				if (RandomHelper.nextDoubleFromTo(0, 1) < invChances) {
+					if (RandomHelper.nextDoubleFromTo(0, 1) < hyip.getAdvert()) {
 						// test passed
 						hyipsChosen.add(hyip);
 					}
 				}
 			}
 		}
-		for (Hyip hyip : hyipsChosen){
+		for (Hyip hyip : hyipsChosen) {
 			chooseOffert(hyip);
 		}
 	}
 
-	public static void reset(){
+	public static void reset() {
 		// reset state of all investors ?
+		for (Object i : CredibilityGame.PLAYERS.getObjects(Investor.class)) {
+			((Investor) i).initializeWallet();
+		}
 	}
 
 	private void chooseOffert(Hyip hyip) {
@@ -116,24 +119,6 @@ public class Investor extends Player {
 	public void acceptReward(double moneyTransfer) {
 		this.investorAccount.addFunds(moneyTransfer);
 	}
-
-//	@SuppressWarnings({ "unused", "unchecked" })
-//	private Hyip chooseProducer(boolean allowFrozen) {
-//		Context<Player> context = ContextUtils.getContext(this);
-//		return (Hyip) context.getRandomObjects(Hyip.class, 1).iterator().next();
-//	}
-//
-//	@SuppressWarnings({ "unused", "unchecked" })
-//	private List<Hyip> chooseProducers(boolean allowFrozen, int howMany) {
-//		Context<Player> context = ContextUtils.getContext(this);
-//		Iterable<Player> it = context.getRandomObjects(Hyip.class, howMany);
-//		List<Hyip> result = new ArrayList<Hyip>();
-//		Iterator<Player> iterator = it.iterator();
-//		for (int i = 0; i < howMany; i++) {
-//			result.add((Hyip) iterator.next());
-//		}
-//		return result;
-//	}
 
 	@SuppressWarnings("unchecked")
 	private List<Hyip> chooseAllProducers(boolean allowFrozen) {
