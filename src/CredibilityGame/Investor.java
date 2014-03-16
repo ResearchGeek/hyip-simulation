@@ -20,17 +20,17 @@ public class Investor extends Player {
 	private static int CONSUMER_TYPE_L;
 	private InvestorType risk_level;
 	private InvestorAccount investorAccount;
-	//private double inv_invest;
-	//private double inv_rec;
 	private int expertise;
 	private RatingStrategy ratingStrategy;
+	
+	private List<Hyip> hyipsChosen = new ArrayList<Hyip>();
+	private List<Hyip> allHyips;
 
 	public Investor(InvestorType investorType) {
 		this.expertise = RandomHelper.createUniform(CONSUMER_TYPE_L,
 				CONSUMER_TYPE_H).nextInt();
-		Parameters params = RunEnvironment.getInstance().getParameters();
-		//inv_invest = (Double) params.getValue("inv_invest");
-		//inv_rec = (Double) params.getValue("inv_rec");
+		//Parameters params = RunEnvironment.getInstance().getParameters();
+		hyipsChosen = new ArrayList<Hyip>();
 		risk_level = investorType;
 	}
 
@@ -56,8 +56,8 @@ public class Investor extends Player {
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 100)
 	public void step() {
-		List<Hyip> hyipsChosen = new ArrayList<Hyip>();
-		List<Hyip> allHyips = chooseAllProducers(false);
+		hyipsChosen.clear();
+		allHyips = chooseAllProducers(false);
 		for (Hyip hyip : allHyips) {
 			if (investorAccount.hasMoney()) {
 				double invChances = 0;
