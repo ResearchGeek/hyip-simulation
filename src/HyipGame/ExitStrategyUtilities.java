@@ -12,7 +12,7 @@ public class ExitStrategyUtilities {
 	public static void assignInitialStrategy(Hyip hyip) {
 		hyip.setExitStrategy(getTypicalStrategy());
 	}
-	
+
 	public static ExitStrategy getTypicalStrategy() {
 		ExitStrategy exitStrategy = new ExitStrategy(TYPICAL_INCOME,
 				TYPICAL_INVESTORCOUNT, TYPICAL_BALANCE, TYPICAL_TIME, true,
@@ -24,13 +24,13 @@ public class ExitStrategyUtilities {
 		boolean result = false;
 		boolean considerationFail = false;
 		boolean considerationMade = false;
-		
+
 		ExitStrategy exitStrategy = hyip.getExitStrategy();
-		ExitStrategyOptions exitStrategyOptions = 
-				hyip.getExitStrategy().getExitStrategyOptions();
+		ExitStrategyOptions exitStrategyOptions = hyip.getExitStrategy()
+				.getExitStrategyOptions();
 		if (exitStrategyOptions.isConsiderIncome()) {
 			considerationMade = true;
-			if (hyip.getIncome() >= exitStrategy.getIncome()){
+			if (hyip.getIncome() >= exitStrategy.getIncome()) {
 				result = true;
 			} else {
 				considerationFail = true;
@@ -38,7 +38,7 @@ public class ExitStrategyUtilities {
 		}
 		if (exitStrategyOptions.isConsiderBalance()) {
 			considerationMade = true;
-			if (hyip.getCash() >= exitStrategy.getBalance()){
+			if (hyip.getCash() >= exitStrategy.getBalance()) {
 				result = true;
 			} else {
 				considerationFail = true;
@@ -46,7 +46,8 @@ public class ExitStrategyUtilities {
 		}
 		if (exitStrategyOptions.isConsiderInvestorCount()) {
 			considerationMade = true;
-			if (hyip.getTotalNumberOfInvestments() >= exitStrategy.getInvestorCount()){
+			if (hyip.getTotalNumberOfInvestments() >= exitStrategy
+					.getInvestorCount()) {
 				result = true;
 			} else {
 				considerationFail = true;
@@ -54,14 +55,15 @@ public class ExitStrategyUtilities {
 		}
 		if (exitStrategyOptions.isConsiderTime()) {
 			considerationMade = true;
-			if (hyip.getCurrentIteration() >= exitStrategy.getTime()){
+			if (hyip.getGameController().getCurrentIteration() >= exitStrategy
+					.getTime()) {
 				result = true;
 			} else {
 				considerationFail = true;
 			}
 		}
-		//answer the ultimate question if to close a HYIP here
-		return ((considerationMade)&&(result)&&(!considerationFail));
+		// answer the ultimate question if to close a HYIP here
+		return ((considerationMade) && (result) && (!considerationFail));
 	}
 
 }

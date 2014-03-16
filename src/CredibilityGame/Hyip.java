@@ -182,9 +182,12 @@ public class Hyip extends Player {
 	public synchronized void considerRunningAway() {
 		if (!getFrozen())
 			this.income = hyipAccount.getIncome() - propablePayouts();
-		boolean runaway = ExitStrategyUtilities.checkForPass(this);
-		if (runaway)
-			freezeHyip();
+
+		if (getGameController().isWarmedUp()) {
+			boolean runaway = ExitStrategyUtilities.checkForPass(this);
+			if (runaway)
+				freezeHyip();
+		}
 	}
 
 	private void freezeHyip() {
@@ -325,22 +328,11 @@ public class Hyip extends Player {
 		return getStrategy().toString();
 	}
 
-	@SuppressWarnings("unchecked")
-	public int getCurrentIteration() {
+	public GameController getGameController() {
 		Context<Object> context = ContextUtils.getContext(this);
 		Context<Object> parentContext = ContextUtils.getParentContext(context);
-		GameController controller = (GameController) parentContext.getObjects(
-				GameController.class).get(0);
-		return controller.getCurrentIteration();
-	}
-
-	@SuppressWarnings("unchecked")
-	public int getCurrentGeneration() {
-		Context<Object> context = ContextUtils.getContext(this);
-		Context<Object> parentContext = ContextUtils.getParentContext(context);
-		GameController controller = (GameController) parentContext.getObjects(
-				GameController.class).get(0);
-		return controller.getCurrentGeneration();
+		return (GameController) parentContext.getObjects(GameController.class)
+				.get(0);
 	}
 
 	public void resetReputation() {

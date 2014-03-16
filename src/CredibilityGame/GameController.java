@@ -76,6 +76,14 @@ public class GameController {
 		return currentIteration;
 	}
 
+	/**
+	 * We check if simulation is warmed up, by comparing currentIteration
+	 * to the threshold after wich we believ first payouts and second invests
+	 * are done
+	 * 
+	 * by default, threshold is = 200 * 0.05 equals 10 ticks
+	 * @return
+	 */
 	public boolean isWarmedUp() {
 		return currentIteration >= (iterationNumber * 0.05);
 	}
