@@ -20,5 +20,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="repast.simphony.batch.BatchMain"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-params &quot;${file_prompt:the Batch Run Parameters File Name:params.xml}&quot; &quot;${workspace_loc:CredibilityGame}/CredibilityGame.rs&quot;"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="CredibilityGame"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xss10M -Xmx400M"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms5120m -Xmx5120m"/>
 </launchConfiguration>

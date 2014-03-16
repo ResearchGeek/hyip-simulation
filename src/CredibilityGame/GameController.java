@@ -1,5 +1,9 @@
 package CredibilityGame;
 
+import org.joda.time.DateTime;
+import org.joda.time.Minutes;
+import org.joda.time.Seconds;
+
 import HyipGame.HyipEvolve;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduleParameters;
@@ -11,6 +15,8 @@ public class GameController {
 	private int iterationNumber;
 	private int currentGeneration;
 	private int currentIteration;
+
+	private DateTime previous = new DateTime();
 
 	public GameController() {
 		Parameters params = RunEnvironment.getInstance().getParameters();
@@ -40,7 +46,12 @@ public class GameController {
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = ScheduleParameters.LAST_PRIORITY)
 	public void step() {
-		// calculate ROI
+		DateTime dateTime = new DateTime();
+		Seconds seconds = Seconds.secondsBetween(previous, dateTime);
+		Minutes minutes = Minutes.minutesBetween(previous, dateTime);
+		System.out.println("It took " + minutes.getMinutes() + " minutes and "
+				+ seconds.getSeconds() + " seconds between ticks.");
+
 		System.out.println("Let's calculate some ROI's");
 		Hyip.calculateRois();
 
@@ -66,6 +77,8 @@ public class GameController {
 			// else
 			// System.out.println("Skipping reputation aggregation");
 		}
+
+		previous = new DateTime();
 	}
 
 	public int getCurrentGeneration() {
@@ -77,11 +90,11 @@ public class GameController {
 	}
 
 	/**
-	 * We check if simulation is warmed up, by comparing currentIteration
-	 * to the threshold after wich we believ first payouts and second invests
-	 * are done
+	 * We check if simulation is warmed up, by comparing currentIteration to the
+	 * threshold after wich we believ first payouts and second invests are done
 	 * 
 	 * by default, threshold is = 200 * 0.05 equals 10 ticks
+	 * 
 	 * @return
 	 */
 	public boolean isWarmedUp() {
