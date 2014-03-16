@@ -45,6 +45,8 @@ public class Hyip extends Player {
 	// ********************* End of credibility game variables *****************
 
 	private static volatile long COUNT_HYIPS = 0;
+	private GameController gameController;
+
 	private long totalNumberOfInvestments = 0;
 	private Long id;
 	private boolean isGoodLooking;
@@ -54,7 +56,7 @@ public class Hyip extends Player {
 	private double income;
 	private Boolean frozen;
 	private ArrayList<HyipOffert> hyipOfferts;
-	private volatile ArrayList<Invest> hyipSoldInvestments;
+	private volatile CopyOnWriteArrayList<Invest> hyipSoldInvestments;
 
 	private static boolean l_cost_rand;
 	// private static int look; // wyglad strony
@@ -94,10 +96,18 @@ public class Hyip extends Player {
 		this.hyipOfferts = isGoodLooking ? createOfferts(
 				(GoodLooking) goodOrBad, null) : createOfferts(null,
 				(BadLooking) goodOrBad);
-		this.hyipSoldInvestments = new ArrayList<Invest>();
+		this.hyipSoldInvestments = new CopyOnWriteArrayList<Invest>();
 		this.frozen = false;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
+	}
+
+	public GameController initGameController() {
+		Context<Object> context = ContextUtils.getContext(this);
+		Context<Object> parentContext = ContextUtils.getParentContext(context);
+		this.gameController = (GameController) parentContext.getObjects(
+				GameController.class).get(0);
+		return this.gameController;
 	}
 
 	public Hyip(GoodLooking goodLooking) {
@@ -180,13 +190,13 @@ public class Hyip extends Player {
 
 	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 5)
 	public synchronized void considerRunningAway() {
-		if (!getFrozen())
+		if (!getFrozen()) {
 			this.income = hyipAccount.getIncome() - propablePayouts();
-
-		if (getGameController().isWarmedUp()) {
-			boolean runaway = ExitStrategyUtilities.checkForPass(this);
-			if (runaway)
-				freezeHyip();
+			if (getGameController().isWarmedUp()) {
+				boolean runaway = ExitStrategyUtilities.checkForPass(this);
+				if (runaway)
+					freezeHyip();
+			}
 		}
 	}
 
@@ -200,10 +210,12 @@ public class Hyip extends Player {
 		double result = 0;
 
 		List<Double> sortedList = new ArrayList<Double>();
-		CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
-				hyipSoldInvestments);
+		/*
+		 * CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
+		 * hyipSoldInvestments);
+		 */
 
-		for (Invest invest : cp) {
+		for (Invest invest : hyipSoldInvestments) {
 			if (invest.getTickCount() + 1 >= invest.getHyipOffert()
 					.getForHowLong()) {
 				sortedList.add(invest.forecastInterest());
@@ -329,10 +341,8 @@ public class Hyip extends Player {
 	}
 
 	public GameController getGameController() {
-		Context<Object> context = ContextUtils.getContext(this);
-		Context<Object> parentContext = ContextUtils.getParentContext(context);
-		return (GameController) parentContext.getObjects(GameController.class)
-				.get(0);
+		return this.gameController == null ? initGameController()
+				: this.gameController;
 	}
 
 	public void resetReputation() {
