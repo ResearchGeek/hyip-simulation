@@ -1,5 +1,11 @@
 package CredibilityGame;
 
+import java.io.IOException;
+
+import logger.EndRunLogger;
+import logger.PjiitLogger;
+import logger.PjiitOutputter;
+import logger.SanityLogger;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
@@ -16,8 +22,13 @@ public class CredibilityGame extends DefaultContext<Object> implements
 
 	@Override
 	public Context<Object> build(Context<Object> context) {
-		System.out.println("Hyip game context builder loaded...");
-		RandomHelper.init();
+		try {
+			System.out.println("Hyip game context builder loaded...");
+			RandomHelper.init();
+			initializeLoggers();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		context.setId("CredibilityGame");
 		Parameters params = RunEnvironment.getInstance().getParameters();
@@ -38,6 +49,18 @@ public class CredibilityGame extends DefaultContext<Object> implements
 
 	private void say(String s) {
 		System.out.println(s);
+	}
+	
+	private void initializeLoggers() throws IOException {
+		PjiitLogger.init();
+		say(Constraints.LOGGER_INITIALIZED);
+		SanityLogger.init();
+		sanity(Constraints.LOGGER_INITIALIZED);
+		EndRunLogger.init();
+	}
+	
+	private void sanity(String s) {
+		PjiitOutputter.sanity(s);
 	}
 
 }

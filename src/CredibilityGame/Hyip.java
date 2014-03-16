@@ -6,8 +6,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import logger.PjiitOutputter;
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -55,8 +57,10 @@ public class Hyip extends Player {
 	private HyipAccount hyipAccount;
 	private double income;
 	private Boolean frozen;
+
 	private ArrayList<HyipOffert> hyipOfferts;
 	private volatile CopyOnWriteArrayList<Invest> hyipSoldInvestments;
+	private PriorityQueue<Double> probablePayouts;
 
 	private static boolean l_cost_rand;
 	// private static int look; // wyglad strony
@@ -100,6 +104,13 @@ public class Hyip extends Player {
 		this.frozen = false;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
+
+		probablePayouts = new PriorityQueue<Double>(10000,
+				new Comparator<Double>() {
+					public int compare(Double o1, Double o2) {
+						return -o1.compareTo(o2);
+					}
+				});
 	}
 
 	public GameController initGameController() {
@@ -184,18 +195,26 @@ public class Hyip extends Player {
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
 	public void step() {
-		if (!getFrozen())
+		if (!getFrozen()) {
+			logActivity("The HYIP " + this.id + " is considering it's marketing");
 			setMarketing();
+		}
 	}
 
 	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 5)
 	public synchronized void considerRunningAway() {
 		if (!getFrozen()) {
+			logActivity("The HYIP " + this.id + " is calculating its income");
 			this.income = hyipAccount.getIncome() - propablePayouts();
 			if (getGameController().isWarmedUp()) {
+				logActivity("The HYIP is considering running away");
 				boolean runaway = ExitStrategyUtilities.checkForPass(this);
-				if (runaway)
+				if (runaway){
+					System.out.println("HYIP " + this.id + " decided to RUN awaay!");
 					freezeHyip();
+				} else{
+					logActivity("Hyip " + this.id + " decides to stay more.");
+				}
 			}
 		}
 	}
@@ -209,25 +228,17 @@ public class Hyip extends Player {
 	private synchronized double propablePayouts() {
 		double result = 0;
 
-		List<Double> sortedList = new ArrayList<Double>();
-		/*
-		 * CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
-		 * hyipSoldInvestments);
-		 */
+		probablePayouts.clear();
 
 		for (Invest invest : hyipSoldInvestments) {
 			if (invest.getTickCount() + 1 >= invest.getHyipOffert()
 					.getForHowLong()) {
-				sortedList.add(invest.forecastInterest());
+				probablePayouts.add(invest.forecastInterest());
 			}
 		}
-		Collections.sort(sortedList, new Comparator<Double>() {
-			public int compare(Double o1, Double o2) {
-				return -o1.compareTo(o2);
-			}
-		});
-		Iterator<Double> it = sortedList.iterator();
-		for (int i = 0; i < sortedList.size() * inv_rec; i++) {
+
+		Iterator<Double> it = probablePayouts.iterator();
+		for (int i = 0; i < probablePayouts.size() * inv_rec; i++) {
 			result += it.next();
 		}
 		return result;
@@ -237,9 +248,7 @@ public class Hyip extends Player {
 	public synchronized void payPercent() {
 		if (!getFrozen()) {
 			hyipAccount.setIncome(0);
-			CopyOnWriteArrayList<Invest> cp = new CopyOnWriteArrayList<Invest>(
-					hyipSoldInvestments);
-			for (Invest invest : cp) {
+			for (Invest invest : hyipSoldInvestments) {
 				invest.incrementTickCount();
 				invest.calculateInterest();
 				if (invest.getTickCount() >= invest.getHyipOffert()
@@ -310,6 +319,7 @@ public class Hyip extends Player {
 	}
 
 	public static void reset() {
+		System.out.println("Hyip is getting reborn! resetting all fields.");
 		for (Object p : CredibilityGame.PLAYERS.getObjects(Hyip.class)) {
 			((Hyip) p).hyipAccount.clear();
 			((Hyip) p).income = 0;
@@ -408,6 +418,10 @@ public class Hyip extends Player {
 
 	public void setFrozen(Boolean frozen) {
 		this.frozen = frozen;
+	}
+	
+	private void logActivity(String s) {
+		PjiitOutputter.log(s);
 	}
 
 	@Override
