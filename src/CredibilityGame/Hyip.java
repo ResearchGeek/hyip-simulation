@@ -420,6 +420,14 @@ public class Hyip extends Player {
 		this.frozen = frozen;
 	}
 	
+	public int getIteration() {
+		return getGameController().getCurrentIteration();
+	}
+	
+	public int getGeneration() {
+		return getGameController().getCurrentGeneration();
+	}
+	
 	private void logActivity(String s) {
 		PjiitOutputter.log(s);
 	}
