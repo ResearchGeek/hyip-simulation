@@ -25,6 +25,78 @@
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
+			<string>Strategy</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Strategy</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>describeStrategy</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Strategy_Balance</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Strategy_Balance</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getStrategyBalance</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Strategy_Income</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Strategy_Income</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getStrategyIncome</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Strategy_Investor_Count</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Strategy_Investor_Count</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getStrategyInvestorCount</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Strategy_Time</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Strategy_Time</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getStrategyTime</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Use_Balance</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Use_Balance</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>usesBalance</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Use_Income</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Use_Income</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>usesIncome</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Use_Investor_Count</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Use_Investor_Count</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>usesInvestorCount</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Use_Time</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Use_Time</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>usesTime</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
 			<string>Generation</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
 				<id>Generation</id>
@@ -53,29 +125,29 @@
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
 				<id>Advert</id>
 				<className>CredibilityGame.Hyip</className>
-				<methodName>getAdvert</methodName>
+				<methodName>describeAdvert</methodName>
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
-			<string>Count Investments</string>
+			<string>Count_Investments</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
-				<id>Count Investments</id>
+				<id>Count_Investments</id>
 				<className>CredibilityGame.Hyip</className>
 				<methodName>countOngoingInvestments</methodName>
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
-			<string>Good Looking</string>
+			<string>Good_Looking</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
-				<id>Good Looking</id>
+				<id>Good_Looking</id>
 				<className>CredibilityGame.Hyip</className>
 				<methodName>isGoodLooking</methodName>
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
-			<string>Total Number Of Invests</string>
+			<string>Total_Number_Of_Invests</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
-				<id>Total Number Of Invests</id>
+				<id>Total_Number_Of_Invests</id>
 				<className>CredibilityGame.Hyip</className>
 				<methodName>getTotalNumberOfInvestments</methodName>
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>

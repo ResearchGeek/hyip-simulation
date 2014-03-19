@@ -1,11 +1,9 @@
 package CredibilityGame;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -21,6 +19,7 @@ import CredibilityGame.HyipType.GoodLooking;
 import CredibilityGame.rating.Rating;
 import CredibilityGame.rating.UpDownRating;
 import HyipGame.ExitStrategy;
+import HyipGame.ExitStrategyOptions;
 import HyipGame.ExitStrategyUtilities;
 
 /**
@@ -180,13 +179,16 @@ public class Hyip extends Player {
 
 	public double getAdvert() {
 		double mark_temp = mktg_cumulated * 12 - 6;
-		double adv = // look * l_eff
-		+(1 / (1 + Math.pow(Math.E, mark_temp * (-1))));
+		double adv = 1 / (1 + Math.pow(Math.E, mark_temp * (-1)));
 		if (adv > 1)
 			adv = 1;
 		assert adv >= 0;
 		assert adv <= 1;
 		return adv;
+	}
+
+	public String describeAdvert() {
+		return (Constraints.DECIMAL_SHORT.format(getAdvert()));
 	}
 
 	public Long getId() {
@@ -196,7 +198,8 @@ public class Hyip extends Player {
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
 	public void step() {
 		if (!getFrozen()) {
-			logActivity("The HYIP " + this.id + " is considering it's marketing");
+			logActivity("The HYIP " + this.id
+					+ " is considering it's marketing");
 			setMarketing();
 		}
 	}
@@ -207,12 +210,12 @@ public class Hyip extends Player {
 			logActivity("The HYIP " + this.id + " is calculating its income");
 			this.income = hyipAccount.getIncome() - propablePayouts();
 			if (getGameController().isWarmedUp()) {
-				logActivity("The HYIP is considering running away");
+				logActivity(Constraints.CONSIDERING_RUNNING_AWAY);
 				boolean runaway = ExitStrategyUtilities.checkForPass(this);
-				if (runaway){
+				if (runaway) {
 					say("HYIP " + this.id + " decided to RUN awaay!");
 					freezeHyip();
-				} else{
+				} else {
 					logActivity("Hyip " + this.id + " decides to stay more.");
 				}
 			}
@@ -318,20 +321,7 @@ public class Hyip extends Player {
 			mktg_cumulated = 1;
 	}
 
-//	public static void reset() {
-//		say("Hyip is getting reborn! resetting all fields.");
-//		GameController.chooseAllProducers(contextBeing)
-//		for (Object p : CredibilityGame.PLAYERS.getObjects(Hyip.class)) {
-//			((Hyip) p).hyipAccount.clear();
-//			((Hyip) p).income = 0;
-//			((Hyip) p).frozen = false;
-//			((Hyip) p).totalNumberOfInvestments = 0;
-//			((Hyip) p).mktg_cumulated = 0;
-//			((Hyip) p).hyipSoldInvestments.clear();
-//		}
-//	}
-	
-	public void resetMe(){
+	public void resetMe() {
 		this.hyipAccount.clear();
 		this.income = 0;
 		this.frozen = false;
@@ -341,7 +331,7 @@ public class Hyip extends Player {
 	}
 
 	public static void calculateRois() {
-		say("calculateRois() executed");
+		say(Constraints.CALCULATE_ROIS_EXECUTED);
 	}
 
 	public double getCash() {
@@ -361,8 +351,7 @@ public class Hyip extends Player {
 	}
 
 	public GameController getGameController() {
-		return this.gameController == null ? initGameController()
-				: this.gameController;
+		return gameController == null ? initGameController() : gameController;
 	}
 
 	public void resetReputation() {
@@ -429,19 +418,79 @@ public class Hyip extends Player {
 	public void setFrozen(Boolean frozen) {
 		this.frozen = frozen;
 	}
-	
+
+	public String describeStrategy() {
+		StringBuilder sb = new StringBuilder(Constraints.OPENING_BRACKET);
+		ExitStrategyOptions ops = exitStrategy.getExitStrategyOptions();
+		
+		sb.append("balance:");
+		sb.append(ops.isConsiderBalance());
+		sb.append(Constraints.COMMA);
+		sb.append(exitStrategy.getBalance());
+		sb.append(Constraints.SEPERATOR);
+		sb.append("income:");
+		sb.append(ops.isConsiderIncome());
+		sb.append(Constraints.COMMA);
+		sb.append(exitStrategy.getIncome());
+		sb.append(Constraints.SEPERATOR);
+		sb.append("time:");
+		sb.append(ops.isConsiderTime());
+		sb.append(Constraints.COMMA);
+		sb.append(exitStrategy.getTime());
+		sb.append(Constraints.SEPERATOR);
+		sb.append("investor_count:");
+		sb.append(ops.isConsiderInvestorCount());
+		sb.append(Constraints.COMMA);
+		sb.append(exitStrategy.getInvestorCount());
+		
+		sb.append(Constraints.CLOSING_BRACKET);
+		return sb.toString();
+	}
+
+	public boolean usesBalance() {
+		return exitStrategy.getExitStrategyOptions().isConsiderBalance();
+	}
+
+	public boolean usesIncome() {
+		return exitStrategy.getExitStrategyOptions().isConsiderIncome();
+	}
+
+	public boolean usesInvestorCount() {
+		return exitStrategy.getExitStrategyOptions().isConsiderInvestorCount();
+	}
+
+	public boolean usesTime() {
+		return exitStrategy.getExitStrategyOptions().isConsiderTime();
+	}
+
+	public double getStrategyBalance() {
+		return exitStrategy.getBalance();
+	}
+
+	public double getStrategyIncome() {
+		return exitStrategy.getIncome();
+	}
+
+	public int getStrategyInvestorCount() {
+		return exitStrategy.getInvestorCount();
+	}
+
+	public int getStrategyTime() {
+		return exitStrategy.getTime();
+	}
+
 	public int getIteration() {
 		return getGameController().getCurrentIteration();
 	}
-	
+
 	public int getGeneration() {
 		return getGameController().getCurrentGeneration() + 1;
 	}
-	
+
 	private void logActivity(String s) {
 		PjiitOutputter.log(s);
 	}
-	
+
 	private static void say(String s) {
 		PjiitOutputter.say(s);
 	}

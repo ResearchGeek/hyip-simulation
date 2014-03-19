@@ -1,19 +1,28 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>Hyips money output</name>
-  <dataSet>Hyips_money_separate</dataSet>
-  <delimiter>;</delimiter>
-  <format>TABULAR</format>
-  <sourceIds class="linked-hash-set">
-    <string>tick</string>
-    <string>Generation</string>
-    <string>Iteration</string>
-    <string>Cash</string>
-    <string>Id</string>
-    <string>Advert</string>
-    <string>Count Investments</string>
-    <string>Good Looking</string>
-    <string>Total Number Of Invests</string>
-  </sourceIds>
-  <fileName>hyip_cash.csv</fileName>
-  <addTimeStamp>true</addTimeStamp>
+	<name>Hyips money output</name>
+	<dataSet>Hyips_money_separate</dataSet>
+	<delimiter>;</delimiter>
+	<format>TABULAR</format>
+	<sourceIds class="linked-hash-set">
+		<string>tick</string>
+		<string>Generation</string>
+		<string>Iteration</string>
+		<string>Cash</string>
+		<string>Id</string>
+		<string>Advert</string>
+		<string>Count_Investments</string>
+		<string>Good_Looking</string>
+		<string>Total_Number_Of_Invests</string>
+		<string>Use_Balance</string>
+		<string>Strategy_Balance</string>
+		<string>Use_Income</string>
+		<string>Strategy_Income</string>
+		<string>Use_Investor_Count</string>
+		<string>Strategy_Investor_Count</string>
+		<string>Use_Time</string>
+		<string>Strategy_Time</string>
+		<string>Strategy</string>
+	</sourceIds>
+	<fileName>hyip_cash.csv</fileName>
+	<addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>
