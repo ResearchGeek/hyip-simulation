@@ -47,7 +47,7 @@ public class Hyip extends Player {
 	// ********************* End of credibility game variables *****************
 
 	private static volatile long COUNT_HYIPS = 0;
-	private GameController gameController;
+	private static GameController gameController;
 
 	private long totalNumberOfInvestments = 0;
 	private Long id;
@@ -116,9 +116,9 @@ public class Hyip extends Player {
 	public GameController initGameController() {
 		Context<Object> context = ContextUtils.getContext(this);
 		Context<Object> parentContext = ContextUtils.getParentContext(context);
-		this.gameController = (GameController) parentContext.getObjects(
+		gameController = (GameController) parentContext.getObjects(
 				GameController.class).get(0);
-		return this.gameController;
+		return gameController;
 	}
 
 	public Hyip(GoodLooking goodLooking) {
@@ -210,7 +210,7 @@ public class Hyip extends Player {
 				logActivity("The HYIP is considering running away");
 				boolean runaway = ExitStrategyUtilities.checkForPass(this);
 				if (runaway){
-					System.out.println("HYIP " + this.id + " decided to RUN awaay!");
+					say("HYIP " + this.id + " decided to RUN awaay!");
 					freezeHyip();
 				} else{
 					logActivity("Hyip " + this.id + " decides to stay more.");
@@ -318,20 +318,30 @@ public class Hyip extends Player {
 			mktg_cumulated = 1;
 	}
 
-	public static void reset() {
-		System.out.println("Hyip is getting reborn! resetting all fields.");
-		for (Object p : CredibilityGame.PLAYERS.getObjects(Hyip.class)) {
-			((Hyip) p).hyipAccount.clear();
-			((Hyip) p).income = 0;
-			((Hyip) p).frozen = false;
-			((Hyip) p).totalNumberOfInvestments = 0;
-			((Hyip) p).mktg_cumulated = 0;
-			((Hyip) p).hyipSoldInvestments.clear();
-		}
+//	public static void reset() {
+//		say("Hyip is getting reborn! resetting all fields.");
+//		GameController.chooseAllProducers(contextBeing)
+//		for (Object p : CredibilityGame.PLAYERS.getObjects(Hyip.class)) {
+//			((Hyip) p).hyipAccount.clear();
+//			((Hyip) p).income = 0;
+//			((Hyip) p).frozen = false;
+//			((Hyip) p).totalNumberOfInvestments = 0;
+//			((Hyip) p).mktg_cumulated = 0;
+//			((Hyip) p).hyipSoldInvestments.clear();
+//		}
+//	}
+	
+	public void resetMe(){
+		this.hyipAccount.clear();
+		this.income = 0;
+		this.frozen = false;
+		this.totalNumberOfInvestments = 0;
+		this.mktg_cumulated = 0;
+		this.hyipSoldInvestments.clear();
 	}
 
 	public static void calculateRois() {
-		System.out.println("calculateRois() executed");
+		say("calculateRois() executed");
 	}
 
 	public double getCash() {
@@ -430,6 +440,10 @@ public class Hyip extends Player {
 	
 	private void logActivity(String s) {
 		PjiitOutputter.log(s);
+	}
+	
+	private static void say(String s) {
+		PjiitOutputter.say(s);
 	}
 
 	@Override

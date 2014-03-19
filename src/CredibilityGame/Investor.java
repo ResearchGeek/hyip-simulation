@@ -88,11 +88,17 @@ public class Investor extends Player {
 		}
 	}
 
-	public static void reset() {
-		// reset state of all investors ?
-		for (Object i : CredibilityGame.PLAYERS.getObjects(Investor.class)) {
-			((Investor) i).initializeWallet();
-		}
+//	public static void reset() {
+//		// reset state of all investors ?
+//		for (Object i : CredibilityGame.PLAYERS.getObjects(Investor.class)) {
+//			((Investor) i).initializeWallet();
+//		}
+//	}
+	
+	public void resetMe(){
+		this.initializeWallet();
+		this.hyipsChosen.clear();
+		this.allHyips.clear();
 	}
 
 	private void chooseOffert(Hyip hyip) {
