@@ -435,7 +435,7 @@ public class Hyip extends Player {
 	}
 	
 	public int getGeneration() {
-		return getGameController().getCurrentGeneration();
+		return getGameController().getCurrentGeneration() + 1;
 	}
 	
 	private void logActivity(String s) {

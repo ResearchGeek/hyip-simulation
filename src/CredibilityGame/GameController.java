@@ -29,11 +29,11 @@ public class GameController {
 	public GameController() {
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		iterationNumber = (Integer) params.getValue("iteration_number");
-		// zmienna oznacza po ilu tickach zakonczyn dany run
-		// ustawione w jednym z batchy na 200
+		// variable iterationNumber states how many ticks long
+		// is a single generation, we use mostly value of 200
 		generationNumber = (Integer) params.getValue("generation_number");
-		// oznacza po ilu generacjach zakonczyc batch job
-		// ustawione w jednym z batchy na 10
+		// how many generations we want to simulate
+		// mostly it is 10 generations
 		say("generationNumber: " + generationNumber);
 		say("iterationNumber: " + iterationNumber);
 	}
@@ -80,10 +80,10 @@ public class GameController {
 		DateTime dateTime = new DateTime();
 		Seconds seconds = Seconds.secondsBetween(previous, dateTime);
 		Minutes minutes = Minutes.minutesBetween(previous, dateTime);
-		System.out.println("It took " + minutes.getMinutes() + " minutes and "
+		say("It took " + minutes.getMinutes() + " minutes and "
 				+ seconds.getSeconds() + " seconds between ticks.");
 
-		System.out.println("Let's calculate some ROI's");
+		say("Let's calculate some ROI's");
 		Hyip.calculateRois();
 
 		// check whether this is the last generation/iteration
@@ -100,7 +100,7 @@ public class GameController {
 				currentGeneration++;
 			}
 		} else {
-			System.out.println("Incrementing current iteration number to: "
+			say("Incrementing current iteration number to: "
 					+ (currentIteration + 1));
 			currentIteration++;
 		}
