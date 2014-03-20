@@ -1,6 +1,5 @@
 package HyipGame;
 
-import CredibilityGame.ProducerStrategy;
 import CredibilityGame.Strategy;
 
 public class ExitStrategy implements Strategy {
@@ -137,6 +136,6 @@ public class ExitStrategy implements Strategy {
 		this.balance = hyipStatistics.getCash();
 		this.income = hyipStatistics.getIncome();
 		this.time = hyipStatistics.getTick();
-		this.investorCount = hyipStatistics.getTick();
+		this.investorCount = hyipStatistics.getInvestorCount();
 	}
 }

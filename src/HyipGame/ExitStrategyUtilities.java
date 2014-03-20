@@ -42,7 +42,7 @@ public class ExitStrategyUtilities {
 		}
 		if (exitStrategyOptions.isConsiderInvestorCount()) {
 			considerationMade = true;
-			if (hyip.countOngoingInvestments() >= exitStrategy
+			if (hyip.countOngoingInvestments() < exitStrategy
 					.getInvestorCount()) {
 				fail = true;
 			}
