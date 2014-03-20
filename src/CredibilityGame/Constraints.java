@@ -13,5 +13,7 @@ public class Constraints {
 			"#.######");
 	public static final String COMMA = ",";
 	public static final String SEPERATOR = "|";
+	public static final double MUTATE_FACTOR = 0.05;
+	public static final int MUTATE_CHANCE = 5;
 
 }

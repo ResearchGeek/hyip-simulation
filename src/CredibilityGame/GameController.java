@@ -91,11 +91,11 @@ public class GameController {
 			System.out.println("This is the last iteration");
 			currentIteration = 0;
 			if (currentGeneration == (generationNumber - 1)) {
-				System.out.println("Ending instance run");
+				say("Ending instance run");
 				RunEnvironment.getInstance().endRun();
 			} else {
 				// Hyip.evolve();
-				System.out.println("Ending current generation");
+				say("Ending current generation");
 				// Consumer.evolve();
 				currentGeneration++;
 			}

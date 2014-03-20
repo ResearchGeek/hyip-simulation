@@ -50,6 +50,7 @@ public abstract class Player {
 		Collections.sort(population, new PlayerComparator());
 		double min = population.get(population.size() - 1).getIncome();
 		double scaling = min < 0 ? ((-1) * min) : 0;
+			// do czego to sluzy ?
 
 		double maxRange = 0;
 		ArrayList<Double> ranges = new ArrayList<Double>();
@@ -70,8 +71,10 @@ public abstract class Player {
 					break;
 				}
 			}
-			population.get(i).getExitStrategy()
+			Hyip nextHyip = population.get(i);
+			nextHyip.getExitStrategy()
 					.copyStrategy(strategiesBackup.get(selectedPlayer));
+			nextHyip.mutate();
 		}
 	}
 

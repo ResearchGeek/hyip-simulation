@@ -411,6 +411,47 @@ public class Hyip extends Player {
 		this.exitStrategy = exitStrategy;
 	}
 
+	public void mutate() {
+		ExitStrategyOptions ops = exitStrategy.getExitStrategyOptions();
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			ops.setConsiderBalance(!ops.isConsiderBalance().booleanValue());
+		}
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			ops.setConsiderIncome(!ops.isConsiderIncome().booleanValue());
+		}
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			ops.setConsiderInvestorCount(!ops.isConsiderInvestorCount()
+					.booleanValue());
+		}
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			ops.setConsiderTime(!ops.isConsiderTime().booleanValue());
+		}
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			exitStrategy.setBalance(exitStrategy.getBalance()
+					+ (exitStrategy.getBalance() * RandomHelper
+							.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+									Constraints.MUTATE_FACTOR)));
+		}
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			exitStrategy.setIncome(exitStrategy.getIncome()
+					+ (exitStrategy.getIncome() * RandomHelper
+							.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+									Constraints.MUTATE_FACTOR)));
+		}
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			exitStrategy.setInvestorCount(exitStrategy.getInvestorCount()
+					+ (int) (exitStrategy.getInvestorCount() * RandomHelper
+							.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+									Constraints.MUTATE_FACTOR)));
+		}
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			exitStrategy.setTime(exitStrategy.getTime()
+					+ (int) (exitStrategy.getTime() * RandomHelper
+							.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+									Constraints.MUTATE_FACTOR)));
+		}
+	}
+
 	public Boolean getFrozen() {
 		return frozen;
 	}
@@ -422,7 +463,7 @@ public class Hyip extends Player {
 	public String describeStrategy() {
 		StringBuilder sb = new StringBuilder(Constraints.OPENING_BRACKET);
 		ExitStrategyOptions ops = exitStrategy.getExitStrategyOptions();
-		
+
 		sb.append("balance:");
 		sb.append(ops.isConsiderBalance());
 		sb.append(Constraints.COMMA);
@@ -442,7 +483,7 @@ public class Hyip extends Player {
 		sb.append(ops.isConsiderInvestorCount());
 		sb.append(Constraints.COMMA);
 		sb.append(exitStrategy.getInvestorCount());
-		
+
 		sb.append(Constraints.CLOSING_BRACKET);
 		return sb.toString();
 	}
