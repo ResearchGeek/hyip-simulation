@@ -24,11 +24,12 @@ import HyipGame.ExitStrategyUtilities;
 
 /**
  * Represent a single instance of a Hyip, contains references to investments and
- * have scheduled method for calculating percentage to pay
+ * have scheduled method for calculating percentage to pay.
+ * Also with evolution model and exit strategies.
  * 
  * @author Oskar Jarczyk
  * @since 1.0
- * @version 1.1
+ * @version 1.2
  */
 public class Hyip extends Player {
 
@@ -62,7 +63,6 @@ public class Hyip extends Player {
 	private PriorityQueue<Double> probablePayouts;
 
 	private static boolean l_cost_rand;
-	// private static int look; // wyglad strony
 	private int marketing; // 0-basic 1-expert 2-proffesional
 	private double mktg_cumulated; // wzrost albo spadek wydajnosci mktg
 	// w zaleznosci od wydatkow w turze
@@ -206,7 +206,7 @@ public class Hyip extends Player {
 
 	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 5)
 	public synchronized void considerRunningAway() {
-		if (!getFrozen()) {
+		if ( (!getFrozen()) && (!getGameController().isFirstGeneration())) {
 			logActivity("The HYIP " + this.id + " is calculating its income");
 			this.income = hyipAccount.getIncome() - propablePayouts();
 			if (getGameController().isWarmedUp()) {
@@ -223,23 +223,20 @@ public class Hyip extends Player {
 	}
 
 	private void freezeHyip() {
-		// running away to Bahamas, Hyips stops to show signs of life
+		// running away to Bahamas, HYIPs stops from showing any signs of life
 		this.frozen = true;
 		// but still in context
 	}
 
 	private synchronized double propablePayouts() {
 		double result = 0;
-
 		probablePayouts.clear();
-
 		for (Invest invest : hyipSoldInvestments) {
 			if (invest.getTickCount() + 1 >= invest.getHyipOffert()
 					.getForHowLong()) {
 				probablePayouts.add(invest.forecastInterest());
 			}
 		}
-
 		Iterator<Double> it = probablePayouts.iterator();
 		for (int i = 0; i < probablePayouts.size() * inv_rec; i++) {
 			result += it.next();
@@ -257,14 +254,14 @@ public class Hyip extends Player {
 				if (invest.getTickCount() >= invest.getHyipOffert()
 						.getForHowLong()) {
 					if (RandomHelper.nextDoubleFromTo(0, 1) > inv_rec) {
-						// nic nie wyplacono, odnow oferte
+						// keeping the money in hyip - investor decided to renew
 						invest.setTickCount(0);
 					} else {
-						// zamknij i rozlicz..
+						// close and pay to client
 						hyipSoldInvestments.remove(invest);
 						transferFunds(invest);
-						// juz, inwestycja zostaje archiwizowana a komputer ja
-						// posprzata
+						// invest moved to archived
+						// hopefully later garbage collected
 					}
 				}
 			}

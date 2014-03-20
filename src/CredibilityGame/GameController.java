@@ -33,44 +33,56 @@ public class GameController {
 		// is a single generation, we use mostly value of 200
 		generationNumber = (Integer) params.getValue("generation_number");
 		// how many generations we want to simulate
-		// mostly it is 10 generations
+		// mostly it is 10 generations in our batch files
 		say("generationNumber: " + generationNumber);
 		say("iterationNumber: " + iterationNumber);
+	}
+	
+	public boolean isFirstGeneration(){
+		return currentGeneration == 0;
 	}
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = ScheduleParameters.FIRST_PRIORITY)
 	public void firstStep() {
-		if (currentIteration == (iterationNumber - 1)) {
-			say("counterIteration: " + currentIteration);
-			say("Execute generation end protocols");
-			// start evolution of Hyips
-			HyipEvolve.evolve(this);
-			resetAllHyips();
-			// reset all objects and states, fields, etc in a Hyip
-			resetAllInvestors();
+		if (isFirstGeneration()) {
+			// warming up, hold on with evolution,
+			// we want to guess the first strategies - entry level
+			;
+		} else {
+			if (currentIteration == (iterationNumber - 1)) {
+				say("counterIteration: " + currentIteration);
+				say("Execute generation end protocols");
+				// start evolution of Hyips
+				HyipEvolve.evolve(this);
+				resetAllHyips();
+				// reset all objects and states, fields, etc in a Hyip
+				resetAllInvestors();
+			}
 		}
 	}
-	
+
 	/**
-	 * Resets states in all Hyips - except a strategy
+	 * Resets states in all HYIPs - except the exit strategy
 	 */
-	private void resetAllHyips(){
-		say("resetAllHyips() starts work. Choosing all producers (HYIPs).");
+	private void resetAllHyips() {
+		say(Constraints.RESET_ALL_HYIPS_MESSAGE);
 		List<Hyip> allHyips = chooseAllProducers(this);
-		say("Resetting all hyips, all together " + allHyips.size() + " of them.");
-		for(Hyip hyip : allHyips){
+		say("Resetting all hyips, all together " + allHyips.size()
+				+ " of them.");
+		for (Hyip hyip : allHyips) {
 			hyip.resetMe();
 		}
 	}
-	
+
 	/**
 	 * Resets states in all Investors
 	 */
-	private void resetAllInvestors(){
-		say("resetAllInvestors() starts work. Choosing all consumers (Investors).");
+	private void resetAllInvestors() {
+		say(Constraints.RESET_ALL_INVESTORS_MESSAGE);
 		List<Investor> allInvestors = chooseAllConsumers(this);
-		say("Resetting all investors, all together " + allInvestors.size() + " of them.");
-		for(Investor investor : allInvestors){
+		say("Resetting all investors, all together " + allInvestors.size()
+				+ " of them.");
+		for (Investor investor : allInvestors) {
 			investor.resetMe();
 		}
 	}
@@ -83,20 +95,18 @@ public class GameController {
 		say("It took " + minutes.getMinutes() + " minutes and "
 				+ seconds.getSeconds() + " seconds between ticks.");
 
-		say("Let's calculate some ROI's");
+		say(Constraints.CALCULATE_ROIS_MESSAGE);
 		Hyip.calculateRois();
 
 		// check whether this is the last generation/iteration
 		if (currentIteration == (iterationNumber - 1)) {
-			System.out.println("This is the last iteration");
+			say("This is the last iteration in this gen");
 			currentIteration = 0;
 			if (currentGeneration == (generationNumber - 1)) {
 				say("Ending instance run");
 				RunEnvironment.getInstance().endRun();
 			} else {
-				// Hyip.evolve();
 				say("Ending current generation");
-				// Consumer.evolve();
 				currentGeneration++;
 			}
 		} else {
@@ -117,7 +127,7 @@ public class GameController {
 
 	/**
 	 * We check if simulation is warmed up, by comparing currentIteration to the
-	 * threshold after wich we believ first payouts and second invests are done
+	 * threshold after which we believe first payouts and second invests are done
 	 * 
 	 * by default, threshold is = 200 * 0.05 equals 10 ticks
 	 * 
@@ -126,9 +136,10 @@ public class GameController {
 	public boolean isWarmedUp() {
 		return currentIteration >= (iterationNumber * 0.05);
 	}
-	
+
 	/**
 	 * This method is used to get All Hyips which exist in the simulator
+	 * 
 	 * @param contextBeing
 	 * @return ArrayList of all Hyips
 	 */
@@ -142,7 +153,7 @@ public class GameController {
 		}
 		return result;
 	}
-	
+
 	public static ArrayList<Investor> chooseAllConsumers(Object contextBeing) {
 		Context<Player> context = ContextUtils.getContext(contextBeing);
 		Iterable<Player> it = context.getObjects(Investor.class);
@@ -153,11 +164,7 @@ public class GameController {
 		}
 		return result;
 	}
-	
-	private void logActivity(String s) {
-		PjiitOutputter.log(s);
-	}
-	
+
 	private static void say(String s) {
 		PjiitOutputter.say(s);
 	}
