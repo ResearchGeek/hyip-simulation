@@ -21,11 +21,12 @@ import CredibilityGame.rating.UpDownRating;
 import HyipGame.ExitStrategy;
 import HyipGame.ExitStrategyOptions;
 import HyipGame.ExitStrategyUtilities;
+import HyipGame.HyipStatistics;
 
 /**
  * Represent a single instance of a Hyip, contains references to investments and
- * have scheduled method for calculating percentage to pay.
- * Also with evolution model and exit strategies.
+ * have scheduled method for calculating percentage to pay. Also with evolution
+ * model and exit strategies.
  * 
  * @author Oskar Jarczyk
  * @since 1.0
@@ -53,7 +54,7 @@ public class Hyip extends Player {
 	private Long id;
 	private boolean isGoodLooking;
 	private ExitStrategy exitStrategy;
-
+	private HyipStatistics hyipStatistics;
 	private HyipAccount hyipAccount;
 	private double income;
 	private Boolean frozen;
@@ -103,7 +104,7 @@ public class Hyip extends Player {
 		this.frozen = false;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
-
+		hyipStatistics = new HyipStatistics();
 		probablePayouts = new PriorityQueue<Double>(10000,
 				new Comparator<Double>() {
 					public int compare(Double o1, Double o2) {
@@ -206,7 +207,9 @@ public class Hyip extends Player {
 
 	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 5)
 	public synchronized void considerRunningAway() {
-		if ( (!getFrozen()) && (!getGameController().isFirstGeneration())) {
+		if (getGameController().isFirstGeneration()) {
+			firstRoundAnalysis();
+		} else if (!getFrozen()) {
 			logActivity("The HYIP " + this.id + " is calculating its income");
 			this.income = hyipAccount.getIncome() - propablePayouts();
 			if (getGameController().isWarmedUp()) {
@@ -219,6 +222,16 @@ public class Hyip extends Player {
 					logActivity("Hyip " + this.id + " decides to stay more.");
 				}
 			}
+		}
+	}
+
+	private void firstRoundAnalysis() {
+		if (hyipStatistics.isBetterMoment(hyipAccount.getCash())) {
+			hyipStatistics.setCash(hyipAccount.getCash());
+			hyipStatistics.setIncome(getIncome());
+			hyipStatistics.setInvestorCount(countOngoingInvestments());
+			hyipStatistics.setTick(getIteration());
+			exitStrategy.updateFromStats(hyipStatistics);
 		}
 	}
 
@@ -325,6 +338,7 @@ public class Hyip extends Player {
 		this.totalNumberOfInvestments = 0;
 		this.mktg_cumulated = 0;
 		this.hyipSoldInvestments.clear();
+		this.hyipStatistics.clear();
 	}
 
 	public static void calculateRois() {

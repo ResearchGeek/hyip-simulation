@@ -21,8 +21,8 @@ public class ExitStrategyUtilities {
 	}
 
 	public static Boolean checkForPass(Hyip hyip) {
-		boolean result = false;
-		boolean considerationFail = false;
+		boolean fail = false;
+		//boolean considerationFail = false;
 		boolean considerationMade = false;
 
 		ExitStrategy exitStrategy = hyip.getExitStrategy();
@@ -30,40 +30,32 @@ public class ExitStrategyUtilities {
 				.getExitStrategyOptions();
 		if (exitStrategyOptions.isConsiderIncome()) {
 			considerationMade = true;
-			if (hyip.getIncome() >= exitStrategy.getIncome()) {
-				result = true;
-			} else {
-				considerationFail = true;
+			if (hyip.getIncome() < exitStrategy.getIncome()) {
+				fail = true;
 			}
 		}
 		if (exitStrategyOptions.isConsiderBalance()) {
 			considerationMade = true;
-			if (hyip.getCash() >= exitStrategy.getBalance()) {
-				result = true;
-			} else {
-				considerationFail = true;
+			if (hyip.getCash() < exitStrategy.getBalance()) {
+				fail = true;
 			}
 		}
 		if (exitStrategyOptions.isConsiderInvestorCount()) {
 			considerationMade = true;
-			if (hyip.getTotalNumberOfInvestments() >= exitStrategy
+			if (hyip.countOngoingInvestments() >= exitStrategy
 					.getInvestorCount()) {
-				result = true;
-			} else {
-				considerationFail = true;
+				fail = true;
 			}
 		}
 		if (exitStrategyOptions.isConsiderTime()) {
 			considerationMade = true;
-			if (hyip.getGameController().getCurrentIteration() >= exitStrategy
+			if (hyip.getGameController().getCurrentIteration() < exitStrategy
 					.getTime()) {
-				result = true;
-			} else {
-				considerationFail = true;
+				fail = true;
 			}
 		}
 		// answer the ultimate question if to close a HYIP here
-		return ((considerationMade) && (result) && (!considerationFail));
+		return ((considerationMade) && (!fail));
 	}
 
 }

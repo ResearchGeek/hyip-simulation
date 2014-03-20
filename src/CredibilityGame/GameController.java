@@ -47,7 +47,13 @@ public class GameController {
 		if (isFirstGeneration()) {
 			// warming up, hold on with evolution,
 			// we want to guess the first strategies - entry level
-			;
+			if (currentIteration == (iterationNumber - 1)) {
+				say("counterIteration: " + currentIteration);
+				say("Execute first generation end protocols");
+				resetAllHyips();
+				// reset all objects and states, fields, etc in a Hyip
+				resetAllInvestors();
+			}
 		} else {
 			if (currentIteration == (iterationNumber - 1)) {
 				say("counterIteration: " + currentIteration);

@@ -127,8 +127,16 @@ public class ExitStrategy implements Strategy {
 
 	@Override
 	public void copyStrategy(Strategy copyFrom) {
-		// this will never happen whatso ever
+		// this will never happen whatsoever - artefact from CredibilityGame
+		// proper method we have above
 		throw new UnsupportedOperationException(
-				"We don't use producer/consumer game in Hyip simulation");
+				"We don't use producer/consumer game in HYIP simulation");
+	}
+
+	public void updateFromStats(HyipStatistics hyipStatistics) {
+		this.balance = hyipStatistics.getCash();
+		this.income = hyipStatistics.getIncome();
+		this.time = hyipStatistics.getTick();
+		this.investorCount = hyipStatistics.getTick();
 	}
 }
