@@ -25,6 +25,14 @@
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
+			<string>Runned_Away</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Runned_Away</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getFrozen</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
 			<string>Strategy</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
 				<id>Strategy</id>
