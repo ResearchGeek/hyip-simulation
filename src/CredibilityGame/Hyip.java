@@ -231,7 +231,7 @@ public class Hyip extends Player {
 			hyipStatistics.setIncome(getIncome());
 			hyipStatistics.setInvestorCount(countOngoingInvestments());
 			hyipStatistics.setTick(getIteration());
-			exitStrategy.updateFromStats(hyipStatistics);
+			exitStrategy.updateFromStats(hyipStatistics, true);
 		}
 	}
 

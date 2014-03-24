@@ -2,7 +2,12 @@ package CredibilityGame;
 
 import java.text.DecimalFormat;
 
+import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.parameter.Parameters;
+
 public class Constraints {
+	
+	private static Parameters params = RunEnvironment.getInstance().getParameters();
 
 	public static final String LOGGER_INITIALIZED = "Logger initialied";
 	public static final String OPENING_BRACKET = "[";
@@ -13,10 +18,11 @@ public class Constraints {
 			"calculateRois() executed";
 	public static final DecimalFormat DECIMAL_SHORT = new DecimalFormat(
 			"#.######");
+	
 	public static final String COMMA = ",";
 	public static final String SEPERATOR = "|";
-	public static final double MUTATE_FACTOR = 0.05;
-	public static final int MUTATE_CHANCE = 5;
+	public static final double MUTATE_FACTOR = (double) params.getValue("mutate_factor");
+	public static final int MUTATE_CHANCE = (int) params.getValue("mutate_chance");
 	public static final String RESET_ALL_HYIPS_MESSAGE = 
 			"resetAllHyips() starts work. Choosing all producers (HYIPs).";
 	public static final String RESET_ALL_INVESTORS_MESSAGE = 

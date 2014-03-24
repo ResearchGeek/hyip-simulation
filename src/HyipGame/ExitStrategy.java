@@ -1,5 +1,8 @@
 package HyipGame;
 
+import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.parameter.Parameters;
+import repast.simphony.random.RandomHelper;
 import CredibilityGame.Strategy;
 
 public class ExitStrategy implements Strategy {
@@ -10,6 +13,9 @@ public class ExitStrategy implements Strategy {
 	private int investorCount;
 	private double balance;
 	private int time;
+	
+	private static Parameters params = RunEnvironment.getInstance().getParameters();
+	private static double bias = 0.01 * ( (int) params.getValue("first_strategy_bias") );
 
 	public ExitStrategy(double income, int investorCount, double balance,
 			int time, Boolean... enabled) {
@@ -126,16 +132,43 @@ public class ExitStrategy implements Strategy {
 
 	@Override
 	public void copyStrategy(Strategy copyFrom) {
-		// this will never happen whatsoever - artefact from CredibilityGame
+		// this will never happen whatsoever - artifact from CredibilityGame
 		// proper method we have above
 		throw new UnsupportedOperationException(
 				"We don't use producer/consumer game in HYIP simulation");
 	}
 
-	public void updateFromStats(HyipStatistics hyipStatistics) {
+	/**
+	 * Update agents strategy within the statistic found to be good for first
+	 * generation. Variable "first" states if is is a first generation, just to
+	 * be sure that developer understands how to use this method ;)
+	 * 
+	 * @param hyipStatistics
+	 * @param first
+	 */
+	public void updateFromStats(HyipStatistics hyipStatistics, boolean first) {
+		if (!first)
+			throw new javax.help.UnsupportedOperationException();
+
+		double variance = 0;
+
 		this.balance = hyipStatistics.getCash();
+		variance = this.balance * bias;
+		this.balance += (RandomHelper.nextDoubleFromTo(-variance, variance));
+		this.exitStrategyOptions.setConsiderBalance(RandomHelper.nextIntFromTo(
+				0, 1) == 0 ? false : true);
+
 		this.income = hyipStatistics.getIncome();
+		variance = this.income * bias;
+		this.income += (RandomHelper.nextDoubleFromTo(-variance, variance));
+
 		this.time = hyipStatistics.getTick();
+		variance = this.time * bias;
+		this.time += (int) (RandomHelper.nextDoubleFromTo(-variance, variance));
+
 		this.investorCount = hyipStatistics.getInvestorCount();
+		variance = this.investorCount * bias;
+		this.investorCount += (int) (RandomHelper.nextDoubleFromTo(-variance,
+				variance));
 	}
 }
