@@ -19,6 +19,7 @@ import repast.simphony.parameter.Parameters;
 import repast.simphony.util.ContextUtils;
 
 public class GameController {
+	
 	private int generationNumber;
 	private int iterationNumber;
 	private int currentGeneration;
@@ -38,6 +39,11 @@ public class GameController {
 		say("iterationNumber: " + iterationNumber);
 	}
 	
+	/**
+	 * Tells wheter this is a first generation (warming up) or not
+	 * (generations are indexed starting from 0)
+	 * @return true if current generation is the first one
+	 */
 	public boolean isFirstGeneration(){
 		return currentGeneration == 0;
 	}
@@ -68,7 +74,8 @@ public class GameController {
 	}
 
 	/**
-	 * Resets states in all HYIPs - except the exit strategy
+	 * Resets states in all HYIPs, including the money in account, offers sold,
+	 * calculated income, marketing state, etc. - except the exit strategy
 	 */
 	private void resetAllHyips() {
 		say(Constraints.RESET_ALL_HYIPS_MESSAGE);
@@ -107,11 +114,11 @@ public class GameController {
 		// check whether this is the last generation/iteration
 		if (currentIteration == (iterationNumber - 1)) {
 			say("This is the last iteration in this gen");
-			currentIteration = 0;
-			if (currentGeneration == (generationNumber - 1)) {
+			if (currentGeneration == (generationNumber - 2)) {
 				say("Ending instance run");
 				RunEnvironment.getInstance().endRun();
 			} else {
+				currentIteration = 0;
 				say("Ending current generation");
 				currentGeneration++;
 			}
@@ -144,10 +151,10 @@ public class GameController {
 	}
 
 	/**
-	 * This method is used to get All Hyips which exist in the simulator
+	 * This method is used to get All HYIP-s which exist in the simulator
 	 * 
 	 * @param contextBeing
-	 * @return ArrayList of all Hyips
+	 * @return ArrayList of all HYIP-s
 	 */
 	public static ArrayList<Hyip> chooseAllProducers(Object contextBeing) {
 		Context<Player> context = ContextUtils.getContext(contextBeing);
