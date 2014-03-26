@@ -13,14 +13,20 @@ import CredibilityGame.Player;
 
 public class HyipEvolve {
 	
-	private static ArrayList<Hyip> chooseAllProducers(Object contextBeing) {
-		say("Choosing all HYIPs to participate in evolving");
-		return GameController.chooseAllProducers(contextBeing);
+	private static ArrayList<Hyip> chooseGoodHyips(Object contextBeing) {
+		say("Choosing all good HYIPs to participate in evolving");
+		return GameController.chooseSpecificProducers(contextBeing, true);
+	}
+	
+	private static ArrayList<Hyip> chooseBadHyips(Object contextBeing) {
+		say("Choosing all bad HYIPs to participate in evolving");
+		return GameController.chooseSpecificProducers(contextBeing, false);
 	}
 	
 	public static void evolve(Object contextBeing){
 		say("Executing stochasting universal sampling");
-		Player.stochasticSampling(chooseAllProducers(contextBeing));
+		Player.stochasticSampling(chooseGoodHyips(contextBeing));
+		Player.stochasticSampling(chooseBadHyips(contextBeing));
 	}
 	
 	private void logActivity(String s) {

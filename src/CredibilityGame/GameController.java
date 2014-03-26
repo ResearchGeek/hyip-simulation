@@ -19,7 +19,7 @@ import repast.simphony.parameter.Parameters;
 import repast.simphony.util.ContextUtils;
 
 public class GameController {
-	
+
 	private int generationNumber;
 	private int iterationNumber;
 	private int currentGeneration;
@@ -38,13 +38,14 @@ public class GameController {
 		say("generationNumber: " + generationNumber);
 		say("iterationNumber: " + iterationNumber);
 	}
-	
+
 	/**
-	 * Tells wheter this is a first generation (warming up) or not
-	 * (generations are indexed starting from 0)
+	 * Tells wheter this is a first generation (warming up) or not (generations
+	 * are indexed starting from 0)
+	 * 
 	 * @return true if current generation is the first one
 	 */
-	public boolean isFirstGeneration(){
+	public boolean isFirstGeneration() {
 		return currentGeneration == 0;
 	}
 
@@ -140,7 +141,8 @@ public class GameController {
 
 	/**
 	 * We check if simulation is warmed up, by comparing currentIteration to the
-	 * threshold after which we believe first payouts and second invests are done
+	 * threshold after which we believe first payouts and second invests are
+	 * done
 	 * 
 	 * by default, threshold is = 200 * 0.05 equals 10 ticks
 	 * 
@@ -156,6 +158,19 @@ public class GameController {
 	 * @param contextBeing
 	 * @return ArrayList of all HYIP-s
 	 */
+	public static ArrayList<Hyip> chooseSpecificProducers(Object contextBeing,
+			boolean good) {
+		Context<Player> context = ContextUtils.getContext(contextBeing);
+		Iterable<Player> it = good ? context.getObjects(GoodLookingHyip.class)
+				: context.getObjects(BadLookingHyip.class);
+		ArrayList<Hyip> result = new ArrayList<Hyip>();
+		Iterator<Player> iterator = it.iterator();
+		while (iterator.hasNext()) {
+			result.add((Hyip) iterator.next());
+		}
+		return result;
+	}
+	
 	public static ArrayList<Hyip> chooseAllProducers(Object contextBeing) {
 		Context<Player> context = ContextUtils.getContext(contextBeing);
 		Iterable<Player> it = context.getObjects(Hyip.class);
