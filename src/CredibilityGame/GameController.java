@@ -112,17 +112,18 @@ public class GameController {
 		say(Constraints.CALCULATE_ROIS_MESSAGE);
 		Hyip.calculateRois();
 
+		if (currentIteration == (iterationNumber - 2)) {
+			if (currentGeneration == (generationNumber - 1)) {
+				say("Ending instance run");
+				RunEnvironment.getInstance().endRun();
+			}
+		} else
 		// check whether this is the last generation/iteration
 		if (currentIteration == (iterationNumber - 1)) {
 			say("This is the last iteration in this gen");
-			if (currentGeneration == (generationNumber - 2)) {
-				say("Ending instance run");
-				RunEnvironment.getInstance().endRun();
-			} else {
-				currentIteration = 0;
-				say("Ending current generation");
-				currentGeneration++;
-			}
+			currentIteration = 0;
+			say("Ending current generation");
+			currentGeneration++;
 		} else {
 			say("Incrementing current iteration number to: "
 					+ (currentIteration + 1));
@@ -170,7 +171,7 @@ public class GameController {
 		}
 		return result;
 	}
-	
+
 	public static ArrayList<Hyip> chooseAllProducers(Object contextBeing) {
 		Context<Player> context = ContextUtils.getContext(contextBeing);
 		Iterable<Player> it = context.getObjects(Hyip.class);
