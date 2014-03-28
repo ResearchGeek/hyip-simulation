@@ -7,7 +7,7 @@ A high-yield investment program (HYIP) is a type of Ponzi scheme, an investment 
 
 **Acknowledgments**
 
-Simulation was creating using parts of Credibility Game (Paulina Adamska, PJWSTK, 2013). Plus some of the HYIP code creating in cooperation with Grzegorz Kowalik (PJWSTK, 2014).
+Simulation was creating using parts of 'Credibility Game' (Paulina Adamska, PJWSTK 2013) and 2nd version of 'Credibility Game' project (Adamska, Kowalik, PJWSTK 2014). Plus some of the HYIP code creating in cooperation with Grzegorz Kowalik (PJWSTK, 2014).
 
 **Licence**
 
@@ -23,7 +23,7 @@ Repast License: The Repast suite software and documentation is licensed under a 
 
 *Hyip* - High Yield Investment Program
 
-*Hyip offer* - an investment offer of the Hyip, agrement between investor and hyip
+*Hyip offer* - an investment offered by the Hyip, agrement between investor and hyip
 
 *Investment* - an ongoing investment
 
@@ -35,3 +35,17 @@ hyip_*params.csv outputs params used
 simulation_logs.txt outputs diagnostic data
 
 /batch directory holds typical scenarios with proper parameters
+
+**Column description**
+
+*run* - repast simulation run number
+
+*tick* - repast simulation tick number
+
+*generation* - SUS generation number
+
+*iteration* - SUS iteration number of the current generation
+
+*cash* - hyip account balance
+
+*hyip* - hyip id
