@@ -10,6 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import logger.PjiitOutputter;
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.parameter.Parameters;
 import repast.simphony.random.RandomHelper;
@@ -62,6 +63,7 @@ public class Hyip extends Player {
 	private ArrayList<HyipOffert> hyipOfferts;
 	private volatile CopyOnWriteArrayList<Invest> hyipSoldInvestments;
 	private PriorityQueue<Double> probablePayouts;
+	private static boolean probable_payouts_by_tops;
 
 	private static boolean l_cost_rand;
 	private int marketing; // 0-basic 1-expert 2-proffesional
@@ -85,6 +87,8 @@ public class Hyip extends Player {
 		p_cost = (Integer) params.getValue("p_cost");
 		l_cost = (Integer) params.getValue("l_cost");
 		l_cost_rand = (Boolean) params.getValue("l_cost_rand");
+		probable_payouts_by_tops = (Boolean) params
+				.getValue("income_eval_frompeek");
 
 		e_eff = (Double) params.getValue("e_eff");
 		p_eff = (Double) params.getValue("p_eff");
@@ -105,7 +109,7 @@ public class Hyip extends Player {
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
 		hyipStatistics = new HyipStatistics();
-		probablePayouts = new PriorityQueue<Double>(10000,
+		probablePayouts = new PriorityQueue<Double>(Constraints.MemoryAllocForQueue,
 				new Comparator<Double>() {
 					public int compare(Double o1, Double o2) {
 						return -o1.compareTo(o2);
@@ -196,22 +200,14 @@ public class Hyip extends Player {
 		return id;
 	}
 
-	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
-	public void step() {
-		if (!getFrozen()) {
-			logActivity("The HYIP " + this.id
-					+ " is considering it's marketing");
-			setMarketing();
-		}
-	}
-
-	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 5)
+	@ScheduledMethod(start = 2.0, interval = 1.0, priority = 500)
 	public synchronized void considerRunningAway() {
 		if (getGameController().isFirstGeneration()) {
 			firstRoundAnalysis();
 		} else if (!getFrozen()) {
-			logActivity("The HYIP " + this.id + " is calculating its income");
-			this.income = hyipAccount.getIncome() - propablePayouts();
+			// logActivity("The HYIP " + this.id +
+			// " is calculating its income");
+			// this.income = hyipAccount.getIncome() - propablePayouts();
 			if (getGameController().isWarmedUp()) {
 				logActivity(Constraints.CONSIDERING_RUNNING_AWAY);
 				boolean runaway = ExitStrategyUtilities.checkForPass(this);
@@ -222,6 +218,51 @@ public class Hyip extends Player {
 					logActivity("Hyip " + this.id + " decides to stay more.");
 				}
 			}
+		}
+	}
+
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
+	public synchronized void payPercent() {
+		if (!getFrozen()) {
+			for (Invest invest : hyipSoldInvestments) {
+				invest.incrementTickCount();
+				invest.calculateInterest();
+				if (invest.getTickCount() >= invest.getHyipOffert()
+						.getForHowLong()) {
+					if (RandomHelper.nextDoubleFromTo(0, 1) > inv_rec) {
+						// keeping the money in hyip - investor decided to renew
+						invest.setTickCount(0);
+					} else {
+						// close and pay to client
+						hyipSoldInvestments.remove(invest);
+						transferFunds(invest);
+						// invest moved to archived
+						// hopefully later garbage collected
+					}
+				}
+			}
+		}
+	}
+
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 200)
+	public synchronized void resetIncome() {
+		hyipAccount.setIncome(0);
+	}
+
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)
+	public void step() {
+		if (!getFrozen()) {
+			logActivity("The HYIP " + this.id
+					+ " is considering it's marketing");
+			setMarketing();
+		}
+	}
+
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 5)
+	public void calculateIncome() {
+		if (!getFrozen()) {
+			logActivity("The HYIP " + this.id + " is calculating its income");
+			this.income = hyipAccount.getIncome() - propablePayouts();
 		}
 	}
 
@@ -250,35 +291,18 @@ public class Hyip extends Player {
 				probablePayouts.add(invest.forecastInterest());
 			}
 		}
-		Iterator<Double> it = probablePayouts.iterator();
-		for (int i = 0; i < probablePayouts.size() * inv_rec; i++) {
-			result += it.next();
-		}
-		return result;
-	}
-
-	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 10)
-	public synchronized void payPercent() {
-		if (!getFrozen()) {
-			hyipAccount.setIncome(0);
-			for (Invest invest : hyipSoldInvestments) {
-				invest.incrementTickCount();
-				invest.calculateInterest();
-				if (invest.getTickCount() >= invest.getHyipOffert()
-						.getForHowLong()) {
-					if (RandomHelper.nextDoubleFromTo(0, 1) > inv_rec) {
-						// keeping the money in hyip - investor decided to renew
-						invest.setTickCount(0);
-					} else {
-						// close and pay to client
-						hyipSoldInvestments.remove(invest);
-						transferFunds(invest);
-						// invest moved to archived
-						// hopefully later garbage collected
-					}
+		if (probable_payouts_by_tops) {
+			for (int i = 0; i < (int) (probablePayouts.size() * inv_rec); i++) {
+				result += probablePayouts.poll();
+			}
+		} else {
+			for (int i = 0; i < probablePayouts.size(); i++) {
+				if (RandomHelper.nextDoubleFromTo(0, 1) < inv_rec) {
+					result += probablePayouts.poll();
 				}
 			}
 		}
+		return result;
 	}
 
 	public double getIncome() {

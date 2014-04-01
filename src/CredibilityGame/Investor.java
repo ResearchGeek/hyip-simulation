@@ -87,13 +87,6 @@ public class Investor extends Player {
 			chooseOffert(hyip);
 		}
 	}
-
-//	public static void reset() {
-//		// reset state of all investors ?
-//		for (Object i : CredibilityGame.PLAYERS.getObjects(Investor.class)) {
-//			((Investor) i).initializeWallet();
-//		}
-//	}
 	
 	public void resetMe(){
 		this.initializeWallet();

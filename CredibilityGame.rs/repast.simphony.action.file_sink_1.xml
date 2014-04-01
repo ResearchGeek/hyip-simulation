@@ -11,11 +11,12 @@
 		<string>Runned_Away</string>
 		<string>Id</string>
 		<string>Advert</string>
+		<string>Income</string>
 		<string>Count_Investments</string>
 		<string>Good_Looking</string>
 		<string>Total_Number_Of_Invests</string>
-		<string>Use_Balance</string>
-		<string>Strategy_Balance</string>
+		<string>Use_Cash</string>
+		<string>Strategy_Cash</string>
 		<string>Use_Income</string>
 		<string>Strategy_Income</string>
 		<string>Use_Investor_Count</string>

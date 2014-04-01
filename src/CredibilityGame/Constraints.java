@@ -29,4 +29,6 @@ public class Constraints {
 			"resetAllInvestors() starts work. Choosing all consumers (Investors).";
 	public static final String CALCULATE_ROIS_MESSAGE = 
 			"Let's calculate some ROI's";
+
+	public static final int MemoryAllocForQueue = 50000;
 }

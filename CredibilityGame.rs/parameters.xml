@@ -37,6 +37,9 @@
 	<parameter name="unlimited_i_funds" displayName="Is investors money unlimited"
 		type="boolean" defaultValue="true" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
+	<parameter name="income_eval_frompeek" displayName="Probable payouts by top biggest?"
+		type="boolean" defaultValue="true" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
 
 	<parameter name="e_eff" displayName="e_eff" type="double"
 		defaultValue="10" isReadOnly="false"

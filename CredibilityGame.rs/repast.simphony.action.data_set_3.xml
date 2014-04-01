@@ -25,6 +25,14 @@
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
+			<string>Income</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Income</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getIncome</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
 			<string>Runned_Away</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
 				<id>Runned_Away</id>
@@ -41,9 +49,9 @@
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
-			<string>Strategy_Balance</string>
+			<string>Strategy_Cash</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
-				<id>Strategy_Balance</id>
+				<id>Strategy_Cash</id>
 				<className>CredibilityGame.Hyip</className>
 				<methodName>getStrategyBalance</methodName>
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -73,9 +81,9 @@
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
-			<string>Use_Balance</string>
+			<string>Use_Cash</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
-				<id>Use_Balance</id>
+				<id>Use_Cash</id>
 				<className>CredibilityGame.Hyip</className>
 				<methodName>usesBalance</methodName>
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>

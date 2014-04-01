@@ -3,8 +3,8 @@ package CredibilityGame;
 public class HyipAccount {
 
 	private Hyip owner;
-	private double cash;
-	private double income;
+	private volatile double cash;
+	private volatile double income;
 
 	public HyipAccount(Hyip owner, double cash) {
 		this.owner = owner;
@@ -23,7 +23,6 @@ public class HyipAccount {
 
 	public void withdrawMoney(double value) {
 		cash -= value;
-		addIncome(-value);
 	}
 
 	public double getCash() {
@@ -35,7 +34,7 @@ public class HyipAccount {
 	}
 
 	public double getIncome() {
-		return income;
+		return this.income;
 	}
 
 	public void setIncome(double income) {
@@ -46,11 +45,20 @@ public class HyipAccount {
 		this.income += amount;
 	}
 
+	public void diffIncome(double amount) {
+		this.income = amount - this.income;
+	}
+
+	public void diffIncome(double amount, boolean abs) {
+		this.income = abs ? Math.abs(amount - this.income) : amount
+				- this.income;
+	}
+
 	public Hyip getOwner() {
 		return owner;
 	}
-	
-	public void clear(){
+
+	public void clear() {
 		this.income = 0;
 		this.cash = 0;
 	}
