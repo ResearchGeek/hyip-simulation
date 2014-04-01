@@ -37,9 +37,9 @@ public abstract class Player {
 	}
 
 	/**
-	 * Evolution with Stochasting Universal Sampling
+	 * Evolution with Stochasting Universal Sampling, I modified little
+	 * SUS method coded by Paulina and Grzegorz
 	 * 
-	 * @author Oskar Jarczyk
 	 * @since 1.1
 	 * @param population
 	 */
@@ -48,7 +48,7 @@ public abstract class Player {
 			return;
 
 		Collections.sort(population, new PlayerComparator());
-		double min = population.get(population.size() - 1).getIncome();
+		double min = population.get(population.size() - 1).getCash();
 		double scaling = min < 0 ? ((-1) * min) : 0;
 			// do czego to sluzy ?
 
@@ -56,7 +56,7 @@ public abstract class Player {
 		ArrayList<Double> ranges = new ArrayList<Double>();
 		ArrayList<ExitStrategy> strategiesBackup = new ArrayList<ExitStrategy>();
 		for (Hyip p : population) {
-			maxRange += (p.getIncome() + scaling);
+			maxRange += (p.getCash() + scaling);
 			ranges.add(maxRange);
 			strategiesBackup.add(p.getExitStrategy().copy());
 		}
