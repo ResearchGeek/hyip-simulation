@@ -297,9 +297,7 @@ public class Hyip extends Player {
 			}
 		} else {
 			for (int i = 0; i < probablePayouts.size(); i++) {
-				if (RandomHelper.nextDoubleFromTo(0, 1) < inv_rec) {
-					result += probablePayouts.poll();
-				}
+				result += probablePayouts.poll();
 			}
 		}
 		return result;
