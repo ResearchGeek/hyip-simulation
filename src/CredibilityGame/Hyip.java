@@ -556,7 +556,7 @@ public class Hyip extends Player {
 	}
 
 	public int getIteration() {
-		return getGameController().getCurrentIteration();
+		return getGameController().getCurrentIteration() + 1;
 	}
 
 	public int getGeneration() {

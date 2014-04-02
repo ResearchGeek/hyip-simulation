@@ -40,7 +40,7 @@ public class GameController {
 	}
 
 	/**
-	 * Tells wheter this is a first generation (warming up) or not (generations
+	 * Tells whether this is a first generation (warming up) or not (generations
 	 * are indexed starting from 0)
 	 * 
 	 * @return true if current generation is the first one
@@ -49,7 +49,7 @@ public class GameController {
 		return currentGeneration == 0;
 	}
 
-	@ScheduledMethod(start = 1.0, interval = 1.0, priority = ScheduleParameters.FIRST_PRIORITY)
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = ScheduleParameters.LAST_PRIORITY + 1)
 	public void firstStep() {
 		if (isFirstGeneration()) {
 			// warming up, hold on with evolution,
@@ -109,21 +109,17 @@ public class GameController {
 		say("It took " + minutes.getMinutes() + " minutes and "
 				+ seconds.getSeconds() + " seconds between ticks.");
 
-		say(Constraints.CALCULATE_ROIS_MESSAGE);
-		Hyip.calculateRois();
-
-		if (currentIteration == (iterationNumber - 2)) {
+		// check whether this is the last generation/iteration
+		if (currentIteration == (iterationNumber - 1)) {
 			if (currentGeneration == (generationNumber - 1)) {
 				say("Ending instance run");
 				RunEnvironment.getInstance().endRun();
+			} else {
+				say("This is the last iteration in this gen");
+				currentIteration = 0;
+				say("Ending current generation");
+				currentGeneration++;
 			}
-		} else
-		// check whether this is the last generation/iteration
-		if (currentIteration == (iterationNumber - 1)) {
-			say("This is the last iteration in this gen");
-			currentIteration = 0;
-			say("Ending current generation");
-			currentGeneration++;
 		} else {
 			say("Incrementing current iteration number to: "
 					+ (currentIteration + 1));
