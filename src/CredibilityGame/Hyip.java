@@ -109,8 +109,8 @@ public class Hyip extends Player {
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
 		hyipStatistics = new HyipStatistics();
-		probablePayouts = new PriorityQueue<Double>(Constraints.MemoryAllocForQueue,
-				new Comparator<Double>() {
+		probablePayouts = new PriorityQueue<Double>(
+				Constraints.MemoryAllocForQueue, new Comparator<Double>() {
 					public int compare(Double o1, Double o2) {
 						return -o1.compareTo(o2);
 					}
@@ -445,6 +445,25 @@ public class Hyip extends Player {
 	}
 
 	public void mutate() {
+		exitStrategy
+				.setBalance(exitStrategy.getBalance()
+						+ (exitStrategy.getBalance() * RandomHelper
+								.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+										Constraints.MUTATE_FACTOR)));
+		exitStrategy
+				.setIncome(exitStrategy.getIncome()
+						+ (exitStrategy.getIncome() * RandomHelper
+								.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+										Constraints.MUTATE_FACTOR)));
+		exitStrategy.setInvestorCount(exitStrategy.getInvestorCount()
+				+ (int) (exitStrategy.getInvestorCount() * RandomHelper
+						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+								Constraints.MUTATE_FACTOR)));
+		exitStrategy.setTime(exitStrategy.getTime()
+				+ (int) (exitStrategy.getTime() * RandomHelper
+						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+								Constraints.MUTATE_FACTOR)));
+
 		ExitStrategyOptions ops = exitStrategy.getExitStrategyOptions();
 		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
 			ops.setConsiderBalance(!ops.isConsiderBalance().booleanValue());
@@ -459,30 +478,7 @@ public class Hyip extends Player {
 		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
 			ops.setConsiderTime(!ops.isConsiderTime().booleanValue());
 		}
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
-			exitStrategy.setBalance(exitStrategy.getBalance()
-					+ (exitStrategy.getBalance() * RandomHelper
-							.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
-									Constraints.MUTATE_FACTOR)));
-		}
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
-			exitStrategy.setIncome(exitStrategy.getIncome()
-					+ (exitStrategy.getIncome() * RandomHelper
-							.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
-									Constraints.MUTATE_FACTOR)));
-		}
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
-			exitStrategy.setInvestorCount(exitStrategy.getInvestorCount()
-					+ (int) (exitStrategy.getInvestorCount() * RandomHelper
-							.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
-									Constraints.MUTATE_FACTOR)));
-		}
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
-			exitStrategy.setTime(exitStrategy.getTime()
-					+ (int) (exitStrategy.getTime() * RandomHelper
-							.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
-									Constraints.MUTATE_FACTOR)));
-		}
+
 	}
 
 	public Boolean getFrozen() {
