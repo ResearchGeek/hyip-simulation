@@ -6,6 +6,9 @@ public class ExitStrategyOptions {
 	private Boolean considerInvestorCount;
 	private Boolean considerBalance;
 	private Boolean considerTime;
+	
+	private Boolean considerE_use;
+	private Boolean considerP_use;
 
 	public ExitStrategyOptions() {
 		// consider done mister.
@@ -16,6 +19,8 @@ public class ExitStrategyOptions {
 		this.considerInvestorCount = switchTrue;
 		this.considerBalance = switchTrue;
 		this.considerTime = switchTrue;
+		this.considerE_use = switchTrue;
+		this.considerP_use = switchTrue;
 	}
 
 	public ExitStrategyOptions(boolean switchTrue) {
@@ -23,6 +28,8 @@ public class ExitStrategyOptions {
 		this.considerInvestorCount = switchTrue;
 		this.considerBalance = switchTrue;
 		this.considerTime = switchTrue;
+		this.considerE_use = switchTrue;
+		this.considerP_use = switchTrue;
 	}
 
 	public Boolean isConsiderBalance() {
@@ -55,6 +62,22 @@ public class ExitStrategyOptions {
 
 	public void setConsiderTime(boolean considerTime) {
 		this.considerTime = considerTime;
+	}
+
+	public Boolean isConsiderE_use() {
+		return considerE_use;
+	}
+
+	public void setConsiderE_use(Boolean considerE_use) {
+		this.considerE_use = considerE_use;
+	}
+
+	public Boolean isConsiderP_use() {
+		return considerP_use;
+	}
+
+	public void setConsiderP_use(Boolean considerP_use) {
+		this.considerP_use = considerP_use;
 	}
 
 }
