@@ -8,6 +8,9 @@ public class HyipStatistics {
 	private double income;
 	private double cash;
 	
+	private double e_use;
+	private double p_use;
+	
 	public HyipStatistics(){
 		this.cash = 0;
 	}
@@ -45,6 +48,22 @@ public class HyipStatistics {
 	}
 	public boolean isBetterMoment(double cash){
 		return cash > this.cash;
+	}
+
+	public double getE_use() {
+		return e_use;
+	}
+
+	public void setE_use(double e_use) {
+		this.e_use = e_use;
+	}
+
+	public double getP_use() {
+		return p_use;
+	}
+
+	public void setP_use(double p_use) {
+		this.p_use = p_use;
 	}
 
 }
