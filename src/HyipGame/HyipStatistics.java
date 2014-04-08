@@ -20,6 +20,8 @@ public class HyipStatistics {
 		this.investorCount = 0;
 		this.income = 0;
 		this.cash = 0;
+		this.e_use = 0;
+		this.p_use = 0;
 	}
 	
 	public int getTick() {
