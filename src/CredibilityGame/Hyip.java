@@ -31,7 +31,8 @@ import HyipGame.HyipStatistics;
  * 
  * @author Oskar Jarczyk
  * @since 1.0
- * @version 1.2
+ * @version 1.3
+ * @update 08.04.2014
  */
 public class Hyip extends Player {
 
@@ -54,6 +55,8 @@ public class Hyip extends Player {
 	private long totalNumberOfInvestments = 0;
 	private Long id;
 	private boolean isGoodLooking;
+	private double e_use;
+	private double p_use;
 	private ExitStrategy exitStrategy;
 	private HyipStatistics hyipStatistics;
 	private HyipAccount hyipAccount;
@@ -74,15 +77,14 @@ public class Hyip extends Player {
 	private static int l_cost; // marketing cost prof
 	private static double e_eff; // marketing efect expert
 	private static double p_eff; // marketing efect prof
-	// private static double l_eff; // look efect prof
-	private static double e_use;
-	private static double p_use;
 	private static double inv_rec;
+	private static double standardE_use;
+	private static double standardP_use;
 
 	public static void initialize() {
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		e_use = (double) params.getValue("e_use");
-		p_use = (double) params.getValue("p_use");
+		standardE_use = (double) params.getValue("e_use");
+		standardP_use = (double) params.getValue("p_use");
 		e_cost = (Integer) params.getValue("e_cost");
 		p_cost = (Integer) params.getValue("p_cost");
 		l_cost = (Integer) params.getValue("l_cost");
@@ -108,6 +110,8 @@ public class Hyip extends Player {
 		this.frozen = false;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
+		e_use = standardE_use;
+		p_use = standardP_use;
 		hyipStatistics = new HyipStatistics();
 		probablePayouts = new PriorityQueue<Double>(
 				Constraints.MemoryAllocForQueue, new Comparator<Double>() {
@@ -205,9 +209,6 @@ public class Hyip extends Player {
 		if (getGameController().isFirstGeneration()) {
 			firstRoundAnalysis();
 		} else if (!getFrozen()) {
-			// logActivity("The HYIP " + this.id +
-			// " is calculating its income");
-			// this.income = hyipAccount.getIncome() - propablePayouts();
 			if (getGameController().isWarmedUp()) {
 				logActivity(Constraints.CONSIDERING_RUNNING_AWAY);
 				boolean runaway = ExitStrategyUtilities.checkForPass(this);
@@ -272,6 +273,8 @@ public class Hyip extends Player {
 			hyipStatistics.setIncome(getIncome());
 			hyipStatistics.setInvestorCount(countOngoingInvestments());
 			hyipStatistics.setTick(getIteration());
+			hyipStatistics.setE_use(getE_use());
+			hyipStatistics.setP_use(getP_use());
 			exitStrategy.updateFromStats(hyipStatistics, true);
 		}
 	}
@@ -488,6 +491,14 @@ public class Hyip extends Player {
 	public void setFrozen(Boolean frozen) {
 		this.frozen = frozen;
 	}
+	
+	public double getE_use(){
+		return this.e_use;
+	}
+	
+	public double getP_use(){
+		return this.p_use;
+	}
 
 	public String describeStrategy() {
 		StringBuilder sb = new StringBuilder(Constraints.OPENING_BRACKET);
@@ -512,6 +523,16 @@ public class Hyip extends Player {
 		sb.append(ops.isConsiderInvestorCount());
 		sb.append(Constraints.COMMA);
 		sb.append(exitStrategy.getInvestorCount());
+		sb.append(Constraints.SEPERATOR);
+		sb.append("e_use:");
+		sb.append(ops.isConsiderE_use());
+		sb.append(Constraints.COMMA);
+		sb.append(exitStrategy.getE_use());
+		sb.append(Constraints.SEPERATOR);
+		sb.append("p_use:");
+		sb.append(ops.isConsiderP_use());
+		sb.append(Constraints.COMMA);
+		sb.append(exitStrategy.getP_use());
 
 		sb.append(Constraints.CLOSING_BRACKET);
 		return sb.toString();
