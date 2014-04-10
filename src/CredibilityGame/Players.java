@@ -12,10 +12,10 @@ public class Players extends DefaultContext<Player> {
 
 	public Players() {
 		super("Players");
-		System.out.println("Players context loaded");
+		System.out.println(Constraints.PLAYERS_LOADED);
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		int producerPopulationSize = (Integer) params
-				.getValue("hyip_population_size"); // 1600 (200x8)
+				.getValue("hyip_population_size");
 
 		int inv_0 = (Integer) params.getValue("inv_0");
 		int inv_1 = (Integer) params.getValue("inv_1");

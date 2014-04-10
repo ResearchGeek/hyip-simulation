@@ -31,4 +31,7 @@ public class Constraints {
 			"Let's calculate some ROI's";
 
 	public static final int MemoryAllocForQueue = 50000;
+
+	public static final String PLAYERS_LOADED = 
+			"Players (extends DefaultContext<Player>) context loaded";
 }

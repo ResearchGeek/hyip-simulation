@@ -27,6 +27,22 @@ Repast License: The Repast suite software and documentation is licensed under a 
 
 *Investment* - an ongoing investment
 
+**Parameters**
+
+*generation_number* - number of generations
+
+*iteration_number* - number of iterations in a generation
+
+*inv_0* - count of investors in part 1
+
+*inv_1* - count of investors in part 2
+
+*inv_2* - count of investors in part 3
+
+*income_eval_frompeek* - be default "false", tells how we want to assess next payouts
+
+*hyip_population_size* - number of hyips in a simulation
+
 **Outputs**
 
 hyip_*.csv outputs results, state of every hyip per every tick

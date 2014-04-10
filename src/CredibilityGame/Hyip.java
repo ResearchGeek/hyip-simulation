@@ -31,7 +31,8 @@ import HyipGame.HyipStatistics;
  * 
  * @author Oskar Jarczyk
  * @since 1.0
- * @version 1.2
+ * @version 1.3
+ * @update 08.04.2014
  */
 public class Hyip extends Player {
 
@@ -54,6 +55,8 @@ public class Hyip extends Player {
 	private long totalNumberOfInvestments = 0;
 	private Long id;
 	private boolean isGoodLooking;
+	private double e_use;
+	private double p_use;
 	private ExitStrategy exitStrategy;
 	private HyipStatistics hyipStatistics;
 	private HyipAccount hyipAccount;
@@ -74,15 +77,12 @@ public class Hyip extends Player {
 	private static int l_cost; // marketing cost prof
 	private static double e_eff; // marketing efect expert
 	private static double p_eff; // marketing efect prof
-	// private static double l_eff; // look efect prof
-	private static double e_use;
-	private static double p_use;
 	private static double inv_rec;
+	private double x_e_use;
+	private double x_p_use;
 
 	public static void initialize() {
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		e_use = (double) params.getValue("e_use");
-		p_use = (double) params.getValue("p_use");
 		e_cost = (Integer) params.getValue("e_cost");
 		p_cost = (Integer) params.getValue("p_cost");
 		l_cost = (Integer) params.getValue("l_cost");
@@ -108,6 +108,10 @@ public class Hyip extends Player {
 		this.frozen = false;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
+		x_e_use = RandomHelper.nextDoubleFromTo(0, 1);
+		x_p_use = RandomHelper.nextDoubleFromTo(0, 1);
+		e_use = interpretEP_use(x_e_use, x_p_use)[0];
+		p_use = interpretEP_use(x_e_use, x_p_use)[1];
 		hyipStatistics = new HyipStatistics();
 		probablePayouts = new PriorityQueue<Double>(
 				Constraints.MemoryAllocForQueue, new Comparator<Double>() {
@@ -205,9 +209,6 @@ public class Hyip extends Player {
 		if (getGameController().isFirstGeneration()) {
 			firstRoundAnalysis();
 		} else if (!getFrozen()) {
-			// logActivity("The HYIP " + this.id +
-			// " is calculating its income");
-			// this.income = hyipAccount.getIncome() - propablePayouts();
 			if (getGameController().isWarmedUp()) {
 				logActivity(Constraints.CONSIDERING_RUNNING_AWAY);
 				boolean runaway = ExitStrategyUtilities.checkForPass(this);
@@ -272,6 +273,8 @@ public class Hyip extends Player {
 			hyipStatistics.setIncome(getIncome());
 			hyipStatistics.setInvestorCount(countOngoingInvestments());
 			hyipStatistics.setTick(getIteration());
+			hyipStatistics.setXE_use(getX_e_use());
+			hyipStatistics.setXP_use(getP_use());
 			exitStrategy.updateFromStats(hyipStatistics, true);
 		}
 	}
@@ -463,6 +466,14 @@ public class Hyip extends Player {
 				+ (int) (exitStrategy.getTime() * RandomHelper
 						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
 								Constraints.MUTATE_FACTOR)));
+		exitStrategy.setE_use(exitStrategy.getE_use()
+				+ (int) (exitStrategy.getE_use() * RandomHelper
+						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+								Constraints.MUTATE_FACTOR)));
+		exitStrategy.setP_use(exitStrategy.getP_use()
+				+ (int) (exitStrategy.getP_use() * RandomHelper
+						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
+								Constraints.MUTATE_FACTOR)));
 
 		ExitStrategyOptions ops = exitStrategy.getExitStrategyOptions();
 		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
@@ -478,6 +489,12 @@ public class Hyip extends Player {
 		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
 			ops.setConsiderTime(!ops.isConsiderTime().booleanValue());
 		}
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			ops.setConsiderE_use(!ops.isConsiderE_use().booleanValue());
+		}
+		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+			ops.setConsiderP_use(!ops.isConsiderP_use().booleanValue());
+		}
 
 	}
 
@@ -487,6 +504,26 @@ public class Hyip extends Player {
 
 	public void setFrozen(Boolean frozen) {
 		this.frozen = frozen;
+	}
+
+	public double getE_use() {
+		return this.e_use;
+	}
+
+	public double getP_use() {
+		return this.p_use;
+	}
+
+	public double getX_e_use() {
+		return x_e_use;
+	}
+
+	public void setX_e_use(double x_e_use) {
+		this.x_e_use = x_e_use;
+	}
+
+	private double[] interpretEP_use(double x_e_use, double x_p_use) {
+		return new double[] { x_e_use * x_p_use, x_e_use * (1 - x_p_use) };
 	}
 
 	public String describeStrategy() {
@@ -512,6 +549,16 @@ public class Hyip extends Player {
 		sb.append(ops.isConsiderInvestorCount());
 		sb.append(Constraints.COMMA);
 		sb.append(exitStrategy.getInvestorCount());
+		sb.append(Constraints.SEPERATOR);
+		sb.append("e_use:");
+		sb.append(ops.isConsiderE_use());
+		sb.append(Constraints.COMMA);
+		sb.append(exitStrategy.getE_use());
+		sb.append(Constraints.SEPERATOR);
+		sb.append("p_use:");
+		sb.append(ops.isConsiderP_use());
+		sb.append(Constraints.COMMA);
+		sb.append(exitStrategy.getP_use());
 
 		sb.append(Constraints.CLOSING_BRACKET);
 		return sb.toString();
