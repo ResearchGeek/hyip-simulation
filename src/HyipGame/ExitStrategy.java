@@ -195,12 +195,12 @@ public class ExitStrategy implements Strategy {
 		this.investorCount += (int) (RandomHelper.nextDoubleFromTo(-variance,
 				variance));
 		
-		this.e_use = hyipStatistics.getE_use();
+		this.e_use = hyipStatistics.getXE_use();
 		variance = this.e_use * bias;
 		this.e_use += (int) (RandomHelper.nextDoubleFromTo(-variance,
 				variance));
 		
-		this.p_use = hyipStatistics.getP_use();
+		this.p_use = hyipStatistics.getXP_use();
 		variance = this.p_use * bias;
 		this.p_use += (int) (RandomHelper.nextDoubleFromTo(-variance,
 				variance));
