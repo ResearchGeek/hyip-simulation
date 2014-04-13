@@ -579,6 +579,14 @@ public class Hyip extends Player {
 	public boolean usesTime() {
 		return exitStrategy.getExitStrategyOptions().isConsiderTime();
 	}
+	
+	public boolean usesE_use() {
+		return exitStrategy.getExitStrategyOptions().isConsiderE_use();
+	}
+	
+	public boolean usesP_use() {
+		return exitStrategy.getExitStrategyOptions().isConsiderP_use();
+	}
 
 	public double getStrategyBalance() {
 		return exitStrategy.getBalance();
@@ -594,6 +602,14 @@ public class Hyip extends Player {
 
 	public int getStrategyTime() {
 		return exitStrategy.getTime();
+	}
+	
+	public double getStrategyE_use() {
+		return exitStrategy.getE_use();
+	}
+	
+	public double getStrategyP_use() {
+		return exitStrategy.getP_use();
 	}
 
 	public int getIteration() {

@@ -12,7 +12,7 @@ public class PjiitOutputter {
 	 * 
 	 * __DONT__FORCE__SKIP__ = true; will enable diagnostic messages
 	 */
-	private static boolean __DONT__FORCE__SKIP__ = true;
+	private static boolean __DONT__FORCE__SKIP__ = false;
 
 	public static void say(String s) {
 		if (__DONT__FORCE__SKIP__) {

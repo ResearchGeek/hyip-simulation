@@ -96,6 +96,40 @@
 				<methodName>usesIncome</methodName>
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
+		
+		<entry>
+			<string>Use_E_Use</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Use_E_Use</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>usesE_use</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Use_P_Use</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Use_P_Use</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>usesP_use</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Strategy_E_Use</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Strategy_E_Use</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getStrategyE_use</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>Strategy_P_Use</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Strategy_P_Use</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getStrategyP_use</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		
 		<entry>
 			<string>Use_Investor_Count</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
