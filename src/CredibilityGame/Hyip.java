@@ -32,7 +32,7 @@ import HyipGame.HyipStatistics;
  * @author Oskar Jarczyk
  * @since 1.0
  * @version 1.3
- * @update 08.04.2014
+ * @update 13.04.2014
  */
 public class Hyip extends Player {
 
@@ -466,12 +466,12 @@ public class Hyip extends Player {
 				+ (int) (exitStrategy.getTime() * RandomHelper
 						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
 								Constraints.MUTATE_FACTOR)));
-		exitStrategy.setE_use(exitStrategy.getE_use()
-				+ (int) (exitStrategy.getE_use() * RandomHelper
+		this.setE_use(this.getE_use()
+				+ (int) (this.getE_use() * RandomHelper
 						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
 								Constraints.MUTATE_FACTOR)));
-		exitStrategy.setP_use(exitStrategy.getP_use()
-				+ (int) (exitStrategy.getP_use() * RandomHelper
+		this.setP_use(this.getP_use()
+				+ (int) (this.getP_use() * RandomHelper
 						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
 								Constraints.MUTATE_FACTOR)));
 
@@ -489,12 +489,12 @@ public class Hyip extends Player {
 		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
 			ops.setConsiderTime(!ops.isConsiderTime().booleanValue());
 		}
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
-			ops.setConsiderE_use(!ops.isConsiderE_use().booleanValue());
-		}
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
-			ops.setConsiderP_use(!ops.isConsiderP_use().booleanValue());
-		}
+//		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+//			ops.setConsiderE_use(!ops.isConsiderE_use().booleanValue());
+//		}
+//		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+//			ops.setConsiderP_use(!ops.isConsiderP_use().booleanValue());
+//		}
 
 	}
 
@@ -522,6 +522,13 @@ public class Hyip extends Player {
 		this.x_e_use = x_e_use;
 	}
 
+	/**
+	 * It should be for first generation only, because after randomizing
+	 * euse puse params only mutate
+	 * @param x_e_use
+	 * @param x_p_use
+	 * @return 0.1
+	 */
 	private double[] interpretEP_use(double x_e_use, double x_p_use) {
 		return new double[] { x_e_use * x_p_use, x_e_use * (1 - x_p_use) };
 	}
@@ -549,16 +556,16 @@ public class Hyip extends Player {
 		sb.append(ops.isConsiderInvestorCount());
 		sb.append(Constraints.COMMA);
 		sb.append(exitStrategy.getInvestorCount());
-		sb.append(Constraints.SEPERATOR);
-		sb.append("e_use:");
-		sb.append(ops.isConsiderE_use());
-		sb.append(Constraints.COMMA);
-		sb.append(exitStrategy.getE_use());
-		sb.append(Constraints.SEPERATOR);
-		sb.append("p_use:");
-		sb.append(ops.isConsiderP_use());
-		sb.append(Constraints.COMMA);
-		sb.append(exitStrategy.getP_use());
+//		sb.append(Constraints.SEPERATOR);
+//		sb.append("e_use:");
+//		sb.append(ops.isConsiderE_use());
+//		sb.append(Constraints.COMMA);
+//		sb.append(exitStrategy.getE_use());
+//		sb.append(Constraints.SEPERATOR);
+//		sb.append("p_use:");
+//		sb.append(ops.isConsiderP_use());
+//		sb.append(Constraints.COMMA);
+//		sb.append(exitStrategy.getP_use());
 
 		sb.append(Constraints.CLOSING_BRACKET);
 		return sb.toString();
@@ -580,13 +587,13 @@ public class Hyip extends Player {
 		return exitStrategy.getExitStrategyOptions().isConsiderTime();
 	}
 	
-	public boolean usesE_use() {
-		return exitStrategy.getExitStrategyOptions().isConsiderE_use();
-	}
-	
-	public boolean usesP_use() {
-		return exitStrategy.getExitStrategyOptions().isConsiderP_use();
-	}
+    public void setE_use(double e_use){
+    	this.e_use = e_use;
+    }
+    
+    public void setP_use(double p_use){
+    	this.p_use = p_use;
+    }
 
 	public double getStrategyBalance() {
 		return exitStrategy.getBalance();
@@ -604,13 +611,13 @@ public class Hyip extends Player {
 		return exitStrategy.getTime();
 	}
 	
-	public double getStrategyE_use() {
-		return exitStrategy.getE_use();
-	}
-	
-	public double getStrategyP_use() {
-		return exitStrategy.getP_use();
-	}
+//	public double getStrategyE_use() {
+//		return exitStrategy.getE_use();
+//	}
+//	
+//	public double getStrategyP_use() {
+//		return exitStrategy.getP_use();
+//	}
 
 	public int getIteration() {
 		return getGameController().getCurrentIteration() + 1;
