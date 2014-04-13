@@ -23,6 +23,8 @@
 		<string>Strategy_Investor_Count</string>
 		<string>Use_Time</string>
 		<string>Strategy_Time</string>
+		<string>E_Use</string>
+		<string>P_Use</string>
 		<string>Strategy</string>
 	</sourceIds>
 	<fileName>hyip_cash.csv</fileName>

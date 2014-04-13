@@ -2,9 +2,9 @@
 <sweep runs="1">
 <parameter name="generation_number" type="constant" constant_type="number" value="10"/>
 <parameter name="iteration_number" type="constant" constant_type="number" value="200"/>
-<parameter name="inv_0" type="constant" constant_type="number" value="700"/> 
-<parameter name="inv_1" type="constant" constant_type="number" value="700"/>
-<parameter name="inv_2" type="constant" constant_type="number" value="700"/>
+<parameter name="inv_0" type="constant" constant_type="number" value="1500"/> 
+<parameter name="inv_1" type="constant" constant_type="number" value="0"/>
+<parameter name="inv_2" type="constant" constant_type="number" value="0"/>
 <parameter name="consumer_max_threshold_mutation" type="constant" constant_type="number" value="0.05"/>
 <parameter name="income_eval_frompeek" type="constant" constant_type="java.lang.Boolean" value="false"/>
 
@@ -13,23 +13,21 @@
 <parameter name="hyip_marketing" type="constant" constant_type="number" value="0"/>
 <parameter name="hyip_look" type="constant" constant_type="number" value="1"/>
 
-<parameter name="e_cost" type="constant" constant_type="number" value="5"/>
-<parameter name="p_cost" type="constant" constant_type="number" value="10"/>
+<parameter name="e_cost" type="constant" constant_type="number" value="500"/>
+<parameter name="p_cost" type="constant" constant_type="number" value="2000"/>
 
 <parameter name="first_strategy_bias" type="constant" constant_type="number" value="20"/>
 <parameter name="mutate_chance" type="constant" constant_type="number" value="1"/>
 <parameter name="mutate_factor" type="constant" constant_type="number" value="0.05"/>
 
-<parameter name="e_eff" type="constant" constant_type="number" value="0.01"/>
-<parameter name="p_eff" type="constant" constant_type="number" value="0.04"/>
+<parameter name="e_eff" type="constant" constant_type="number" value="0.0"/>
+<parameter name="p_eff" type="constant" constant_type="number" value="0.0"/>
 <parameter name="l_eff" type="constant" constant_type="number" value="0.1"/>
-<!-- <parameter name="e_use" type="constant" constant_type="number" value="0.33"/> -->
-<!-- <parameter name="p_use" type="constant" constant_type="number" value="0.33"/> -->
 
 <parameter name="l_cost" type="constant" constant_type="number" value="600"/>
 <parameter name="l_cost_rand" type="constant" constant_type="java.lang.Boolean" value="true"/>
 
-<parameter name="inv_invest" type="constant" constant_type="number" value="0.1"/>
-<parameter name="inv_rec" type="constant" constant_type="number" value="0.08"/>
+<parameter name="inv_invest" type="constant" constant_type="number" value="0.75"/>
+<parameter name="inv_rec" type="constant" constant_type="number" value="0.05"/>
 <parameter name="unlimited_i_funds" type="constant" constant_type="java.lang.Boolean" value="true"/>
 </sweep>

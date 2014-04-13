@@ -14,8 +14,8 @@ public class ExitStrategy implements Strategy {
 	private double balance;
 	private int time;
 
-	private double e_use;
-	private double p_use;
+	// private double e_use;
+	// private double p_use;
 
 	private static Parameters params = RunEnvironment.getInstance()
 			.getParameters();
@@ -23,13 +23,13 @@ public class ExitStrategy implements Strategy {
 			.getValue("first_strategy_bias"));
 
 	public ExitStrategy(double income, int investorCount, double balance,
-			int time, double e_use, double p_use, Boolean... enabled) {
+			int time, Boolean... enabled) {
 		this.income = income;
 		this.investorCount = investorCount;
 		this.balance = balance;
 		this.time = time;
-		this.e_use = e_use;
-		this.p_use = p_use;
+		// this.e_use = e_use;
+		// this.p_use = p_use;
 		this.exitStrategyOptions = new ExitStrategyOptions();
 		for (boolean enable : enabled) {
 			if (isN(exitStrategyOptions.isConsiderBalance())) {
@@ -48,14 +48,14 @@ public class ExitStrategy implements Strategy {
 				exitStrategyOptions.setConsiderTime(enable);
 				continue;
 			}
-			if (isN(exitStrategyOptions.isConsiderE_use())) {
-				exitStrategyOptions.setConsiderE_use(enable);
-				continue;
-			}
-			if (isN(exitStrategyOptions.isConsiderP_use())) {
-				exitStrategyOptions.setConsiderP_use(enable);
-				continue;
-			}
+			// if (isN(exitStrategyOptions.isConsiderE_use())) {
+			// exitStrategyOptions.setConsiderE_use(enable);
+			// continue;
+			// }
+			// if (isN(exitStrategyOptions.isConsiderP_use())) {
+			// exitStrategyOptions.setConsiderP_use(enable);
+			// continue;
+			// }
 		}
 	}
 
@@ -65,20 +65,19 @@ public class ExitStrategy implements Strategy {
 		this.investorCount = investorCount;
 		this.balance = balance;
 		this.time = time;
-		this.e_use = e_use;
-		this.p_use = p_use;
+		// this.e_use = e_use;
+		// this.p_use = p_use;
 		this.exitStrategyOptions = new ExitStrategyOptions();
 	}
 
 	public ExitStrategy(double income, int investorCount, double balance,
-			int time, double e_use, double p_use,
-			ExitStrategyOptions exitStrategyOptions) {
+			int time, ExitStrategyOptions exitStrategyOptions) {
 		this.income = income;
 		this.investorCount = investorCount;
 		this.balance = balance;
 		this.time = time;
-		this.e_use = e_use;
-		this.p_use = p_use;
+		// this.e_use = e_use;
+		// this.p_use = p_use;
 		this.exitStrategyOptions = exitStrategyOptions;
 	}
 
@@ -129,7 +128,7 @@ public class ExitStrategy implements Strategy {
 	@Override
 	public ExitStrategy copy() {
 		return new ExitStrategy(getIncome(), getInvestorCount(), getBalance(),
-				getTime(), getE_use(), getP_use(), getExitStrategyOptions());
+				getTime(), getExitStrategyOptions());
 	}
 
 	@Override
@@ -140,8 +139,8 @@ public class ExitStrategy implements Strategy {
 		this.income = typical.income;
 		this.time = typical.time;
 		this.investorCount = typical.investorCount;
-		this.e_use = typical.e_use;
-		this.p_use = typical.p_use;
+		// this.e_use = typical.e_use;
+		// this.p_use = typical.p_use;
 	}
 
 	public void copyStrategy(ExitStrategy copyFrom) {
@@ -150,8 +149,8 @@ public class ExitStrategy implements Strategy {
 		this.income = copyFrom.income;
 		this.time = copyFrom.time;
 		this.investorCount = copyFrom.investorCount;
-		this.e_use = copyFrom.e_use;
-		this.p_use = copyFrom.p_use;
+		// this.e_use = copyFrom.e_use;
+		// this.p_use = copyFrom.p_use;
 	}
 
 	@Override
@@ -194,31 +193,31 @@ public class ExitStrategy implements Strategy {
 		variance = this.investorCount * bias;
 		this.investorCount += (int) (RandomHelper.nextDoubleFromTo(-variance,
 				variance));
-		
-		this.e_use = hyipStatistics.getXE_use();
-		variance = this.e_use * bias;
-		this.e_use += (int) (RandomHelper.nextDoubleFromTo(-variance,
-				variance));
-		
-		this.p_use = hyipStatistics.getXP_use();
-		variance = this.p_use * bias;
-		this.p_use += (int) (RandomHelper.nextDoubleFromTo(-variance,
-				variance));
+
+		// this.e_use = hyipStatistics.getXE_use();
+		// variance = this.e_use * bias;
+		// this.e_use += (int) (RandomHelper.nextDoubleFromTo(-variance,
+		// variance));
+		//
+		// this.p_use = hyipStatistics.getXP_use();
+		// variance = this.p_use * bias;
+		// this.p_use += (int) (RandomHelper.nextDoubleFromTo(-variance,
+		// variance));
 	}
 
-	public double getE_use() {
-		return e_use;
-	}
-
-	public void setE_use(double e_use) {
-		this.e_use = e_use;
-	}
-
-	public double getP_use() {
-		return p_use;
-	}
-
-	public void setP_use(double p_use) {
-		this.p_use = p_use;
-	}
+	// public double getE_use() {
+	// return e_use;
+	// }
+	//
+	// public void setE_use(double e_use) {
+	// this.e_use = e_use;
+	// }
+	//
+	// public double getP_use() {
+	// return p_use;
+	// }
+	//
+	// public void setP_use(double p_use) {
+	// this.p_use = p_use;
+	// }
 }

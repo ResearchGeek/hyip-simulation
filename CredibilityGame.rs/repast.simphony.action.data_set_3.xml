@@ -97,6 +97,23 @@
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
+			<string>E_Use</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>E_Use</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getE_use</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
+			<string>P_Use</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>P_Use</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getP_use</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		
+		<entry>
 			<string>Use_Investor_Count</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
 				<id>Use_Investor_Count</id>
