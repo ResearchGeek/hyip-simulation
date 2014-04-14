@@ -23,8 +23,7 @@
 <parameter name="e_eff" type="constant" constant_type="number" value="0.01"/>
 <parameter name="p_eff" type="constant" constant_type="number" value="0.04"/>
 <parameter name="l_eff" type="constant" constant_type="number" value="0.1"/>
-<!-- <parameter name="e_use" type="constant" constant_type="number" value="0.33"/> -->
-<!-- <parameter name="p_use" type="constant" constant_type="number" value="0.33"/> -->
+<parameter name="verbose" type="constant" constant_type="java.lang.Boolean" value="true"/>
 
 <parameter name="l_cost" type="constant" constant_type="number" value="600"/>
 <parameter name="l_cost_rand" type="constant" constant_type="java.lang.Boolean" value="true"/>
