@@ -8,8 +8,8 @@ public class HyipStatistics {
 	private double income;
 	private double cash;
 
-	private double x_e_use;
-	private double x_p_use;
+	//private double x_e_use;
+	//private double x_p_use;
 
 	public HyipStatistics() {
 		this.cash = 0;
@@ -20,8 +20,8 @@ public class HyipStatistics {
 		this.investorCount = 0;
 		this.income = 0;
 		this.cash = 0;
-		this.x_e_use = 0;
-		this.x_p_use = 0;
+		//this.x_e_use = 0;
+		//this.x_p_use = 0;
 	}
 
 	public int getTick() {
@@ -60,20 +60,20 @@ public class HyipStatistics {
 		return cash > this.cash;
 	}
 
-	public double getXE_use() {
-		return x_e_use;
-	}
-
-	public void setXE_use(double x_e_use) {
-		this.x_e_use = x_e_use;
-	}
-
-	public double getXP_use() {
-		return x_p_use;
-	}
-
-	public void setXP_use(double x_p_use) {
-		this.x_p_use = x_p_use;
-	}
+//	public double getXE_use() {
+//		return x_e_use;
+//	}
+//
+//	public void setXE_use(double x_e_use) {
+//		this.x_e_use = x_e_use;
+//	}
+//
+//	public double getXP_use() {
+//		return x_p_use;
+//	}
+//
+//	public void setXP_use(double x_p_use) {
+//		this.x_p_use = x_p_use;
+//	}
 
 }

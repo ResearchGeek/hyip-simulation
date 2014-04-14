@@ -23,6 +23,7 @@ import HyipGame.ExitStrategy;
 import HyipGame.ExitStrategyOptions;
 import HyipGame.ExitStrategyUtilities;
 import HyipGame.HyipStatistics;
+import HyipGame.HyipTools;
 
 /**
  * Represent a single instance of a Hyip, contains references to investments and
@@ -32,7 +33,7 @@ import HyipGame.HyipStatistics;
  * @author Oskar Jarczyk
  * @since 1.0
  * @version 1.3
- * @update 13.04.2014
+ * @update 14.04.2014
  */
 public class Hyip extends Player {
 
@@ -55,11 +56,10 @@ public class Hyip extends Player {
 	private long totalNumberOfInvestments = 0;
 	private Long id;
 	private boolean isGoodLooking;
-	private double e_use;
-	private double p_use;
 	private ExitStrategy exitStrategy;
 	private HyipStatistics hyipStatistics;
 	private HyipAccount hyipAccount;
+	private EpPair epPair;
 	private double income;
 	private Boolean frozen;
 
@@ -110,8 +110,8 @@ public class Hyip extends Player {
 		id = COUNT_HYIPS;
 		x_e_use = RandomHelper.nextDoubleFromTo(0, 1);
 		x_p_use = RandomHelper.nextDoubleFromTo(0, 1);
-		e_use = interpretEP_use(x_e_use, x_p_use)[0];
-		p_use = interpretEP_use(x_e_use, x_p_use)[1];
+		epPair = new EpPair(HyipTools.interpretEP_use(x_e_use, x_p_use)[0],
+				HyipTools.interpretEP_use(x_e_use, x_p_use)[1]);
 		hyipStatistics = new HyipStatistics();
 		probablePayouts = new PriorityQueue<Double>(
 				Constraints.MemoryAllocForQueue, new Comparator<Double>() {
@@ -273,8 +273,6 @@ public class Hyip extends Player {
 			hyipStatistics.setIncome(getIncome());
 			hyipStatistics.setInvestorCount(countOngoingInvestments());
 			hyipStatistics.setTick(getIteration());
-			hyipStatistics.setXE_use(getX_e_use());
-			hyipStatistics.setXP_use(getP_use());
 			exitStrategy.updateFromStats(hyipStatistics, true);
 		}
 	}
@@ -329,10 +327,10 @@ public class Hyip extends Player {
 
 	public void setMarketing() {
 		double r = Math.random();
-		if (r > e_use + p_use) { // bez marketingu
+		if (r > getE_use() + getP_use()) { // bez marketingu
 			marketing = 0;
 			hyipAccount.addMoney(0);
-		} else if (r < e_use) {// marketing na poziomie expert (srednim)
+		} else if (r < getE_use()) {// marketing na poziomie expert (srednim)
 			marketing = 1;
 			hyipAccount.addMoney(-e_cost);
 		} else {// marketing na poziomie proffessional (najwyzszym)
@@ -466,14 +464,17 @@ public class Hyip extends Player {
 				+ (int) (exitStrategy.getTime() * RandomHelper
 						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
 								Constraints.MUTATE_FACTOR)));
-		this.setE_use(this.getE_use()
-				+ (int) (this.getE_use() * RandomHelper
-						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
-								Constraints.MUTATE_FACTOR)));
-		this.setP_use(this.getP_use()
-				+ (int) (this.getP_use() * RandomHelper
-						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
-								Constraints.MUTATE_FACTOR)));
+		setE_use(getE_use()
+				+ (int) (this.getE_use() * RandomHelper.nextDoubleFromTo(
+						-Constraints.MUTATE_FACTOR, Constraints.MUTATE_FACTOR)));
+		setP_use(getP_use()
+				+ (int) (this.getP_use() * RandomHelper.nextDoubleFromTo(
+						-Constraints.MUTATE_FACTOR, Constraints.MUTATE_FACTOR)));
+		if (getE_use() + getP_use() > 1.0) {
+			double normalEP[] = HyipTools.normalizeEP(getE_use(), getP_use());
+			setE_use(normalEP[0]);
+			setP_use(normalEP[1]);
+		}
 
 		ExitStrategyOptions ops = exitStrategy.getExitStrategyOptions();
 		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
@@ -489,13 +490,6 @@ public class Hyip extends Player {
 		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
 			ops.setConsiderTime(!ops.isConsiderTime().booleanValue());
 		}
-//		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
-//			ops.setConsiderE_use(!ops.isConsiderE_use().booleanValue());
-//		}
-//		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
-//			ops.setConsiderP_use(!ops.isConsiderP_use().booleanValue());
-//		}
-
 	}
 
 	public Boolean getFrozen() {
@@ -507,11 +501,11 @@ public class Hyip extends Player {
 	}
 
 	public double getE_use() {
-		return this.e_use;
+		return this.epPair.getE_use();
 	}
 
 	public double getP_use() {
-		return this.p_use;
+		return this.epPair.getP_use();
 	}
 
 	public double getX_e_use() {
@@ -522,15 +516,12 @@ public class Hyip extends Player {
 		this.x_e_use = x_e_use;
 	}
 
-	/**
-	 * It should be for first generation only, because after randomizing
-	 * euse puse params only mutate
-	 * @param x_e_use
-	 * @param x_p_use
-	 * @return 0.1
-	 */
-	private double[] interpretEP_use(double x_e_use, double x_p_use) {
-		return new double[] { x_e_use * x_p_use, x_e_use * (1 - x_p_use) };
+	public EpPair getEpPair() {
+		return epPair;
+	}
+
+	public void setEpPair(EpPair epPair) {
+		this.epPair = epPair;
 	}
 
 	public String describeStrategy() {
@@ -556,16 +547,16 @@ public class Hyip extends Player {
 		sb.append(ops.isConsiderInvestorCount());
 		sb.append(Constraints.COMMA);
 		sb.append(exitStrategy.getInvestorCount());
-//		sb.append(Constraints.SEPERATOR);
-//		sb.append("e_use:");
-//		sb.append(ops.isConsiderE_use());
-//		sb.append(Constraints.COMMA);
-//		sb.append(exitStrategy.getE_use());
-//		sb.append(Constraints.SEPERATOR);
-//		sb.append("p_use:");
-//		sb.append(ops.isConsiderP_use());
-//		sb.append(Constraints.COMMA);
-//		sb.append(exitStrategy.getP_use());
+		// sb.append(Constraints.SEPERATOR);
+		// sb.append("e_use:");
+		// sb.append(ops.isConsiderE_use());
+		// sb.append(Constraints.COMMA);
+		// sb.append(exitStrategy.getE_use());
+		// sb.append(Constraints.SEPERATOR);
+		// sb.append("p_use:");
+		// sb.append(ops.isConsiderP_use());
+		// sb.append(Constraints.COMMA);
+		// sb.append(exitStrategy.getP_use());
 
 		sb.append(Constraints.CLOSING_BRACKET);
 		return sb.toString();
@@ -586,14 +577,14 @@ public class Hyip extends Player {
 	public boolean usesTime() {
 		return exitStrategy.getExitStrategyOptions().isConsiderTime();
 	}
-	
-    public void setE_use(double e_use){
-    	this.e_use = e_use;
-    }
-    
-    public void setP_use(double p_use){
-    	this.p_use = p_use;
-    }
+
+	public void setE_use(double e_use) {
+		this.epPair.setE_use(e_use);
+	}
+
+	public void setP_use(double p_use) {
+		this.epPair.setP_use(p_use);
+	}
 
 	public double getStrategyBalance() {
 		return exitStrategy.getBalance();
@@ -610,14 +601,14 @@ public class Hyip extends Player {
 	public int getStrategyTime() {
 		return exitStrategy.getTime();
 	}
-	
-//	public double getStrategyE_use() {
-//		return exitStrategy.getE_use();
-//	}
-//	
-//	public double getStrategyP_use() {
-//		return exitStrategy.getP_use();
-//	}
+
+	// public double getStrategyE_use() {
+	// return exitStrategy.getE_use();
+	// }
+	//
+	// public double getStrategyP_use() {
+	// return exitStrategy.getP_use();
+	// }
 
 	public int getIteration() {
 		return getGameController().getCurrentIteration() + 1;

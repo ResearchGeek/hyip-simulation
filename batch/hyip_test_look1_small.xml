@@ -2,9 +2,9 @@
 <sweep runs="1">
 <parameter name="generation_number" type="constant" constant_type="number" value="10"/>
 <parameter name="iteration_number" type="constant" constant_type="number" value="200"/>
-<parameter name="inv_0" type="constant" constant_type="number" value="1500"/> 
-<parameter name="inv_1" type="constant" constant_type="number" value="0"/>
-<parameter name="inv_2" type="constant" constant_type="number" value="0"/>
+<parameter name="inv_0" type="constant" constant_type="number" value="200"/> 
+<parameter name="inv_1" type="constant" constant_type="number" value="200"/>
+<parameter name="inv_2" type="constant" constant_type="number" value="200"/>
 <parameter name="consumer_max_threshold_mutation" type="constant" constant_type="number" value="0.05"/>
 <parameter name="income_eval_frompeek" type="constant" constant_type="java.lang.Boolean" value="false"/>
 

@@ -6,6 +6,7 @@ import logger.EndRunLogger;
 import logger.PjiitLogger;
 import logger.PjiitOutputter;
 import logger.SanityLogger;
+import logger.ValidationOutputter;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
@@ -22,16 +23,17 @@ public class CredibilityGame extends DefaultContext<Object> implements
 
 	@Override
 	public Context<Object> build(Context<Object> context) {
+		Parameters params = RunEnvironment.getInstance().getParameters();
+		
 		try {
 			System.out.println("Hyip game context builder loaded...");
 			RandomHelper.init();
-			initializeLoggers();
+			initializeLoggers(params);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		context.setId("CredibilityGame");
-		Parameters params = RunEnvironment.getInstance().getParameters();
 		say("generation_number is set to: "
 				+ params.getValue("generation_number"));
 		say("iteration_number is set to: "
@@ -51,7 +53,9 @@ public class CredibilityGame extends DefaultContext<Object> implements
 		System.out.println(s);
 	}
 	
-	private void initializeLoggers() throws IOException {
+	private void initializeLoggers(Parameters params) throws IOException {
+		PjiitOutputter.init((Boolean) params.getValue("verbose"));
+		ValidationOutputter.init((Boolean) params.getValue("verbose"));
 		PjiitLogger.init();
 		say(Constraints.LOGGER_INITIALIZED);
 		SanityLogger.init();

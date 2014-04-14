@@ -50,15 +50,16 @@ public abstract class Player {
 		Collections.sort(population, new PlayerComparator());
 		double min = population.get(population.size() - 1).getCash();
 		double scaling = min < 0 ? ((-1) * min) : 0;
-			// do czego to sluzy ?
 
 		double maxRange = 0;
 		ArrayList<Double> ranges = new ArrayList<Double>();
 		ArrayList<ExitStrategy> strategiesBackup = new ArrayList<ExitStrategy>();
+		ArrayList<EpPair> epBackup = new ArrayList<EpPair>();
 		for (Hyip p : population) {
 			maxRange += (p.getCash() + scaling);
 			ranges.add(maxRange);
 			strategiesBackup.add(p.getExitStrategy().copy());
+			epBackup.add(p.getEpPair().copy());
 		}
 		double step = maxRange / population.size();
 		double start = RandomHelper.nextDoubleFromTo(0, 1) * step;
@@ -74,6 +75,8 @@ public abstract class Player {
 			Hyip nextHyip = population.get(i);
 			nextHyip.getExitStrategy()
 					.copyStrategy(strategiesBackup.get(selectedPlayer));
+			nextHyip.getEpPair()
+				.copyStrategy(epBackup.get(selectedPlayer));
 			nextHyip.mutate();
 		}
 	}
