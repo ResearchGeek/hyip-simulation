@@ -464,6 +464,10 @@ public class Hyip extends Player {
 				+ (int) (exitStrategy.getTime() * RandomHelper
 						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
 								Constraints.MUTATE_FACTOR)));
+		
+		say("E_use of hyip no." + getId() + " before mutation: " + getE_use());
+		say("P_use of hyip no." + getId() + " before mutation: " + getP_use());
+		
 		setE_use(getE_use()
 				+ (int) (this.getE_use() * RandomHelper.nextDoubleFromTo(
 						-Constraints.MUTATE_FACTOR, Constraints.MUTATE_FACTOR)));
@@ -475,6 +479,9 @@ public class Hyip extends Player {
 			setE_use(normalEP[0]);
 			setP_use(normalEP[1]);
 		}
+		
+		say("E_use of hyip no." + getId() + " after mutation: " + getE_use());
+		say("P_use of hyip no." + getId() + " after mutation: " + getP_use());
 
 		ExitStrategyOptions ops = exitStrategy.getExitStrategyOptions();
 		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {

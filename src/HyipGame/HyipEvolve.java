@@ -29,12 +29,12 @@ public class HyipEvolve {
 		ArrayList<Hyip> b = chooseBadHyips(contextBeing);
 		say("There are " + g.size() + " good hyips and " + b.size()
 				+ " bad hyips");
-		say("E_use before mutation: " + g.get(0).getE_use());
-		say("P_use before mutation: " + g.get(0).getP_use());
+		say("E_use of 1st good hyip before evolution: " + g.get(0).getE_use());
+		say("P_use of 1st good hyip before evolution: " + g.get(0).getP_use());
 		Player.stochasticSampling(g);
 		Player.stochasticSampling(b);
-		say("E_use after mutation: " + g.get(0).getE_use());
-		say("P_use after mutation: " + g.get(0).getP_use());
+		say("E_use of 1st good hyip after evolution: " + g.get(0).getE_use());
+		say("P_use of 1st good hyip after evolution: " + g.get(0).getP_use());
 	}
 
 	private void logActivity(String s) {
