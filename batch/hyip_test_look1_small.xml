@@ -23,6 +23,7 @@
 <parameter name="e_eff" type="constant" constant_type="number" value="0.0"/>
 <parameter name="p_eff" type="constant" constant_type="number" value="0.0"/>
 <parameter name="l_eff" type="constant" constant_type="number" value="0.1"/>
+<parameter name="verbose" type="constant" constant_type="java.lang.Boolean" value="true"/>
 
 <parameter name="l_cost" type="constant" constant_type="number" value="600"/>
 <parameter name="l_cost_rand" type="constant" constant_type="java.lang.Boolean" value="true"/>

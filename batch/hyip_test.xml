@@ -9,7 +9,7 @@
 <parameter name="inv_2" type="constant" constant_type="number" value="100"/>
 <parameter name="consumer_max_threshold_mutation" type="constant" constant_type="number" value="0.05"/>
 
-
+<parameter name="verbose" type="constant" constant_type="java.lang.Boolean" value="true"/>
 <parameter name="hyip_population_size" type="constant" constant_type="number" value="1"/>
 
 <parameter name="hyip_perc" type="constant" constant_type="number" value="0.02"/>
