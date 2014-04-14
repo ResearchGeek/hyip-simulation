@@ -464,22 +464,22 @@ public class Hyip extends Player {
 				+ (int) (exitStrategy.getTime() * RandomHelper
 						.nextDoubleFromTo(-Constraints.MUTATE_FACTOR,
 								Constraints.MUTATE_FACTOR)));
-		
+
 		say("E_use of hyip no." + getId() + " before mutation: " + getE_use());
 		say("P_use of hyip no." + getId() + " before mutation: " + getP_use());
-		
+
 		setE_use(getE_use()
-				+ (int) (this.getE_use() * RandomHelper.nextDoubleFromTo(
+				+ (this.getE_use() * RandomHelper.nextDoubleFromTo(
 						-Constraints.MUTATE_FACTOR, Constraints.MUTATE_FACTOR)));
 		setP_use(getP_use()
-				+ (int) (this.getP_use() * RandomHelper.nextDoubleFromTo(
+				+ (this.getP_use() * RandomHelper.nextDoubleFromTo(
 						-Constraints.MUTATE_FACTOR, Constraints.MUTATE_FACTOR)));
 		if (getE_use() + getP_use() > 1.0) {
 			double normalEP[] = HyipTools.normalizeEP(getE_use(), getP_use());
 			setE_use(normalEP[0]);
 			setP_use(normalEP[1]);
 		}
-		
+
 		say("E_use of hyip no." + getId() + " after mutation: " + getE_use());
 		say("P_use of hyip no." + getId() + " after mutation: " + getP_use());
 
