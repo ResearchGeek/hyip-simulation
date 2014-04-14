@@ -47,7 +47,7 @@ public abstract class Player {
 		if (population.size() == 0)
 			return;
 
-		Collections.sort(population, new PlayerComparator());
+		Collections.sort(population, new HyipComparator());
 		double min = population.get(population.size() - 1).getCash();
 		double scaling = min < 0 ? ((-1) * min) : 0;
 

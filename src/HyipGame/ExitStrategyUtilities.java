@@ -26,7 +26,6 @@ public class ExitStrategyUtilities {
 
 	public static Boolean checkForPass(Hyip hyip) {
 		boolean hyipQuits = true;
-		// boolean considerationFail = false;
 		boolean considerationMade = false;
 
 		ExitStrategy exitStrategy = hyip.getExitStrategy();
