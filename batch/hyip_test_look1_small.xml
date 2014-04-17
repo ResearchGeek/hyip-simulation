@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<sweep runs="1">
+<sweep runs="10">
 <parameter name="generation_number" type="constant" constant_type="number" value="10"/>
 <parameter name="iteration_number" type="constant" constant_type="number" value="200"/>
 <parameter name="inv_0" type="constant" constant_type="number" value="1500"/> 
@@ -23,7 +23,7 @@
 <parameter name="e_eff" type="constant" constant_type="number" value="0.0"/>
 <parameter name="p_eff" type="constant" constant_type="number" value="0.0"/>
 <parameter name="l_eff" type="constant" constant_type="number" value="0.1"/>
-<parameter name="verbose" type="constant" constant_type="java.lang.Boolean" value="true"/>
+<parameter name="verbose" type="constant" constant_type="java.lang.Boolean" value="false"/>
 
 <parameter name="l_cost" type="constant" constant_type="number" value="600"/>
 <parameter name="l_cost_rand" type="constant" constant_type="java.lang.Boolean" value="true"/>

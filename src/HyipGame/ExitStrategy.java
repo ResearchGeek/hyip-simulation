@@ -17,7 +17,7 @@ public class ExitStrategy implements Strategy {
 	private static Parameters params = RunEnvironment.getInstance()
 			.getParameters();
 	private static double bias = 0.01 * ((int) params
-			.getValue("first_strategy_bias"));
+			.getInteger("first_strategy_bias"));
 
 	public ExitStrategy(double income, int investorCount, double balance,
 			int time, Boolean... enabled) {
@@ -137,8 +137,11 @@ public class ExitStrategy implements Strategy {
 	public void copyStrategy(Strategy copyFrom) {
 		// this will never happen whatsoever - artifact from CredibilityGame
 		// proper method we have above
-		throw new UnsupportedOperationException(
-				"We don't use producer/consumer game in HYIP simulation");
+		/*
+		 * throw new UnsupportedOperationException(
+		 * "We don't use producer/consumer game in HYIP simulation");
+		 */
+		System.exit(-10);
 	}
 
 	/**
@@ -151,7 +154,8 @@ public class ExitStrategy implements Strategy {
 	 */
 	public void updateFromStats(HyipStatistics hyipStatistics, boolean first) {
 		if (!first)
-			throw new javax.help.UnsupportedOperationException();
+			// throw new javax.help.UnsupportedOperationException();
+			System.exit(-10);
 
 		double variance = 0;
 
