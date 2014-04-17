@@ -110,16 +110,18 @@ public class GameController {
 				+ seconds.getSeconds() + " seconds between ticks.");
 
 		// check whether this is the last generation/iteration
-		if (currentIteration == (iterationNumber - 1)) {
+		if (currentIteration == (iterationNumber - 2)) {
 			if (currentGeneration == (generationNumber - 1)) {
 				say("Ending instance run");
 				RunEnvironment.getInstance().endRun();
-			} else {
-				say("This is the last iteration in this gen");
-				currentIteration = 0;
-				say("Ending current generation");
-				currentGeneration++;
 			}
+		}
+
+		if (currentIteration == (iterationNumber - 1)) {
+			say("This is the last iteration in this gen");
+			currentIteration = 0;
+			say("Ending current generation");
+			currentGeneration++;
 		} else {
 			say("Incrementing current iteration number to: "
 					+ (currentIteration + 1));
