@@ -6,9 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import repast.simphony.context.Context;
-import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.parameter.Parameters;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.util.ContextUtils;
 import CredibilityGame.rating.strategy.RatingStrategy;
@@ -22,14 +20,14 @@ public class Investor extends Player {
 	private InvestorAccount investorAccount;
 	private int expertise;
 	private RatingStrategy ratingStrategy;
-	
+
 	private List<Hyip> hyipsChosen = new ArrayList<Hyip>();
 	private List<Hyip> allHyips;
 
 	public Investor(InvestorType investorType) {
 		this.expertise = RandomHelper.createUniform(CONSUMER_TYPE_L,
 				CONSUMER_TYPE_H).nextInt();
-		//Parameters params = RunEnvironment.getInstance().getParameters();
+		// Parameters params = RunEnvironment.getInstance().getParameters();
 		hyipsChosen = new ArrayList<Hyip>();
 		risk_level = investorType;
 	}
@@ -72,8 +70,9 @@ public class Investor extends Player {
 					invChances = hyip.isGoodLooking() ? 0.9 : 0.5;
 					break;
 				default:
-					throw new UnsupportedOperationException(
-							"should never happen");
+					// throw new UnsupportedOperationException(
+					// "should never happen");
+					break;
 				}
 				if (RandomHelper.nextDoubleFromTo(0, 1) < invChances) {
 					if (RandomHelper.nextDoubleFromTo(0, 1) < hyip.getAdvert()) {
@@ -87,8 +86,8 @@ public class Investor extends Player {
 			chooseOffert(hyip);
 		}
 	}
-	
-	public void resetMe(){
+
+	public void resetMe() {
 		this.initializeWallet();
 		this.hyipsChosen.clear();
 		this.allHyips.clear();

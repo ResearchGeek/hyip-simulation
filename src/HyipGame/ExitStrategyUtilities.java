@@ -19,8 +19,7 @@ public class ExitStrategyUtilities {
 	public static ExitStrategy getTypicalStrategy() {
 		ExitStrategy exitStrategy = new ExitStrategy(TYPICAL_INCOME,
 				TYPICAL_INVESTORCOUNT, TYPICAL_BALANCE, TYPICAL_TIME,
-				true, true, true, true, true,
-				true);
+				true, true, true, true);
 		return exitStrategy;
 	}
 

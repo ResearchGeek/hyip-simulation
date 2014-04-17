@@ -12,9 +12,9 @@ public class HyipAccount {
 		this.income = 0;
 	}
 
-	public HyipAccount(Hyip owner) {
-		throw new UnsupportedOperationException("Don't use this constructor");
-	}
+	// public HyipAccount(Hyip owner) {
+	// //throw new UnsupportedOperationException("Don't use this constructor");
+	// }
 
 	public void addMoney(double value) {
 		cash += value;
@@ -40,7 +40,7 @@ public class HyipAccount {
 	public void setIncome(double income) {
 		this.income = income;
 	}
-	
+
 	public void addIncome(double amount) {
 		this.income += amount;
 	}
@@ -64,8 +64,9 @@ public class HyipAccount {
 	}
 
 	public void setOwner(Hyip owner) {
-		throw new UnsupportedOperationException(
-				"I doubt account can change owner");
+		System.exit(-10);
+		// throw new UnsupportedOperationException(
+		// "I doubt account can change owner");
 		// this.owner = owner;
 	}
 

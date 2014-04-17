@@ -1,6 +1,6 @@
-<model name="CredibilityGame">
+<model name="CredibilityGame" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://repast.org/scenario/user_path">
 	<classpath>
-		<agents path="bin" />
-		<entry path="lib" />
+		<agents path="../bin" />
+		<entry path="../lib" />
 	</classpath>
 </model>
