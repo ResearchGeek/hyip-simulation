@@ -49,7 +49,7 @@ public class GameController {
 		return currentGeneration == 0;
 	}
 
-	@ScheduledMethod(start = 1.0, interval = 1.0, priority = ScheduleParameters.LAST_PRIORITY + 1)
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = -2000)
 	public void firstStep() {
 		if (isFirstGeneration()) {
 			// warming up, hold on with evolution,
@@ -101,7 +101,7 @@ public class GameController {
 		}
 	}
 
-	@ScheduledMethod(start = 1.0, interval = 1.0, priority = ScheduleParameters.LAST_PRIORITY)
+	@ScheduledMethod(start = 1.0, interval = 1.0, priority = -3000)
 	public void step() {
 		DateTime dateTime = new DateTime();
 		Seconds seconds = Seconds.secondsBetween(previous, dateTime);

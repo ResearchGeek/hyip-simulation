@@ -8,7 +8,7 @@
 	<scheduleParams>
 		<start>1.0</start>
 		<interval>1.0</interval>
-		<priority>-Infinity</priority>
+		<priority>-1000</priority>
 		<pType>LAST</pType>
 		<duration>-1.0</duration>
 		<frequency>REPEAT</frequency>
