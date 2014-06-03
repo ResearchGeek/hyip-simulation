@@ -41,13 +41,13 @@ public class Investor extends Player {
 			investorAccount = new InvestorAccount(this);
 		switch (risk_level) {
 		case HIGH_AVERSION:
-			investorAccount.setBalance(50 * 5);
-			break;
-		case MEDIUM_AVERSION:
 			investorAccount.setBalance(50 * 50);
 			break;
+		case MEDIUM_AVERSION:
+			investorAccount.setBalance(50 * 500);
+			break;
 		case LOW_AVERSION:
-			investorAccount.setBalance(50 * 1000);
+			investorAccount.setBalance(50 * 5000);
 			break;
 		}
 	}
@@ -101,13 +101,13 @@ public class Investor extends Player {
 		int invest = 0;
 		Invest investment = null;
 		if (risk_level == InvestorType.HIGH_AVERSION) {
-			invest = (int) (Math.random() * 4) + 1;
+			invest = (int) (Math.random() * 49) + 1;
 			investment = new Invest(this, hyip, invest, hyipOffert);
 		} else if (risk_level == InvestorType.MEDIUM_AVERSION) {
-			invest = (int) (Math.random() * 45) + 5;
+			invest = (int) (Math.random() * 450) + 50;
 			investment = new Invest(this, hyip, invest, hyipOffert);
 		} else if (risk_level == InvestorType.LOW_AVERSION) {
-			invest = (int) (Math.random() * 950) + 50;
+			invest = (int) (Math.random() * 4500) + 500;
 			investment = new Invest(this, hyip, invest, hyipOffert);
 		}
 		investorAccount.spendMoney(invest);
