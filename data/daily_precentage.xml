@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<perc>
+	<observ id="1">
+      <perc>1</perc>
+	  <number>612</number>
+	  <part>19%</part>
+	</observ>
+	
+	<observ id="2">
+      <perc>2</perc>
+	  <number>717</number>
+	  <part>22%</part>
+	</observ>
+	
+	<observ id="3">
+      <perc>3</perc>
+	  <number>510</number>
+	  <part>16%</part>
+	</observ>
+	
+	<observ id="4">
+      <perc>4</perc>
+	  <number>223</number>
+	  <part>7%</part>
+	</observ>
+	
+	<observ id="5">
+      <perc>5</perc>
+	  <number>184</number>
+	  <part>6%</part>
+	</observ>
+	
+	<observ id="6">
+      <perc>6</perc>
+	  <number>210</number>
+	  <part>6%</part>
+	</observ>
+	
+	<observ id="7">
+      <perc>7</perc>
+	  <number>90</number>
+	  <part>3%</part>
+	</observ>
+	
+	<observ id="8">
+      <perc>8</perc>
+	  <number>160</number>
+	  <part>5%</part>
+	</observ>
+	
+	<observ id="9">
+      <perc>9</perc>
+	  <number>110</number>
+	  <part>3%</part>
+	</observ>
+	
+	<observ id="10">
+      <perc>10</perc>
+	  <number>37</number>
+	  <part>1%</part>
+	</observ>
+	
+	<observ id="11">
+      <perc>15</perc>
+	  <number>232</number>
+	  <part>7%</part>
+	</observ>
+	
+	<observ id="12">
+      <perc>20</perc>
+	  <number>50</number>
+	  <part>2%</part>
+	</observ>
+	
+	<observ id="13">
+      <perc>30</perc>
+	  <number>68</number>
+	  <part>2%</part>
+	</observ>
+	
+	<observ id="14">
+      <perc>40</perc>
+	  <number>6</number>
+	  <part>0%</part>
+	</observ>
+	
+	<observ id="15">
+      <perc>50</perc>
+	  <number>11</number>
+	  <part>0%</part>
+	</observ>
+	
+	<observ id="16">
+      <perc>100</perc>
+	  <number>24</number>
+	  <part>1%</part>
+	</observ>
+</perc>
