@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<sweep runs="3">
+<parameter name="generation_number" type="constant" constant_type="number" value="100"/>
+<parameter name="iteration_number" type="constant" constant_type="number" value="200"/>
+<parameter name="inv_0" type="constant" constant_type="number" value="0"/> 
+<parameter name="inv_1" type="constant" constant_type="number" value="750"/>
+<parameter name="inv_2" type="constant" constant_type="number" value="0"/>
+<parameter name="consumer_max_threshold_mutation" type="constant" constant_type="number" value="0.05"/>
+<parameter name="income_eval_frompeek" type="constant" constant_type="java.lang.Boolean" value="false"/>
+
+<parameter name="hyip_population_size" type="constant" constant_type="number" value="80"/>
+<parameter name="hyip_perc" type="constant" constant_type="number" value="0.02"/>
+<parameter name="hyip_marketing" type="constant" constant_type="number" value="0"/>
+<parameter name="hyip_look" type="constant" constant_type="number" value="1"/>
+
+<parameter name="e_cost" type="constant" constant_type="number" value="250"/>
+<parameter name="p_cost" type="constant" constant_type="number" value="1000"/>
+
+<parameter name="first_strategy_bias" type="constant" constant_type="number" value="20"/>
+<parameter name="mutate_chance" type="constant" constant_type="number" value="1"/>
+<parameter name="mutate_factor" type="constant" constant_type="number" value="0.05"/>
+
+<parameter name="e_eff" type="constant" constant_type="number" value="0.1"/>
+<parameter name="p_eff" type="constant" constant_type="number" value="0.2"/>
+<parameter name="l_eff" type="constant" constant_type="number" value="0.1"/>
+<parameter name="verbose" type="constant" constant_type="java.lang.Boolean" value="false"/>
+
+<parameter name="l_cost" type="constant" constant_type="number" value="600"/>
+<parameter name="l_cost_rand" type="constant" constant_type="java.lang.Boolean" value="true"/>
+
+<parameter name="inv_invest" type="constant" constant_type="number" value="0.5"/>
+<parameter name="inv_rec" type="constant" constant_type="number" value="0.05"/>
+<parameter name="unlimited_i_funds" type="constant" constant_type="java.lang.Boolean" value="true"/>
+</sweep>
