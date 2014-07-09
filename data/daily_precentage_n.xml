@@ -65,5 +65,25 @@
 			<perc>30</perc>
 			<freq>1</freq>
 		</percent>
+		
+		<percent id="40">
+			<perc>40</perc>
+			<freq>0</freq>
+		</percent>
+		
+		<percent id="50">
+			<perc>50</perc>
+			<freq>0</freq>
+		</percent>
+		
+		<percent id="100">
+			<perc>100</perc>
+			<freq>0</freq>
+		</percent>
+		
+		<percent id="200">
+			<perc>200</perc>
+			<freq>0</freq>
+		</percent>
 	</percents>
 </percentages>

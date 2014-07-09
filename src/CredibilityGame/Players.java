@@ -78,7 +78,8 @@ public class Players extends DefaultContext<Player> {
 
 		Iterator<GoodLooking> goodLookingHyips = HyipType.goodLooking
 				.iterator();
-		List<GoodLookingHyip> temporaryMeaning = new ArrayList<GoodLookingHyip>();
+		int assertion1 = 0;
+		List<Hyip> temporaryMeaning = new ArrayList<Hyip>();
 		for (int x = 0; x < HyipType.goodLooking.size(); x++) {
 			assert goodLookingHyips.hasNext();
 			GoodLooking goodLooking = goodLookingHyips.next();
@@ -88,12 +89,39 @@ public class Players extends DefaultContext<Player> {
 						goodLooking);
 				temporaryMeaning.add(goodLookingHyip);
 				this.add(goodLookingHyip);
+				assertion1 += 1;
 			}
 		}
-		for (GoodLookingHyip temporaryMeaningHyip : temporaryMeaning) {
-
+		assert temporaryMeaning.size() == assertion1; //this should be now 80 good hyips
+		List<Hyip> dailyHyips = new ArrayList<Hyip>();
+		List<Hyip> weeklyHyips = new ArrayList<Hyip>();
+		for (Hyip temporaryMeaningHyip : temporaryMeaning) {
+			// divide to 40 daily offers and 40 weekly offers
+			if (temporaryMeaningHyip.getFirstOffert().getForHowLong() > 1.1){
+				weeklyHyips.add(temporaryMeaningHyip);
+			} else {
+				dailyHyips.add(temporaryMeaningHyip);
+			}
 		}
+		assert dailyHyips.size() == 40;
+		assert weeklyHyips.size() == 40;
+		int iterator = 0;
+		for(Percentage d : getDailyPercentages()){
+			for(int i = 0; i < d.getFreq() ; i++){
+				dailyHyips.get(iterator++).getFirstOffert().setPercent(d.getPerc()/100);
+			}
+		}
+		assert iterator == 40;
+		iterator = 0;
+		for(Percentage d : getWeeklyPercentages()){
+			for(int i = 0; i < d.getFreq() ; i++){
+				dailyHyips.get(iterator++).getFirstOffert().setPercent(d.getPerc()/100);
+			}
+		}
+		assert iterator == 40;
 
+		assertion1 = 0;
+		temporaryMeaning.clear();
 		Iterator<BadLooking> badLookingHyips = HyipType.badLooking.iterator();
 		for (int x = 0; x < HyipType.badLooking.size(); x++) {
 			assert badLookingHyips.hasNext();
@@ -102,8 +130,37 @@ public class Players extends DefaultContext<Player> {
 			for (int i = 0; i < z; i++) {
 				BadLookingHyip badLookingHyip = new BadLookingHyip(badLooking);
 				this.add(badLookingHyip);
+				temporaryMeaning.add(badLookingHyip);
+				assertion1 += 1;
 			}
 		}
+		assert temporaryMeaning.size() == assertion1; //this should be now 80 good hyips
+		dailyHyips.clear();
+		weeklyHyips.clear();
+		for (Hyip temporaryMeaningHyip : temporaryMeaning) {
+			// divide to 40 daily offers and 40 weekly offers
+			if (temporaryMeaningHyip.getFirstOffert().getForHowLong() > 1.1){
+				weeklyHyips.add(temporaryMeaningHyip);
+			} else {
+				dailyHyips.add(temporaryMeaningHyip);
+			}
+		}
+		assert dailyHyips.size() == 40;
+		assert weeklyHyips.size() == 40;
+		iterator = 0;
+		for(Percentage d : getDailyPercentages()){
+			for(int i = 0; i < d.getFreq() ; i++){
+				dailyHyips.get(iterator++).getFirstOffert().setPercent(d.getPerc()/100);
+			}
+		}
+		assert iterator == 40;
+		iterator = 0;
+		for(Percentage d : getWeeklyPercentages()){
+			for(int i = 0; i < d.getFreq() ; i++){
+				dailyHyips.get(iterator++).getFirstOffert().setPercent(d.getPerc()/100);
+			}
+		}
+		assert iterator == 40;
 
 		for (int i = 0; i < inv_0; i++) {
 			Investor investor = new Investor(InvestorType.HIGH_AVERSION);
