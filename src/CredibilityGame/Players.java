@@ -1,14 +1,67 @@
 package CredibilityGame;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import repast.simphony.context.DefaultContext;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.parameter.Parameters;
 import CredibilityGame.HyipType.BadLooking;
 import CredibilityGame.HyipType.GoodLooking;
+import HyipGame.Percentage;
+import HyipGame.PercentageCollection;
 
 public class Players extends DefaultContext<Player> {
+
+	private static ArrayList<Percentage> getDailyPercentages() {
+		File file = new File("data/daily_percentage_n.xml");
+		ArrayList<Percentage> result = null;
+
+		try {
+			JAXBContext jaxbContext = JAXBContext
+					.newInstance(PercentageCollection.class);
+
+			/* -- try to read data */
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			PercentageCollection forSaveMultiple = (PercentageCollection) jaxbUnmarshaller
+					.unmarshal(file);
+
+			result = forSaveMultiple.getList();
+
+		} catch (JAXBException ex) {
+			System.out.println("JAXBException");
+		}
+		
+		return result;
+	}
+	
+	private static ArrayList<Percentage> getWeeklyPercentages() {
+		File file = new File("data/weekly_percentage_n.xml");
+		ArrayList<Percentage> result = null;
+
+		try {
+			JAXBContext jaxbContext = JAXBContext
+					.newInstance(PercentageCollection.class);
+
+			/* -- try to read data */
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			PercentageCollection forSaveMultiple = (PercentageCollection) jaxbUnmarshaller
+					.unmarshal(file);
+
+			result = forSaveMultiple.getList();
+
+		} catch (JAXBException ex) {
+			System.out.println("JAXBException");
+		}
+		
+		return result;
+	}
 
 	public Players() {
 		super("Players");
@@ -25,18 +78,24 @@ public class Players extends DefaultContext<Player> {
 
 		Iterator<GoodLooking> goodLookingHyips = HyipType.goodLooking
 				.iterator();
-		for (int x = 0 ; x < HyipType.goodLooking.size() ; x++){
+		List<GoodLookingHyip> temporaryMeaning = new ArrayList<GoodLookingHyip>();
+		for (int x = 0; x < HyipType.goodLooking.size(); x++) {
 			assert goodLookingHyips.hasNext();
 			GoodLooking goodLooking = goodLookingHyips.next();
 			int z = (producerPopulationSize / 2) / HyipType.goodLooking.size();
 			for (int i = 0; i < z; i++) {
-				GoodLookingHyip goodLookingHyip = new GoodLookingHyip(goodLooking);
+				GoodLookingHyip goodLookingHyip = new GoodLookingHyip(
+						goodLooking);
+				temporaryMeaning.add(goodLookingHyip);
 				this.add(goodLookingHyip);
 			}
 		}
+		for (GoodLookingHyip temporaryMeaningHyip : temporaryMeaning) {
+
+		}
 
 		Iterator<BadLooking> badLookingHyips = HyipType.badLooking.iterator();
-		for (int x = 0 ; x < HyipType.badLooking.size() ; x++){
+		for (int x = 0; x < HyipType.badLooking.size(); x++) {
 			assert badLookingHyips.hasNext();
 			BadLooking badLooking = badLookingHyips.next();
 			int z = (producerPopulationSize / 2) / HyipType.badLooking.size();

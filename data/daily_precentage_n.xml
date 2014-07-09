@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<percentages>
+	<percents>
+		<percent id="1">
+			<perc>1</perc>
+			<freq>8</freq>
+		</percent>
+
+		<percent id="2">
+			<perc>2</perc>
+			<freq>9</freq>
+		</percent>
+
+		<percent id="3">
+			<perc>3</perc>
+			<freq>6</freq>
+		</percent>
+
+		<percent id="4">
+			<perc>4</perc>
+			<freq>3</freq>
+		</percent>
+
+		<percent id="5">
+			<perc>5</perc>
+			<freq>2</freq>
+		</percent>
+
+		<percent id="6">
+			<perc>6</perc>
+			<freq>3</freq>
+		</percent>
+
+		<percent id="7">
+			<perc>7</perc>
+			<freq>1</freq>
+		</percent>
+
+		<percent id="8">
+			<perc>8</perc>
+			<freq>2</freq>
+		</percent>
+
+		<percent id="9">
+			<perc>9</perc>
+			<freq>1</freq>
+		</percent>
+		
+		<percent id="10">
+			<perc>10</perc>
+			<freq>0</freq>
+		</percent>
+		
+		<percent id="15">
+			<perc>15</perc>
+			<freq>3</freq>
+		</percent>
+		
+		<percent id="20">
+			<perc>20</perc>
+			<freq>1</freq>
+		</percent>
+		
+		<percent id="30">
+			<perc>30</perc>
+			<freq>1</freq>
+		</percent>
+	</percents>
+</percentages>
