@@ -19,8 +19,9 @@ import HyipGame.PercentageCollection;
 
 public class Players extends DefaultContext<Player> {
 
-	private static ArrayList<Percentage> getDailyPercentages() {
-		File file = new File("data/daily_percentage_n.xml");
+	private static ArrayList<Percentage> getDailyPercentages(boolean win) {
+		File file = new File(win ? "data\\daily_percentage_n.xml"
+				: "data/daily_percentage_n.xml");
 		ArrayList<Percentage> result = null;
 
 		try {
@@ -36,13 +37,15 @@ public class Players extends DefaultContext<Player> {
 
 		} catch (JAXBException ex) {
 			System.out.println("JAXBException");
+			System.out.println(ex.toString());
 		}
-		
+
 		return result;
 	}
-	
-	private static ArrayList<Percentage> getWeeklyPercentages() {
-		File file = new File("data/weekly_percentage_n.xml");
+
+	private static ArrayList<Percentage> getWeeklyPercentages(boolean win) {
+		File file = new File(win ? "data\\weekly_percentage_n.xml"
+				: "data/weekly_percentage_n.xml");
 		ArrayList<Percentage> result = null;
 
 		try {
@@ -58,14 +61,20 @@ public class Players extends DefaultContext<Player> {
 
 		} catch (JAXBException ex) {
 			System.out.println("JAXBException");
+			System.out.println(ex.toString());
 		}
-		
+
 		return result;
 	}
 
 	public Players() {
 		super("Players");
 		System.out.println(Constraints.PLAYERS_LOADED);
+		String osName = System.getProperty("os.name").toLowerCase();
+
+		boolean isMacOs = osName.startsWith("mac");
+		boolean isWin = osName.startsWith("win");
+
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		int producerPopulationSize = (Integer) params
 				.getValue("hyip_population_size");
@@ -92,12 +101,13 @@ public class Players extends DefaultContext<Player> {
 				assertion1 += 1;
 			}
 		}
-		assert temporaryMeaning.size() == assertion1; //this should be now 80 good hyips
+		assert temporaryMeaning.size() == assertion1; // this should be now 80
+														// good hyips
 		List<Hyip> dailyHyips = new ArrayList<Hyip>();
 		List<Hyip> weeklyHyips = new ArrayList<Hyip>();
 		for (Hyip temporaryMeaningHyip : temporaryMeaning) {
 			// divide to 40 daily offers and 40 weekly offers
-			if (temporaryMeaningHyip.getFirstOffert().getForHowLong() > 1.1){
+			if (temporaryMeaningHyip.getFirstOffert().getForHowLong() > 1.1) {
 				weeklyHyips.add(temporaryMeaningHyip);
 			} else {
 				dailyHyips.add(temporaryMeaningHyip);
@@ -106,16 +116,18 @@ public class Players extends DefaultContext<Player> {
 		assert dailyHyips.size() == 40;
 		assert weeklyHyips.size() == 40;
 		int iterator = 0;
-		for(Percentage d : getDailyPercentages()){
-			for(int i = 0; i < d.getFreq() ; i++){
-				dailyHyips.get(iterator++).getFirstOffert().setPercent(d.getPerc()/100);
+		for (Percentage d : getDailyPercentages(isWin)) {
+			for (int i = 0; i < d.getFreq(); i++) {
+				dailyHyips.get(iterator++).getFirstOffert()
+						.setPercent(d.getPerc() / 100);
 			}
 		}
 		assert iterator == 40;
 		iterator = 0;
-		for(Percentage d : getWeeklyPercentages()){
-			for(int i = 0; i < d.getFreq() ; i++){
-				dailyHyips.get(iterator++).getFirstOffert().setPercent(d.getPerc()/100);
+		for (Percentage d : getWeeklyPercentages(isWin)) {
+			for (int i = 0; i < d.getFreq(); i++) {
+				dailyHyips.get(iterator++).getFirstOffert()
+						.setPercent(d.getPerc() / 100);
 			}
 		}
 		assert iterator == 40;
@@ -134,12 +146,13 @@ public class Players extends DefaultContext<Player> {
 				assertion1 += 1;
 			}
 		}
-		assert temporaryMeaning.size() == assertion1; //this should be now 80 good hyips
+		assert temporaryMeaning.size() == assertion1; // this should be now 80
+														// good hyips
 		dailyHyips.clear();
 		weeklyHyips.clear();
 		for (Hyip temporaryMeaningHyip : temporaryMeaning) {
 			// divide to 40 daily offers and 40 weekly offers
-			if (temporaryMeaningHyip.getFirstOffert().getForHowLong() > 1.1){
+			if (temporaryMeaningHyip.getFirstOffert().getForHowLong() > 1.1) {
 				weeklyHyips.add(temporaryMeaningHyip);
 			} else {
 				dailyHyips.add(temporaryMeaningHyip);
@@ -148,16 +161,18 @@ public class Players extends DefaultContext<Player> {
 		assert dailyHyips.size() == 40;
 		assert weeklyHyips.size() == 40;
 		iterator = 0;
-		for(Percentage d : getDailyPercentages()){
-			for(int i = 0; i < d.getFreq() ; i++){
-				dailyHyips.get(iterator++).getFirstOffert().setPercent(d.getPerc()/100);
+		for (Percentage d : getDailyPercentages(isWin)) {
+			for (int i = 0; i < d.getFreq(); i++) {
+				dailyHyips.get(iterator++).getFirstOffert()
+						.setPercent(d.getPerc() / 100);
 			}
 		}
 		assert iterator == 40;
 		iterator = 0;
-		for(Percentage d : getWeeklyPercentages()){
-			for(int i = 0; i < d.getFreq() ; i++){
-				dailyHyips.get(iterator++).getFirstOffert().setPercent(d.getPerc()/100);
+		for (Percentage d : getWeeklyPercentages(isWin)) {
+			for (int i = 0; i < d.getFreq(); i++) {
+				dailyHyips.get(iterator++).getFirstOffert()
+						.setPercent(d.getPerc() / 100);
 			}
 		}
 		assert iterator == 40;
