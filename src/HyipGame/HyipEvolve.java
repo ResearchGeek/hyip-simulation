@@ -1,12 +1,8 @@
 package HyipGame;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import logger.PjiitOutputter;
-import repast.simphony.context.Context;
-import repast.simphony.util.ContextUtils;
 import CredibilityGame.GameController;
 import CredibilityGame.Hyip;
 import CredibilityGame.Player;

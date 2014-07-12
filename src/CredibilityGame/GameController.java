@@ -1,8 +1,10 @@
 package CredibilityGame;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import logger.PjiitOutputter;
 
@@ -10,13 +12,12 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 import org.joda.time.Seconds;
 
-import HyipGame.HyipEvolve;
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
-import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.parameter.Parameters;
 import repast.simphony.util.ContextUtils;
+import HyipGame.HyipEvolve;
 
 public class GameController {
 
@@ -80,7 +81,7 @@ public class GameController {
 	 */
 	private void resetAllHyips() {
 		say(Constraints.RESET_ALL_HYIPS_MESSAGE);
-		List<Hyip> allHyips = chooseAllProducers(this);
+		Set<Hyip> allHyips = chooseAllProducers(this);
 		say("Resetting all hyips, all together " + allHyips.size()
 				+ " of them.");
 		for (Hyip hyip : allHyips) {
@@ -170,10 +171,10 @@ public class GameController {
 		return result;
 	}
 
-	public static ArrayList<Hyip> chooseAllProducers(Object contextBeing) {
+	public static HashSet<Hyip> chooseAllProducers(Object contextBeing) {
 		Context<Player> context = ContextUtils.getContext(contextBeing);
 		Iterable<Player> it = context.getObjects(Hyip.class);
-		ArrayList<Hyip> result = new ArrayList<Hyip>();
+		HashSet<Hyip> result = new HashSet<Hyip>();
 		Iterator<Player> iterator = it.iterator();
 		while (iterator.hasNext()) {
 			result.add((Hyip) iterator.next());

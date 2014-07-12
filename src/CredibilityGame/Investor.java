@@ -2,8 +2,10 @@ package CredibilityGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -11,6 +13,13 @@ import repast.simphony.random.RandomHelper;
 import repast.simphony.util.ContextUtils;
 import CredibilityGame.rating.strategy.RatingStrategy;
 
+/**
+ * Represents a single investor willing to spend his money
+ * on one or more hyips through all the Hyip game
+ * 
+ * @author Oskar
+ * @updated 13.07.2014
+ */
 public class Investor extends Player {
 
 	public static HashMap<String, Double> PAYOFFS = new HashMap<String, Double>();
@@ -22,12 +31,11 @@ public class Investor extends Player {
 	private RatingStrategy ratingStrategy;
 
 	private List<Hyip> hyipsChosen = new ArrayList<Hyip>();
-	private List<Hyip> allHyips;
+	private Set<Hyip> allHyips;
 
 	public Investor(InvestorType investorType) {
 		this.expertise = RandomHelper.createUniform(CONSUMER_TYPE_L,
 				CONSUMER_TYPE_H).nextInt();
-		// Parameters params = RunEnvironment.getInstance().getParameters();
 		hyipsChosen = new ArrayList<Hyip>();
 		risk_level = investorType;
 	}
@@ -119,10 +127,10 @@ public class Investor extends Player {
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<Hyip> chooseAllProducers(boolean allowFrozen) {
+	private Set<Hyip> chooseAllProducers(boolean allowFrozen) {
 		Context<Player> context = ContextUtils.getContext(this);
 		Iterable<Player> it = context.getObjects(Hyip.class);
-		List<Hyip> result = new ArrayList<Hyip>();
+		Set<Hyip> result = new HashSet<Hyip>();
 		Iterator<Player> iterator = it.iterator();
 		while (iterator.hasNext()) {
 			Hyip hyip = (Hyip) iterator.next();
