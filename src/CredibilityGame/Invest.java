@@ -66,6 +66,11 @@ public class Invest {
 	@Override
 	public int hashCode() {
 		return InvestId.hashCode();
+		// Returns a hash code for this Long.
+		// The result is the exclusive OR of the two halves of the
+		// primitive long value held by this Long object. That is, 
+		// the hashcode is the value of the expression: 
+		// (int)(this.longValue()^(this.longValue()>>>32))
 	}
 
 	@Override

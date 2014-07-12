@@ -1,16 +1,17 @@
 package CredibilityGame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.PriorityQueue;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
 
 import logger.PjiitOutputter;
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
-import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.parameter.Parameters;
 import repast.simphony.random.RandomHelper;
@@ -32,8 +33,8 @@ import HyipGame.HyipTools;
  * 
  * @author Oskar Jarczyk
  * @since 1.0
- * @version 1.3
- * @update 14.04.2014
+ * @version 2.0
+ * @update 12.07.2014
  */
 public class Hyip extends Player {
 
@@ -64,7 +65,7 @@ public class Hyip extends Player {
 	private Boolean frozen;
 
 	private ArrayList<HyipOffert> hyipOfferts;
-	private volatile CopyOnWriteArrayList<Invest> hyipSoldInvestments;
+	private Set<Invest> hyipSoldInvestments;
 	private PriorityQueue<Double> probablePayouts;
 	private static boolean probable_payouts_by_tops;
 
@@ -104,7 +105,7 @@ public class Hyip extends Player {
 		this.hyipOfferts = isGoodLooking ? createOfferts(
 				(GoodLooking) goodOrBad, null) : createOfferts(null,
 				(BadLooking) goodOrBad);
-		this.hyipSoldInvestments = new CopyOnWriteArrayList<Invest>();
+		this.hyipSoldInvestments = Collections.synchronizedSet(new HashSet<Invest>());
 		this.frozen = false;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
@@ -225,7 +226,8 @@ public class Hyip extends Player {
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
 	public synchronized void payPercent() {
 		if (!getFrozen()) {
-			for (Invest invest : hyipSoldInvestments) {
+			for (Iterator<Invest> i = hyipSoldInvestments.iterator(); i.hasNext();) {
+				Invest invest = i.next();
 				invest.incrementTickCount();
 				invest.calculateInterest();
 				if (invest.getTickCount() >= invest.getHyipOffert()
@@ -235,7 +237,8 @@ public class Hyip extends Player {
 						invest.setTickCount(0);
 					} else {
 						// close and pay to client
-						hyipSoldInvestments.remove(invest);
+						//hyipSoldInvestments.remove(invest);
+						i.remove();
 						transferFunds(invest);
 						// invest moved to archived
 						// hopefully later garbage collected
@@ -327,13 +330,13 @@ public class Hyip extends Player {
 
 	public void setMarketing() {
 		double r = Math.random();
-		if (r > getE_use() + getP_use()) { // bez marketingu
+		if (r > getE_use() + getP_use()) {  // without marketing
 			marketing = 0;
 			hyipAccount.addMoney(0);
-		} else if (r < getE_use()) {// marketing na poziomie expert (srednim)
+		} else if (r < getE_use()) {  // marketing on "expert" level (middle)
 			marketing = 1;
 			hyipAccount.addMoney(-e_cost);
-		} else {// marketing na poziomie proffessional (najwyzszym)
+		} else {  // marketing on professional level (highest)
 			marketing = 2;
 			hyipAccount.addMoney(-p_cost);
 		}
@@ -554,16 +557,6 @@ public class Hyip extends Player {
 		sb.append(ops.isConsiderInvestorCount());
 		sb.append(Constraints.COMMA);
 		sb.append(exitStrategy.getInvestorCount());
-		// sb.append(Constraints.SEPERATOR);
-		// sb.append("e_use:");
-		// sb.append(ops.isConsiderE_use());
-		// sb.append(Constraints.COMMA);
-		// sb.append(exitStrategy.getE_use());
-		// sb.append(Constraints.SEPERATOR);
-		// sb.append("p_use:");
-		// sb.append(ops.isConsiderP_use());
-		// sb.append(Constraints.COMMA);
-		// sb.append(exitStrategy.getP_use());
 
 		sb.append(Constraints.CLOSING_BRACKET);
 		return sb.toString();
@@ -608,14 +601,6 @@ public class Hyip extends Player {
 	public int getStrategyTime() {
 		return exitStrategy.getTime();
 	}
-
-	// public double getStrategyE_use() {
-	// return exitStrategy.getE_use();
-	// }
-	//
-	// public double getStrategyP_use() {
-	// return exitStrategy.getP_use();
-	// }
 
 	public int getIteration() {
 		return getGameController().getCurrentIteration() + 1;
