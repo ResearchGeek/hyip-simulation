@@ -19,7 +19,7 @@ import HyipGame.PercentageCollection;
 
 public class Players extends DefaultContext<Player> {
 
-	private static ArrayList<Percentage> getDailyPercentages(boolean win) {
+	private ArrayList<Percentage> getDailyPercentages(boolean win) {
 		File file = new File(win ? "data\\daily_percentage_n.xml"
 				: "data/daily_percentage_n.xml");
 		ArrayList<Percentage> result = null;
@@ -43,7 +43,7 @@ public class Players extends DefaultContext<Player> {
 		return result;
 	}
 
-	private static ArrayList<Percentage> getWeeklyPercentages(boolean win) {
+	private ArrayList<Percentage> getWeeklyPercentages(boolean win) {
 		File file = new File(win ? "data\\weekly_percentage_n.xml"
 				: "data/weekly_percentage_n.xml");
 		ArrayList<Percentage> result = null;
@@ -118,16 +118,31 @@ public class Players extends DefaultContext<Player> {
 		int iterator = 0;
 		for (Percentage d : getDailyPercentages(isWin)) {
 			for (int i = 0; i < d.getFreq(); i++) {
-				dailyHyips.get(iterator++).getFirstOffert()
-						.setPercent(d.getPerc() / 100);
+				try {
+					dailyHyips.get(iterator++).getFirstOffert()
+							.setPercent(d.getPerc() / 100);
+				} catch (Exception exc) {
+					System.out.println("Didn't set percentage for index "
+							+ iterator);
+					System.out
+							.println("Did you provide bigger percentage set than HYIP population size?");
+				}
 			}
 		}
 		assert iterator == 40;
 		iterator = 0;
 		for (Percentage d : getWeeklyPercentages(isWin)) {
 			for (int i = 0; i < d.getFreq(); i++) {
-				dailyHyips.get(iterator++).getFirstOffert()
-						.setPercent(d.getPerc() / 100);
+				try {
+					dailyHyips.get(iterator++).getFirstOffert()
+							.setPercent(d.getPerc() / 100);
+				} catch (Exception exc) {
+					System.out
+							.println("Didn't set percentage for hyip indexed with: "
+									+ iterator);
+					System.out
+							.println("Did you provide bigger list of percentage than a HYIP population size?");
+				}
 			}
 		}
 		assert iterator == 40;
@@ -163,16 +178,31 @@ public class Players extends DefaultContext<Player> {
 		iterator = 0;
 		for (Percentage d : getDailyPercentages(isWin)) {
 			for (int i = 0; i < d.getFreq(); i++) {
-				dailyHyips.get(iterator++).getFirstOffert()
-						.setPercent(d.getPerc() / 100);
+				try {
+					dailyHyips.get(iterator++).getFirstOffert()
+							.setPercent(d.getPerc() / 100);
+				} catch (Exception exc) {
+					System.out.println("Didn't set percentage for index "
+							+ iterator);
+					System.out
+							.println("Did you provide bigger percentage set than HYIP population size?");
+				}
 			}
 		}
 		assert iterator == 40;
 		iterator = 0;
 		for (Percentage d : getWeeklyPercentages(isWin)) {
 			for (int i = 0; i < d.getFreq(); i++) {
-				dailyHyips.get(iterator++).getFirstOffert()
-						.setPercent(d.getPerc() / 100);
+				try {
+					dailyHyips.get(iterator++).getFirstOffert()
+							.setPercent(d.getPerc() / 100);
+				} catch (Exception exc) {
+					System.out
+							.println("Didn't set percentage for hyip indexed with: "
+									+ iterator);
+					System.out
+							.println("Did you provide bigger list of percentage than a HYIP population size?");
+				}
 			}
 		}
 		assert iterator == 40;
