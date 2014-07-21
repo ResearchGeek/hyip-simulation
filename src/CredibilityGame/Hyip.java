@@ -186,6 +186,10 @@ public class Hyip extends Player {
 	public HyipOffert getFirstOffert() {
 		return hyipOfferts.get(0);
 	}
+	
+	public double getTypicalPercentage() {
+		return hyipOfferts.get(0).getPercent();
+	}
 
 	public double getAdvert() {
 		double mark_temp = mktg_cumulated * 12 - 6;

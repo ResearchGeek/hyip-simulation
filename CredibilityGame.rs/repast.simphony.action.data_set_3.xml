@@ -33,6 +33,14 @@
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
+			<string>Percentage</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Percentage</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getTypicalPercentage</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
 			<string>Runned_Away</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
 				<id>Runned_Away</id>
