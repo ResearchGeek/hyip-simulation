@@ -6,5 +6,6 @@
 	<classpathentry exported="true" kind="con" path="REPAST_SIMPHONY_SUPPORT"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="lib" path="lib/joda-time-2.3.jar"/>
+	<classpathentry kind="lib" path="lib/lambdaj-2.4-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

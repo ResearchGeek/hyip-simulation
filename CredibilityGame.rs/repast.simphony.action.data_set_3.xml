@@ -41,6 +41,14 @@
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
+			<string>Weekly_Daily</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>Weekly_Daily</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getOffertType</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
 			<string>Runned_Away</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
 				<id>Runned_Away</id>

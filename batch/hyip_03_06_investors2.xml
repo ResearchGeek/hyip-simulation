@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<sweep runs="3">
+<sweep runs="5">
 <parameter name="generation_number" type="constant" constant_type="number" value="500"/>
 <parameter name="iteration_number" type="constant" constant_type="number" value="200"/>
 <parameter name="inv_0" type="constant" constant_type="number" value="1500"/> 

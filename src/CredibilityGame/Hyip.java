@@ -144,16 +144,16 @@ public class Hyip extends Player {
 		if (this.isGoodLooking) {
 			switch (goodLooking) {
 			case GOOD_LOOKING_1A:
-				offerts.add(HyipTypicalOffert.MEDIUM_RISK_1D);
+				offerts.add(new HyipOffert(HyipTypicalOffert.MEDIUM_RISK_1D));
 				break;
 			case GOOD_LOOKING_2A:
-				offerts.add(HyipTypicalOffert.MEDIUM_RISK_7D);
+				offerts.add(new HyipOffert(HyipTypicalOffert.MEDIUM_RISK_7D));
 				break;
 			case GOOD_LOOKING_3A:
-				offerts.add(HyipTypicalOffert.LOW_RISK_1D);
+				offerts.add(new HyipOffert(HyipTypicalOffert.LOW_RISK_1D));
 				break;
 			case GOOD_LOOKING_4A:
-				offerts.add(HyipTypicalOffert.LOW_RISK_7D);
+				offerts.add(new HyipOffert(HyipTypicalOffert.LOW_RISK_7D));
 				break;
 			default:
 				break;
@@ -161,16 +161,16 @@ public class Hyip extends Player {
 		} else {
 			switch (badLooking) {
 			case BAD_LOOKING_1B:
-				offerts.add(HyipTypicalOffert.HIGH_RISK_1D);
+				offerts.add(new HyipOffert(HyipTypicalOffert.HIGH_RISK_1D));
 				break;
 			case BAD_LOOKING_2B:
-				offerts.add(HyipTypicalOffert.HIGH_RISK_7D);
+				offerts.add(new HyipOffert(HyipTypicalOffert.HIGH_RISK_7D));
 				break;
 			case BAD_LOOKING_3B:
-				offerts.add(HyipTypicalOffert.MEDIUM_RISK_1D);
+				offerts.add(new HyipOffert(HyipTypicalOffert.MEDIUM_RISK_1D));
 				break;
 			case BAD_LOOKING_4B:
-				offerts.add(HyipTypicalOffert.MEDIUM_RISK_7D);
+				offerts.add(new HyipOffert(HyipTypicalOffert.MEDIUM_RISK_7D));
 				break;
 			default:
 				break;
@@ -187,8 +187,12 @@ public class Hyip extends Player {
 		return hyipOfferts.get(0);
 	}
 	
-	public double getTypicalPercentage() {
-		return hyipOfferts.get(0).getPercent();
+	public String getTypicalPercentage() {
+		return hyipOfferts.get(0).getPercent() * 100 + "%";
+	}
+	
+	public String getOffertType() {
+		return hyipOfferts.get(0).getForHowLong() >= 6 ? "w" : "d";
 	}
 
 	public double getAdvert() {

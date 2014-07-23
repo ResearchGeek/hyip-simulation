@@ -24,6 +24,14 @@ public class HyipOffert {
 		this.penalty = penalty;
 	}
 	
+	public HyipOffert(HyipOffert copyFrom){
+		this.percent = copyFrom.percent;
+		this.minimum = copyFrom.minimum;
+		this.noMinimum = copyFrom.noMinimum;
+		this.forHowLong = copyFrom.forHowLong;
+		this.penalty = copyFrom.penalty;
+	}
+	
 	public double getPercent() {
 		return percent;
 	}

@@ -2,87 +2,87 @@
 <percentages>
 	<percents>
 		<percent id="1">
-			<perc>1</perc>
+			<perc>0.01</perc>
 			<freq>8</freq>
 		</percent>
 
 		<percent id="2">
-			<perc>2</perc>
+			<perc>0.02</perc>
 			<freq>9</freq>
 		</percent>
 
 		<percent id="3">
-			<perc>3</perc>
+			<perc>0.03</perc>
 			<freq>6</freq>
 		</percent>
 
 		<percent id="4">
-			<perc>4</perc>
+			<perc>0.04</perc>
 			<freq>3</freq>
 		</percent>
 
 		<percent id="5">
-			<perc>5</perc>
+			<perc>0.05</perc>
 			<freq>2</freq>
 		</percent>
 
 		<percent id="6">
-			<perc>6</perc>
+			<perc>0.06</perc>
 			<freq>3</freq>
 		</percent>
 
 		<percent id="7">
-			<perc>7</perc>
+			<perc>0.07</perc>
 			<freq>1</freq>
 		</percent>
 
 		<percent id="8">
-			<perc>8</perc>
+			<perc>0.08</perc>
 			<freq>2</freq>
 		</percent>
 
 		<percent id="9">
-			<perc>9</perc>
+			<perc>0.09</perc>
 			<freq>1</freq>
 		</percent>
 		
 		<percent id="10">
-			<perc>10</perc>
+			<perc>0.10</perc>
 			<freq>0</freq>
 		</percent>
 		
 		<percent id="15">
-			<perc>15</perc>
+			<perc>0.15</perc>
 			<freq>3</freq>
 		</percent>
 		
 		<percent id="20">
-			<perc>20</perc>
+			<perc>0.20</perc>
 			<freq>1</freq>
 		</percent>
 		
 		<percent id="30">
-			<perc>30</perc>
+			<perc>0.30</perc>
 			<freq>1</freq>
 		</percent>
 		
 		<percent id="40">
-			<perc>40</perc>
+			<perc>0.40</perc>
 			<freq>0</freq>
 		</percent>
 		
 		<percent id="50">
-			<perc>50</perc>
+			<perc>0.50</perc>
 			<freq>0</freq>
 		</percent>
 		
 		<percent id="100">
-			<perc>100</perc>
+			<perc>1.0</perc>
 			<freq>0</freq>
 		</percent>
 		
 		<percent id="200">
-			<perc>200</perc>
+			<perc>2.0</perc>
 			<freq>0</freq>
 		</percent>
 	</percents>

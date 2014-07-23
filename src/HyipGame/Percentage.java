@@ -11,7 +11,7 @@ public class Percentage {
 	};
 
 	private int id;
-	private int perc;
+	private double perc;
 	private int freq;
 
 	/* -- this property is saved as item attribute (not as element) */
@@ -22,7 +22,7 @@ public class Percentage {
 
 	/* -- saved as element */
 	@XmlElement
-	public int getPerc() {
+	public double getPerc() {
 		return perc;
 	}
 
@@ -36,7 +36,7 @@ public class Percentage {
 		this.id = id;
 	}
 
-	public void setPerc(int perc) {
+	public void setPerc(double perc) {
 		this.perc = perc;
 	}
 

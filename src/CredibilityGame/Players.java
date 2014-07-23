@@ -72,7 +72,7 @@ public class Players extends DefaultContext<Player> {
 		System.out.println(Constraints.PLAYERS_LOADED);
 		String osName = System.getProperty("os.name").toLowerCase();
 
-		boolean isMacOs = osName.startsWith("mac");
+		//boolean isMacOs = osName.startsWith("mac");
 		boolean isWin = osName.startsWith("win");
 
 		Parameters params = RunEnvironment.getInstance().getParameters();
@@ -87,8 +87,9 @@ public class Players extends DefaultContext<Player> {
 
 		Iterator<GoodLooking> goodLookingHyips = HyipType.goodLooking
 				.iterator();
-		int assertion1 = 0;
-		List<Hyip> temporaryMeaning = new ArrayList<Hyip>();
+		
+		List<Hyip> goodHyipsPercentageRev = new ArrayList<Hyip>();
+		
 		for (int x = 0; x < HyipType.goodLooking.size(); x++) {
 			assert goodLookingHyips.hasNext();
 			GoodLooking goodLooking = goodLookingHyips.next();
@@ -96,59 +97,13 @@ public class Players extends DefaultContext<Player> {
 			for (int i = 0; i < z; i++) {
 				GoodLookingHyip goodLookingHyip = new GoodLookingHyip(
 						goodLooking);
-				temporaryMeaning.add(goodLookingHyip);
+				goodHyipsPercentageRev.add(goodLookingHyip);
 				this.add(goodLookingHyip);
-				assertion1 += 1;
 			}
 		}
-		assert temporaryMeaning.size() == assertion1; // this should be now 80
-														// good hyips
-		List<Hyip> dailyHyips = new ArrayList<Hyip>();
-		List<Hyip> weeklyHyips = new ArrayList<Hyip>();
-		for (Hyip temporaryMeaningHyip : temporaryMeaning) {
-			// divide to 40 daily offers and 40 weekly offers
-			if (temporaryMeaningHyip.getFirstOffert().getForHowLong() > 1.1) {
-				weeklyHyips.add(temporaryMeaningHyip);
-			} else {
-				dailyHyips.add(temporaryMeaningHyip);
-			}
-		}
-		assert dailyHyips.size() == 40;
-		assert weeklyHyips.size() == 40;
-		int iterator = 0;
-		for (Percentage d : getDailyPercentages(isWin)) {
-			for (int i = 0; i < d.getFreq(); i++) {
-				try {
-					dailyHyips.get(iterator++).getFirstOffert()
-							.setPercent(d.getPerc() / 100);
-				} catch (Exception exc) {
-					System.out.println("Didn't set percentage for index "
-							+ iterator);
-					System.out
-							.println("Did you provide bigger percentage set than HYIP population size?");
-				}
-			}
-		}
-		assert iterator == 40;
-		iterator = 0;
-		for (Percentage d : getWeeklyPercentages(isWin)) {
-			for (int i = 0; i < d.getFreq(); i++) {
-				try {
-					dailyHyips.get(iterator++).getFirstOffert()
-							.setPercent(d.getPerc() / 100);
-				} catch (Exception exc) {
-					System.out
-							.println("Didn't set percentage for hyip indexed with: "
-									+ iterator);
-					System.out
-							.println("Did you provide bigger list of percentage than a HYIP population size?");
-				}
-			}
-		}
-		assert iterator == 40;
+		
+		List<Hyip> badHyipsPercentageRev = new ArrayList<Hyip>();
 
-		assertion1 = 0;
-		temporaryMeaning.clear();
 		Iterator<BadLooking> badLookingHyips = HyipType.badLooking.iterator();
 		for (int x = 0; x < HyipType.badLooking.size(); x++) {
 			assert badLookingHyips.hasNext();
@@ -157,55 +112,67 @@ public class Players extends DefaultContext<Player> {
 			for (int i = 0; i < z; i++) {
 				BadLookingHyip badLookingHyip = new BadLookingHyip(badLooking);
 				this.add(badLookingHyip);
-				temporaryMeaning.add(badLookingHyip);
-				assertion1 += 1;
+				badHyipsPercentageRev.add(badLookingHyip);
 			}
 		}
-		assert temporaryMeaning.size() == assertion1; // this should be now 80
-														// good hyips
-		dailyHyips.clear();
-		weeklyHyips.clear();
-		for (Hyip temporaryMeaningHyip : temporaryMeaning) {
-			// divide to 40 daily offers and 40 weekly offers
-			if (temporaryMeaningHyip.getFirstOffert().getForHowLong() > 1.1) {
-				weeklyHyips.add(temporaryMeaningHyip);
+		
+		List<Percentage> listOfDPercentages = getDailyPercentages(isWin);
+		int daily_iterator = 1;
+		Iterator<Percentage> di = listOfDPercentages.iterator();
+		Percentage current_daily = nextNonEmptyPercentage(di);
+		
+		List<Percentage> listOfWPercentages = getWeeklyPercentages(isWin);
+		int weekly_iterator = 1;
+		Iterator<Percentage> wi = listOfWPercentages.iterator();
+		Percentage current_weekly = nextNonEmptyPercentage(wi);
+		
+		for(Hyip hyip : goodHyipsPercentageRev){
+			if (hyip.getFirstOffert().getForHowLong() >= 6){
+				if (current_weekly.getFreq() >= weekly_iterator++){
+					hyip.getFirstOffert().setPercent(current_weekly.getPerc());
+				} else {
+					current_weekly = nextNonEmptyPercentage(wi);
+					hyip.getFirstOffert().setPercent(current_weekly.getPerc());
+					weekly_iterator = 2;
+				}
 			} else {
-				dailyHyips.add(temporaryMeaningHyip);
-			}
-		}
-		assert dailyHyips.size() == 40;
-		assert weeklyHyips.size() == 40;
-		iterator = 0;
-		for (Percentage d : getDailyPercentages(isWin)) {
-			for (int i = 0; i < d.getFreq(); i++) {
-				try {
-					dailyHyips.get(iterator++).getFirstOffert()
-							.setPercent(d.getPerc() / 100);
-				} catch (Exception exc) {
-					System.out.println("Didn't set percentage for index "
-							+ iterator);
-					System.out
-							.println("Did you provide bigger percentage set than HYIP population size?");
+				if (current_daily.getFreq() >= daily_iterator++){
+					hyip.getFirstOffert().setPercent(current_daily.getPerc());
+				} else {
+					current_daily = nextNonEmptyPercentage(di);
+					hyip.getFirstOffert().setPercent(current_daily.getPerc());
+					daily_iterator = 2;
 				}
 			}
 		}
-		assert iterator == 40;
-		iterator = 0;
-		for (Percentage d : getWeeklyPercentages(isWin)) {
-			for (int i = 0; i < d.getFreq(); i++) {
-				try {
-					dailyHyips.get(iterator++).getFirstOffert()
-							.setPercent(d.getPerc() / 100);
-				} catch (Exception exc) {
-					System.out
-							.println("Didn't set percentage for hyip indexed with: "
-									+ iterator);
-					System.out
-							.println("Did you provide bigger list of percentage than a HYIP population size?");
+		
+		daily_iterator = 1;
+		di = listOfDPercentages.iterator();
+		current_daily = nextNonEmptyPercentage(di);
+		
+		weekly_iterator = 1;
+		wi = listOfWPercentages.iterator();
+		current_weekly = nextNonEmptyPercentage(wi);
+		
+		for(Hyip hyip : badHyipsPercentageRev){
+			if (hyip.getFirstOffert().getForHowLong() >= 6){
+				if (current_weekly.getFreq() >= weekly_iterator++){
+					hyip.getFirstOffert().setPercent(current_weekly.getPerc());
+				} else {
+					current_weekly = nextNonEmptyPercentage(wi);
+					hyip.getFirstOffert().setPercent(current_weekly.getPerc());
+					weekly_iterator = 2;
+				}
+			} else {
+				if (current_daily.getFreq() >= daily_iterator++){
+					hyip.getFirstOffert().setPercent(current_daily.getPerc());
+				} else {
+					current_daily = nextNonEmptyPercentage(di);
+					hyip.getFirstOffert().setPercent(current_daily.getPerc());
+					daily_iterator = 2;
 				}
 			}
 		}
-		assert iterator == 40;
 
 		for (int i = 0; i < inv_0; i++) {
 			Investor investor = new Investor(InvestorType.HIGH_AVERSION);
@@ -223,5 +190,15 @@ public class Players extends DefaultContext<Player> {
 			this.add(investor);
 		}
 
+	}
+
+	private Percentage nextNonEmptyPercentage(Iterator i) {
+		Percentage pi = null;
+		while (i.hasNext()){
+			pi = (Percentage) i.next();
+			if ( (pi).getFreq() > 0 )
+				break; 
+		}
+		return pi;
 	}
 }
