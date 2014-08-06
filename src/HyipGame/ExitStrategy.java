@@ -168,14 +168,19 @@ public class ExitStrategy implements Strategy {
 		this.income = hyipStatistics.getIncome();
 		variance = this.income * bias;
 		this.income += (RandomHelper.nextDoubleFromTo(-variance, variance));
+		this.exitStrategyOptions.setConsiderIncome(RandomHelper.nextIntFromTo(
+				0, 1) == 0 ? false : true);
 
 		this.time = hyipStatistics.getTick();
 		variance = this.time * bias;
 		this.time += (int) (RandomHelper.nextDoubleFromTo(-variance, variance));
+		this.exitStrategyOptions.setConsiderTime(RandomHelper.nextIntFromTo(
+				0, 1) == 0 ? false : true);
 
 		this.investorCount = hyipStatistics.getInvestorCount();
 		variance = this.investorCount * bias;
 		this.investorCount += (int) (RandomHelper.nextDoubleFromTo(-variance,
 				variance));
+		this.exitStrategyOptions.setConsiderInvestorCount(RandomHelper.nextIntFromTo(	0, 1) == 0 ? false : true);
 	}
 }

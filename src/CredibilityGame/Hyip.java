@@ -274,7 +274,8 @@ public class Hyip extends Player {
 	public void calculateIncome() {
 		if (!getFrozen()) {
 			logActivity("The HYIP " + this.id + " is calculating its income");
-			this.income = hyipAccount.getIncome() - propablePayouts();
+			//this.income = hyipAccount.getIncome() - propablePayouts();
+			this.income = hyipAccount.getIncome();
 		}
 	}
 
