@@ -8,9 +8,6 @@ public class ExitStrategyUtilities {
 	private static final int TYPICAL_INVESTORCOUNT = 1000;
 	private static final double TYPICAL_BALANCE = 1000;
 	private static final int TYPICAL_TIME = 100;
-	
-	private static final double DEFAULT_E_USE = 0.33;
-	private static final double DEFAULT_P_USE = 0.33;
 
 	public static void assignInitialStrategy(Hyip hyip) {
 		hyip.setExitStrategy(getTypicalStrategy());

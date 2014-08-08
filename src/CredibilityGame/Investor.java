@@ -48,15 +48,18 @@ public class Investor extends Player {
 		} else
 			investorAccount = new InvestorAccount(this);
 		switch (risk_level) {
-		case HIGH_AVERSION:
-			investorAccount.setBalance(50 * 50);
-			break;
-		case MEDIUM_AVERSION:
-			investorAccount.setBalance(50 * 500);
-			break;
-		case LOW_AVERSION:
-			investorAccount.setBalance(50 * 5000);
-			break;
+			case HIGH_AVERSION:
+				investorAccount.setBalance(50 * 50);
+				break;
+			case MEDIUM_AVERSION:
+				investorAccount.setBalance(50 * 500);
+				break;
+			case LOW_AVERSION:
+				investorAccount.setBalance(50 * 5000);
+				break;
+			default:
+				assert false; // should never happen
+				break;
 		}
 	}
 

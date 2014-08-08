@@ -12,10 +12,6 @@ public class HyipAccount {
 		this.income = 0;
 	}
 
-	// public HyipAccount(Hyip owner) {
-	// //throw new UnsupportedOperationException("Don't use this constructor");
-	// }
-
 	public void addMoney(double value) {
 		cash += value;
 		addIncome(value);
