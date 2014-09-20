@@ -14,8 +14,8 @@ import repast.simphony.util.ContextUtils;
 import CredibilityGame.rating.strategy.RatingStrategy;
 
 /**
- * Represents a single investor willing to spend his money
- * on one or more hyips through all the Hyip game
+ * Represents a single investor willing to spend his money on one or more hyips
+ * through all the Hyip game
  * 
  * @author Oskar
  * @updated 13.07.2014
@@ -32,6 +32,7 @@ public class Investor extends Player {
 
 	private List<Hyip> hyipsChosen = new ArrayList<Hyip>();
 	private Set<Hyip> allHyips;
+	private static final double MINIMAL_INVESTMENT_TO_CONSIDER = 1.0;
 
 	public Investor(InvestorType investorType) {
 		this.expertise = RandomHelper.createUniform(CONSUMER_TYPE_L,
@@ -48,18 +49,18 @@ public class Investor extends Player {
 		} else
 			investorAccount = new InvestorAccount(this);
 		switch (risk_level) {
-			case HIGH_AVERSION:
-				investorAccount.setBalance(50 * 50);
-				break;
-			case MEDIUM_AVERSION:
-				investorAccount.setBalance(50 * 500);
-				break;
-			case LOW_AVERSION:
-				investorAccount.setBalance(50 * 5000);
-				break;
-			default:
-				assert false; // should never happen
-				break;
+		case HIGH_AVERSION:
+			investorAccount.setBalance(100);
+			break;
+		case MEDIUM_AVERSION:
+			investorAccount.setBalance(1000);
+			break;
+		case LOW_AVERSION:
+			investorAccount.setBalance(10000);
+			break;
+		default:
+			assert false; // should never happen
+			break;
 		}
 	}
 
@@ -109,20 +110,25 @@ public class Investor extends Player {
 	}
 
 	private void invest(Hyip hyip, HyipOffert hyipOffert) {
-		int invest = 0;
+		int amountToInvest = 0;
 		Invest investment = null;
 		if (risk_level == InvestorType.HIGH_AVERSION) {
-			invest = (int) (Math.random() * 49) + 1;
-			investment = new Invest(this, hyip, invest, hyipOffert);
+			amountToInvest = (int) (Math.random() * 49) + 1;
+			investment = new Invest(this, hyip, amountToInvest, hyipOffert);
 		} else if (risk_level == InvestorType.MEDIUM_AVERSION) {
-			invest = (int) (Math.random() * 450) + 50;
-			investment = new Invest(this, hyip, invest, hyipOffert);
+			amountToInvest = (int) (Math.random() * 450) + 50;
+			investment = new Invest(this, hyip, amountToInvest, hyipOffert);
 		} else if (risk_level == InvestorType.LOW_AVERSION) {
-			invest = (int) (Math.random() * 4500) + 500;
-			investment = new Invest(this, hyip, invest, hyipOffert);
+			amountToInvest = (int) (Math.random() * 4500) + 500;
+			investment = new Invest(this, hyip, amountToInvest, hyipOffert);
 		}
-		investorAccount.spendMoney(invest);
-		hyip.registerInvestment(investment);
+		if (amountToInvest <= investorAccount.getBalance()) {
+			investorAccount.spendMoney(amountToInvest);
+			hyip.registerInvestment(investment);
+		} else if (amountToInvest >= MINIMAL_INVESTMENT_TO_CONSIDER) {
+			investorAccount.spendMoney(investorAccount.getBalance());
+			hyip.registerInvestment(investment);
+		}
 	}
 
 	public void acceptReward(double moneyTransfer) {
