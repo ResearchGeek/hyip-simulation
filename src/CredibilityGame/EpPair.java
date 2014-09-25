@@ -1,7 +1,5 @@
 package CredibilityGame;
 
-import HyipGame.ExitStrategy;
-
 public class EpPair {
 	private double e_use;
 	private double p_use;

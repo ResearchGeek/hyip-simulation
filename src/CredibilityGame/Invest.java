@@ -4,6 +4,7 @@ package CredibilityGame;
 public class Invest {
 	
 	private static volatile long COUNT_INVESTS = 0;
+	
 	private Long InvestId;
 	
 	private double money; // amount of money "invested"
