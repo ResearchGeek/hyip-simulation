@@ -383,6 +383,10 @@ public class Hyip extends Player {
 	public double getCash() {
 		return hyipAccount.getCash();
 	}
+	
+	public double getBalance() {
+		return getCash();
+	}
 
 	public long getTotalNumberOfInvestments() {
 		return totalNumberOfInvestments;

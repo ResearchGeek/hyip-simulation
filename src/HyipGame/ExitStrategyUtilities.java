@@ -4,9 +4,9 @@ import CredibilityGame.Hyip;
 
 public class ExitStrategyUtilities {
 
-	private static final double TYPICAL_INCOME = 1000;
-	private static final int TYPICAL_INVESTORCOUNT = 1000;
 	private static final double TYPICAL_BALANCE = 1000;
+	private static final int TYPICAL_INVESTORCOUNT = 1000;
+	private static final double TYPICAL_INCOME = 1000;
 	private static final int TYPICAL_TIME = 100;
 
 	public static void assignInitialStrategy(Hyip hyip) {
@@ -14,9 +14,9 @@ public class ExitStrategyUtilities {
 	}
 
 	public static ExitStrategy getTypicalStrategy() {
-		ExitStrategy exitStrategy = new ExitStrategy(TYPICAL_INCOME,
-				TYPICAL_INVESTORCOUNT, TYPICAL_BALANCE, TYPICAL_TIME,
-				false, false, false, false);
+		ExitStrategy exitStrategy = new ExitStrategy(TYPICAL_BALANCE,
+				TYPICAL_INVESTORCOUNT, TYPICAL_INCOME, TYPICAL_TIME, false,
+				false, false, false);
 		return exitStrategy;
 	}
 

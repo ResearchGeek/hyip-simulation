@@ -9,9 +9,9 @@ public class ExitStrategy implements Strategy {
 
 	private ExitStrategyOptions exitStrategyOptions;
 
-	private double income;
-	private int investorCount;
 	private double balance;
+	private int investorCount;
+	private double income;
 	private int time;
 
 	private static Parameters params = RunEnvironment.getInstance()
@@ -19,11 +19,11 @@ public class ExitStrategy implements Strategy {
 	private static double bias = 0.01 * ((int) params
 			.getInteger("first_strategy_bias"));
 
-	public ExitStrategy(double income, int investorCount, double balance,
+	public ExitStrategy(double balance, int investorCount, double income,
 			int time, Boolean... enabled) {
-		this.income = income;
-		this.investorCount = investorCount;
 		this.balance = balance;
+		this.investorCount = investorCount;
+		this.income = income;
 		this.time = time;
 		this.exitStrategyOptions = new ExitStrategyOptions();
 		for (boolean enable : enabled) {
@@ -31,12 +31,12 @@ public class ExitStrategy implements Strategy {
 				exitStrategyOptions.setConsiderBalance(enable);
 				continue;
 			}
-			if (isN(exitStrategyOptions.isConsiderIncome())) {
-				exitStrategyOptions.setConsiderIncome(enable);
-				continue;
-			}
 			if (isN(exitStrategyOptions.isConsiderInvestorCount())) {
 				exitStrategyOptions.setConsiderInvestorCount(enable);
+				continue;
+			}
+			if (isN(exitStrategyOptions.isConsiderIncome())) {
+				exitStrategyOptions.setConsiderIncome(enable);
 				continue;
 			}
 			if (isN(exitStrategyOptions.isConsiderTime())) {
@@ -111,7 +111,7 @@ public class ExitStrategy implements Strategy {
 	@Override
 	public ExitStrategy copy() {
 		return new ExitStrategy(getIncome(), getInvestorCount(), getBalance(),
-				getTime(), getExitStrategyOptions());
+				getTime(), getExitStrategyOptions().clone());
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class ExitStrategy implements Strategy {
 	}
 
 	public void copyStrategy(ExitStrategy copyFrom) {
-		this.exitStrategyOptions = copyFrom.getExitStrategyOptions();
+		this.exitStrategyOptions = copyFrom.getExitStrategyOptions().clone();
 		this.balance = copyFrom.balance;
 		this.income = copyFrom.income;
 		this.time = copyFrom.time;
@@ -137,10 +137,8 @@ public class ExitStrategy implements Strategy {
 	public void copyStrategy(Strategy copyFrom) {
 		// this will never happen whatsoever - artifact from CredibilityGame
 		// proper method we have above
-		/*
-		 * throw new UnsupportedOperationException(
-		 * "We don't use producer/consumer game in HYIP simulation");
-		 */
+		// throw new UnsupportedOperationException(
+		// "We don't use producer/consumer game in HYIP simulation");
 		System.exit(-10);
 	}
 
@@ -174,13 +172,14 @@ public class ExitStrategy implements Strategy {
 		this.time = hyipStatistics.getTick();
 		variance = this.time * bias;
 		this.time += (int) (RandomHelper.nextDoubleFromTo(-variance, variance));
-		this.exitStrategyOptions.setConsiderTime(RandomHelper.nextIntFromTo(
-				0, 1) == 0 ? false : true);
+		this.exitStrategyOptions.setConsiderTime(RandomHelper.nextIntFromTo(0,
+				1) == 0 ? false : true);
 
 		this.investorCount = hyipStatistics.getInvestorCount();
 		variance = this.investorCount * bias;
 		this.investorCount += (int) (RandomHelper.nextDoubleFromTo(-variance,
 				variance));
-		this.exitStrategyOptions.setConsiderInvestorCount(RandomHelper.nextIntFromTo(	0, 1) == 0 ? false : true);
+		this.exitStrategyOptions.setConsiderInvestorCount(RandomHelper
+				.nextIntFromTo(0, 1) == 0 ? false : true);
 	}
 }

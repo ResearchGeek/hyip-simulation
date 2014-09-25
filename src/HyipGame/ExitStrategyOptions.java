@@ -2,34 +2,36 @@ package HyipGame;
 
 public class ExitStrategyOptions {
 
-	private Boolean considerIncome;
-	private Boolean considerInvestorCount;
 	private Boolean considerBalance;
+	private Boolean considerInvestorCount;
+	private Boolean considerIncome;
 	private Boolean considerTime;
 
-	public ExitStrategyOptions() {
-		// consider done mister.
+	public ExitStrategyOptions(Boolean... switches) {
+		this.considerBalance = switches[0];
+		this.considerInvestorCount = switches[1];
+		this.considerIncome = switches[2];
+		this.considerTime = switches[3];
 	}
 
 	public ExitStrategyOptions(Boolean switchTrue) {
 		this.considerBalance = switchTrue;
 		this.considerInvestorCount = switchTrue;
-		this.considerBalance = switchTrue;
+		this.considerIncome = switchTrue;
 		this.considerTime = switchTrue;
 	}
 
-	public ExitStrategyOptions(boolean switchTrue) {
-		this.considerBalance = switchTrue;
-		this.considerInvestorCount = switchTrue;
-		this.considerBalance = switchTrue;
-		this.considerTime = switchTrue;
+	public ExitStrategyOptions clone() {
+		return new ExitStrategyOptions(this.considerBalance,
+				this.considerInvestorCount, this.considerIncome,
+				this.considerTime);
 	}
 
 	public Boolean isConsiderBalance() {
 		return considerBalance;
 	}
 
-	public void setConsiderBalance(boolean considerBalance) {
+	public void setConsiderBalance(Boolean considerBalance) {
 		this.considerBalance = considerBalance;
 	}
 
@@ -37,7 +39,7 @@ public class ExitStrategyOptions {
 		return considerIncome;
 	}
 
-	public void setConsiderIncome(boolean considerIncome) {
+	public void setConsiderIncome(Boolean considerIncome) {
 		this.considerIncome = considerIncome;
 	}
 
@@ -45,7 +47,7 @@ public class ExitStrategyOptions {
 		return considerInvestorCount;
 	}
 
-	public void setConsiderInvestorCount(boolean considerInvestorCount) {
+	public void setConsiderInvestorCount(Boolean considerInvestorCount) {
 		this.considerInvestorCount = considerInvestorCount;
 	}
 
@@ -53,7 +55,7 @@ public class ExitStrategyOptions {
 		return considerTime;
 	}
 
-	public void setConsiderTime(boolean considerTime) {
+	public void setConsiderTime(Boolean considerTime) {
 		this.considerTime = considerTime;
 	}
 
