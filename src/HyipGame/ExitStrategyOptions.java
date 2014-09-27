@@ -6,6 +6,10 @@ public class ExitStrategyOptions {
 	private Boolean considerInvestorCount;
 	private Boolean considerIncome;
 	private Boolean considerTime;
+	
+	public ExitStrategyOptions(){
+		// default constructor
+	}
 
 	public ExitStrategyOptions(Boolean... switches) {
 		this.considerBalance = switches[0];
