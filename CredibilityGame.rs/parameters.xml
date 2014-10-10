@@ -77,11 +77,11 @@
 	<parameter name="first_strategy_bias" displayName="Bias of 1st exit strategy" type="int"
 		defaultValue="20" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
-	<parameter name="mutate_chance" displayName="Chances of a gene to mutate" type="int"
-		defaultValue="5" isReadOnly="false"
+	<parameter name="mutate_chance" displayName="Chances of a strategy to enable/disable" type="double"
+		defaultValue="0.01" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
-	<parameter name="mutate_factor" displayName="Chances of a gene to mutate" type="double"
-		defaultValue="0.05" isReadOnly="false"
+	<parameter name="mutate_factor" displayName="By how far strategies values to mutate" type="double"
+		defaultValue="0.01" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 		
 	<parameter name="producer_choice_strategy" displayName="producer_choice_strategy"

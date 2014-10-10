@@ -500,17 +500,17 @@ public class Hyip extends Player {
 		say("P_use of hyip no." + getId() + " after mutation: " + getP_use());
 
 		ExitStrategyOptions ops = exitStrategy.getExitStrategyOptions();
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+		if (RandomHelper.nextDoubleFromTo(0, 1) <= Constraints.MUTATE_CHANCE) {
 			ops.setConsiderBalance(!ops.isConsiderBalance().booleanValue());
 		}
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+		if (RandomHelper.nextDoubleFromTo(0, 1) <= Constraints.MUTATE_CHANCE) {
 			ops.setConsiderIncome(!ops.isConsiderIncome().booleanValue());
 		}
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+		if (RandomHelper.nextDoubleFromTo(0, 1) <= Constraints.MUTATE_CHANCE) {
 			ops.setConsiderInvestorCount(!ops.isConsiderInvestorCount()
 					.booleanValue());
 		}
-		if (RandomHelper.nextIntFromTo(0, 100) <= Constraints.MUTATE_CHANCE) {
+		if (RandomHelper.nextDoubleFromTo(0, 1) <= Constraints.MUTATE_CHANCE) {
 			ops.setConsiderTime(!ops.isConsiderTime().booleanValue());
 		}
 	}

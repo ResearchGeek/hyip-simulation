@@ -22,7 +22,7 @@ public class Constraints {
 	public static final String COMMA = ",";
 	public static final String SEPERATOR = "|";
 	public static final double MUTATE_FACTOR = (double) params.getDouble("mutate_factor");
-	public static final int MUTATE_CHANCE = (int) params.getInteger("mutate_chance");
+	public static final double MUTATE_CHANCE = (double) params.getInteger("mutate_chance");
 	public static final String RESET_ALL_HYIPS_MESSAGE = 
 			"resetAllHyips() starts work. Choosing all producers (HYIPs).";
 	public static final String RESET_ALL_INVESTORS_MESSAGE = 
