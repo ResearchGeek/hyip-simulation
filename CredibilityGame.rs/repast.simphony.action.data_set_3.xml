@@ -57,6 +57,14 @@
 			</repast.simphony.data2.engine.MethodDataSourceDefinition>
 		</entry>
 		<entry>
+			<string>When_Runned_Away</string>
+			<repast.simphony.data2.engine.MethodDataSourceDefinition>
+				<id>When_Runned_Away</id>
+				<className>CredibilityGame.Hyip</className>
+				<methodName>getWhenFrozen</methodName>
+			</repast.simphony.data2.engine.MethodDataSourceDefinition>
+		</entry>
+		<entry>
 			<string>Strategy</string>
 			<repast.simphony.data2.engine.MethodDataSourceDefinition>
 				<id>Strategy</id>

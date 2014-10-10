@@ -33,8 +33,8 @@ import HyipGame.HyipTools;
  * 
  * @author Oskar Jarczyk
  * @since 1.0
- * @version 2.0
- * @update 12.07.2014
+ * @version 2.2
+ * @update 11.10.2014
  */
 public class Hyip extends Player {
 
@@ -62,7 +62,9 @@ public class Hyip extends Player {
 	private HyipAccount hyipAccount;
 	private EpPair epPair;
 	private double income;
+	
 	private Boolean frozen;
+	private int whenFrozen;
 
 	private ArrayList<HyipOffert> hyipOfferts;
 	private Set<Invest> hyipSoldInvestments;
@@ -107,6 +109,7 @@ public class Hyip extends Player {
 				(BadLooking) goodOrBad);
 		this.hyipSoldInvestments = Collections.synchronizedSet(new HashSet<Invest>());
 		this.frozen = false;
+		this.whenFrozen = 0;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
 		x_e_use = RandomHelper.nextDoubleFromTo(0, 1);
@@ -222,8 +225,8 @@ public class Hyip extends Player {
 				logActivity(Constraints.CONSIDERING_RUNNING_AWAY);
 				boolean runaway = ExitStrategyUtilities.checkForPass(this);
 				if (runaway) {
-					say("HYIP " + this.id + " decided to RUN awaay!");
-					freezeHyip();
+					say("HYIP " + this.id + " decided to RUN away!");
+					freezeHyip(getGameController().getCurrentIteration());
 				} else {
 					logActivity("Hyip " + this.id + " decides to stay more.");
 				}
@@ -289,9 +292,10 @@ public class Hyip extends Player {
 		}
 	}
 
-	private void freezeHyip() {
+	private void freezeHyip(Integer day) {
 		// running away to Bahamas, HYIPs stops from showing any signs of life
-		this.frozen = true;
+		this.setFrozen(true);
+		this.setWhenFrozen(day);
 		// but still in context
 	}
 
@@ -521,6 +525,14 @@ public class Hyip extends Player {
 
 	public void setFrozen(Boolean frozen) {
 		this.frozen = frozen;
+	}
+	
+	public Integer getWhenFrozen() {
+		return whenFrozen;
+	}
+
+	public void setWhenFrozen(Integer whenFrozen) {
+		this.whenFrozen = whenFrozen;
 	}
 
 	public double getE_use() {

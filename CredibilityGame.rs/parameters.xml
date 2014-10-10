@@ -79,7 +79,7 @@
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
 	<parameter name="mutate_chance" displayName="Chances of a strategy to enable/disable" type="double"
 		defaultValue="0.01" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="mutate_factor" displayName="By how far strategies values to mutate" type="double"
 		defaultValue="0.01" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
