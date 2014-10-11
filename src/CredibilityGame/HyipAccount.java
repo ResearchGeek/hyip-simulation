@@ -19,6 +19,7 @@ public class HyipAccount {
 
 	public void withdrawMoney(double value) {
 		cash -= value;
+		minusIncome(value);
 	}
 
 	public double getCash() {
@@ -39,6 +40,10 @@ public class HyipAccount {
 
 	public void addIncome(double amount) {
 		this.income += amount;
+	}
+	
+	public void minusIncome(double amount) {
+		this.income -= amount;
 	}
 
 	public void diffIncome(double amount) {

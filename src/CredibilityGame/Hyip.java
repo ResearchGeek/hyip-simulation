@@ -83,6 +83,7 @@ public class Hyip extends Player {
 	private static double inv_rec;
 	private double x_e_use;
 	private double x_p_use;
+	public boolean bankrupt;
 
 	public static void initialize() {
 		Parameters params = RunEnvironment.getInstance().getParameters();
@@ -103,13 +104,13 @@ public class Hyip extends Player {
 		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(costFrom, costTo)
 				: l_cost;
 		this.isGoodLooking = isGoodLooking;
+		this.bankrupt=false;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = isGoodLooking ? createOfferts(
 				(GoodLooking) goodOrBad, null) : createOfferts(null,
 				(BadLooking) goodOrBad);
 		this.hyipSoldInvestments = Collections.synchronizedSet(new HashSet<Invest>());
 		this.frozen = false;
-		this.whenFrozen = 0;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
 		x_e_use = RandomHelper.nextDoubleFromTo(0, 1);
@@ -123,6 +124,16 @@ public class Hyip extends Player {
 						return -o1.compareTo(o2);
 					}
 				});
+	}
+	
+	public boolean setbankrupt(boolean b)
+	{
+		
+		
+		if (bankrupt && b) return(true); else {this.bankrupt=b; return(false);}
+		
+		
+		
 	}
 
 	public GameController initGameController() {
@@ -194,8 +205,7 @@ public class Hyip extends Player {
 	}
 	
 	public String getTypicalPercentage() {
-		//return String.format("###.##", hyipOfferts.get(0).getPercent() * 100) + "%";
-		return (hyipOfferts.get(0).getPercent() * 100) + "%";
+		return hyipOfferts.get(0).getPercent() * 100 + "%";
 	}
 	
 	public String getOffertType() {
@@ -390,10 +400,6 @@ public class Hyip extends Player {
 
 	public double getCash() {
 		return hyipAccount.getCash();
-	}
-	
-	public double getBalance() {
-		return getCash();
 	}
 
 	public long getTotalNumberOfInvestments() {

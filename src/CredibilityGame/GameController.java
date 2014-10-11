@@ -122,6 +122,7 @@ public class GameController {
 			say("This is the last iteration in this gen");
 			currentIteration = 0;
 			say("Ending current generation");
+			System.out.println(currentGeneration);
 			currentGeneration++;
 		} else {
 			say("Incrementing current iteration number to: "
