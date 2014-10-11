@@ -144,7 +144,10 @@ public class Hyip extends Player {
 	private ArrayList<HyipOffert> createOfferts(GoodLooking goodLooking,
 			BadLooking badLooking) {
 		ArrayList<HyipOffert> offerts = new ArrayList<HyipOffert>();
-		if (this.isGoodLooking) {
+		if (Constraints.CONSTANT_PERC){
+			offerts.add(new HyipOffert(HyipTypicalOffert.CONST_TYPICAL_OFFER));
+		}
+		else if (this.isGoodLooking) {
 			switch (goodLooking) {
 			case GOOD_LOOKING_1A:
 				offerts.add(new HyipOffert(HyipTypicalOffert.MEDIUM_RISK_1D));
@@ -191,7 +194,7 @@ public class Hyip extends Player {
 	}
 	
 	public String getTypicalPercentage() {
-		return hyipOfferts.get(0).getPercent() * 100 + "%";
+		return String.format("###.##", hyipOfferts.get(0).getPercent() * 100) + "%";
 	}
 	
 	public String getOffertType() {

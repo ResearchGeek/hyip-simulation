@@ -72,7 +72,6 @@ public class Players extends DefaultContext<Player> {
 		System.out.println(Constraints.PLAYERS_LOADED);
 		String osName = System.getProperty("os.name").toLowerCase();
 
-		//boolean isMacOs = osName.startsWith("mac");
 		boolean isWin = osName.startsWith("win");
 
 		Parameters params = RunEnvironment.getInstance().getParameters();
@@ -87,9 +86,10 @@ public class Players extends DefaultContext<Player> {
 
 		Iterator<GoodLooking> goodLookingHyips = HyipType.goodLooking
 				.iterator();
-		
+
 		List<Hyip> goodHyipsPercentageRev = new ArrayList<Hyip>();
-		
+		List<Hyip> badHyipsPercentageRev = new ArrayList<Hyip>();
+
 		for (int x = 0; x < HyipType.goodLooking.size(); x++) {
 			assert goodLookingHyips.hasNext();
 			GoodLooking goodLooking = goodLookingHyips.next();
@@ -101,8 +101,6 @@ public class Players extends DefaultContext<Player> {
 				this.add(goodLookingHyip);
 			}
 		}
-		
-		List<Hyip> badHyipsPercentageRev = new ArrayList<Hyip>();
 
 		Iterator<BadLooking> badLookingHyips = HyipType.badLooking.iterator();
 		for (int x = 0; x < HyipType.badLooking.size(); x++) {
@@ -115,61 +113,71 @@ public class Players extends DefaultContext<Player> {
 				badHyipsPercentageRev.add(badLookingHyip);
 			}
 		}
-		
-		List<Percentage> listOfDPercentages = getDailyPercentages(isWin);
-		int daily_iterator = 1;
-		Iterator<Percentage> di = listOfDPercentages.iterator();
-		Percentage current_daily = nextNonEmptyPercentage(di);
-		
-		List<Percentage> listOfWPercentages = getWeeklyPercentages(isWin);
-		int weekly_iterator = 1;
-		Iterator<Percentage> wi = listOfWPercentages.iterator();
-		Percentage current_weekly = nextNonEmptyPercentage(wi);
-		
-		for(Hyip hyip : goodHyipsPercentageRev){
-			if (hyip.getFirstOffert().getForHowLong() >= 6){
-				if (current_weekly.getFreq() >= weekly_iterator++){
-					hyip.getFirstOffert().setPercent(current_weekly.getPerc());
+
+		if (Constraints.REAL_PERC) {
+			List<Percentage> listOfDPercentages = getDailyPercentages(isWin);
+			int daily_iterator = 1;
+			Iterator<Percentage> di = listOfDPercentages.iterator();
+			Percentage current_daily = nextNonEmptyPercentage(di);
+
+			List<Percentage> listOfWPercentages = getWeeklyPercentages(isWin);
+			int weekly_iterator = 1;
+			Iterator<Percentage> wi = listOfWPercentages.iterator();
+			Percentage current_weekly = nextNonEmptyPercentage(wi);
+
+			for (Hyip hyip : goodHyipsPercentageRev) {
+				if (hyip.getFirstOffert().getForHowLong() >= 6) {
+					if (current_weekly.getFreq() >= weekly_iterator++) {
+						hyip.getFirstOffert().setPercent(
+								current_weekly.getPerc());
+					} else {
+						current_weekly = nextNonEmptyPercentage(wi);
+						hyip.getFirstOffert().setPercent(
+								current_weekly.getPerc());
+						weekly_iterator = 2;
+					}
 				} else {
-					current_weekly = nextNonEmptyPercentage(wi);
-					hyip.getFirstOffert().setPercent(current_weekly.getPerc());
-					weekly_iterator = 2;
-				}
-			} else {
-				if (current_daily.getFreq() >= daily_iterator++){
-					hyip.getFirstOffert().setPercent(current_daily.getPerc());
-				} else {
-					current_daily = nextNonEmptyPercentage(di);
-					hyip.getFirstOffert().setPercent(current_daily.getPerc());
-					daily_iterator = 2;
+					if (current_daily.getFreq() >= daily_iterator++) {
+						hyip.getFirstOffert().setPercent(
+								current_daily.getPerc());
+					} else {
+						current_daily = nextNonEmptyPercentage(di);
+						hyip.getFirstOffert().setPercent(
+								current_daily.getPerc());
+						daily_iterator = 2;
+					}
 				}
 			}
-		}
-		
-		daily_iterator = 1;
-		di = listOfDPercentages.iterator();
-		current_daily = nextNonEmptyPercentage(di);
-		
-		weekly_iterator = 1;
-		wi = listOfWPercentages.iterator();
-		current_weekly = nextNonEmptyPercentage(wi);
-		
-		for(Hyip hyip : badHyipsPercentageRev){
-			if (hyip.getFirstOffert().getForHowLong() >= 6){
-				if (current_weekly.getFreq() >= weekly_iterator++){
-					hyip.getFirstOffert().setPercent(current_weekly.getPerc());
+
+			daily_iterator = 1;
+			di = listOfDPercentages.iterator();
+			current_daily = nextNonEmptyPercentage(di);
+
+			weekly_iterator = 1;
+			wi = listOfWPercentages.iterator();
+			current_weekly = nextNonEmptyPercentage(wi);
+
+			for (Hyip hyip : badHyipsPercentageRev) {
+				if (hyip.getFirstOffert().getForHowLong() >= 6) {
+					if (current_weekly.getFreq() >= weekly_iterator++) {
+						hyip.getFirstOffert().setPercent(
+								current_weekly.getPerc());
+					} else {
+						current_weekly = nextNonEmptyPercentage(wi);
+						hyip.getFirstOffert().setPercent(
+								current_weekly.getPerc());
+						weekly_iterator = 2;
+					}
 				} else {
-					current_weekly = nextNonEmptyPercentage(wi);
-					hyip.getFirstOffert().setPercent(current_weekly.getPerc());
-					weekly_iterator = 2;
-				}
-			} else {
-				if (current_daily.getFreq() >= daily_iterator++){
-					hyip.getFirstOffert().setPercent(current_daily.getPerc());
-				} else {
-					current_daily = nextNonEmptyPercentage(di);
-					hyip.getFirstOffert().setPercent(current_daily.getPerc());
-					daily_iterator = 2;
+					if (current_daily.getFreq() >= daily_iterator++) {
+						hyip.getFirstOffert().setPercent(
+								current_daily.getPerc());
+					} else {
+						current_daily = nextNonEmptyPercentage(di);
+						hyip.getFirstOffert().setPercent(
+								current_daily.getPerc());
+						daily_iterator = 2;
+					}
 				}
 			}
 		}
@@ -192,12 +200,12 @@ public class Players extends DefaultContext<Player> {
 
 	}
 
-	private Percentage nextNonEmptyPercentage(Iterator i) {
+	private Percentage nextNonEmptyPercentage(Iterator<Percentage> i) {
 		Percentage pi = null;
-		while (i.hasNext()){
-			pi = (Percentage) i.next();
-			if ( (pi).getFreq() > 0 )
-				break; 
+		while (i.hasNext()) {
+			pi = i.next();
+			if ((pi).getFreq() > 0)
+				break;
 		}
 		return pi;
 	}

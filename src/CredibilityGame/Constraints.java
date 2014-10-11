@@ -19,6 +19,10 @@ public class Constraints {
 	public static final DecimalFormat DECIMAL_SHORT = new DecimalFormat(
 			"#.######");
 	
+	public static final boolean CONSTANT_PERC = (boolean) params.getBoolean("hyip_const_perc");
+	public static final boolean REAL_PERC = (boolean) params.getBoolean("hyip_real_perc");
+	public static final double HYIP_PERC = (double) params.getDouble("hyip_perc");
+	
 	public static final String COMMA = ",";
 	public static final String SEPERATOR = "|";
 	public static final double MUTATE_FACTOR = (double) params.getDouble("mutate_factor");
