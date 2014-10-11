@@ -194,7 +194,8 @@ public class Hyip extends Player {
 	}
 	
 	public String getTypicalPercentage() {
-		return String.format("###.##", hyipOfferts.get(0).getPercent() * 100) + "%";
+		//return String.format("###.##", hyipOfferts.get(0).getPercent() * 100) + "%";
+		return (hyipOfferts.get(0).getPercent() * 100) + "%";
 	}
 	
 	public String getOffertType() {

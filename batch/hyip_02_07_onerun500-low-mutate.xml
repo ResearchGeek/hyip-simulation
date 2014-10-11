@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sweep runs="3">
-<parameter name="generation_number" type="constant" constant_type="number" value="5000"/>
+<parameter name="generation_number" type="constant" constant_type="number" value="500"/>
 <parameter name="iteration_number" type="constant" constant_type="number" value="200"/>
 <parameter name="inv_0" type="constant" constant_type="number" value="500"/> 
 <parameter name="inv_1" type="constant" constant_type="number" value="500"/>
@@ -20,8 +20,8 @@
 <parameter name="p_cost" type="constant" constant_type="number" value="150"/>
 
 <parameter name="first_strategy_bias" type="constant" constant_type="number" value="20"/>
-<parameter name="mutate_chance" type="constant" constant_type="number" value="0.01"/>
-<parameter name="mutate_factor" type="constant" constant_type="number" value="0.05"/>
+<parameter name="mutate_chance" type="constant" constant_type="number" value="0.005"/>
+<parameter name="mutate_factor" type="constant" constant_type="number" value="0.01"/>
 
 <parameter name="e_eff" type="constant" constant_type="number" value="0.01"/>
 <parameter name="p_eff" type="constant" constant_type="number" value="0.02"/>

@@ -20,7 +20,7 @@
 <parameter name="p_cost" type="constant" constant_type="number" value="150"/>
 
 <parameter name="first_strategy_bias" type="constant" constant_type="number" value="20"/>
-<parameter name="mutate_chance" type="constant" constant_type="number" value="1"/>
+<parameter name="mutate_chance" type="constant" constant_type="number" value="0.01"/>
 <parameter name="mutate_factor" type="constant" constant_type="number" value="0.05"/>
 
 <parameter name="e_eff" type="constant" constant_type="number" value="0.01"/>
