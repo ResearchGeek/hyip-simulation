@@ -62,7 +62,7 @@ public class Hyip extends Player {
 	private HyipAccount hyipAccount;
 	private EpPair epPair;
 	private double income;
-	
+
 	private Boolean frozen;
 	private int whenFrozen;
 
@@ -104,13 +104,15 @@ public class Hyip extends Player {
 		l_cost = l_cost_rand ? RandomHelper.nextIntFromTo(costFrom, costTo)
 				: l_cost;
 		this.isGoodLooking = isGoodLooking;
-		this.bankrupt=false;
+		this.bankrupt = false;
 		this.hyipAccount = new HyipAccount(this, 0 - l_cost);
 		this.hyipOfferts = isGoodLooking ? createOfferts(
 				(GoodLooking) goodOrBad, null) : createOfferts(null,
 				(BadLooking) goodOrBad);
-		this.hyipSoldInvestments = Collections.synchronizedSet(new HashSet<Invest>());
+		this.hyipSoldInvestments = Collections
+				.synchronizedSet(new HashSet<Invest>());
 		this.frozen = false;
+		this.whenFrozen = 0;
 		++COUNT_HYIPS;
 		id = COUNT_HYIPS;
 		x_e_use = RandomHelper.nextDoubleFromTo(0, 1);
@@ -125,15 +127,16 @@ public class Hyip extends Player {
 					}
 				});
 	}
-	
-	public boolean setbankrupt(boolean b)
-	{
-		
-		
-		if (bankrupt && b) return(true); else {this.bankrupt=b; return(false);}
-		
-		
-		
+
+	public boolean setbankrupt(boolean b) {
+
+		if (bankrupt && b)
+			return (true);
+		else {
+			this.bankrupt = b;
+			return (false);
+		}
+
 	}
 
 	public GameController initGameController() {
@@ -155,10 +158,9 @@ public class Hyip extends Player {
 	private ArrayList<HyipOffert> createOfferts(GoodLooking goodLooking,
 			BadLooking badLooking) {
 		ArrayList<HyipOffert> offerts = new ArrayList<HyipOffert>();
-		if (Constraints.CONSTANT_PERC){
+		if (Constraints.CONSTANT_PERC) {
 			offerts.add(new HyipOffert(HyipTypicalOffert.CONST_TYPICAL_OFFER));
-		}
-		else if (this.isGoodLooking) {
+		} else if (this.isGoodLooking) {
 			switch (goodLooking) {
 			case GOOD_LOOKING_1A:
 				offerts.add(new HyipOffert(HyipTypicalOffert.MEDIUM_RISK_1D));
@@ -203,11 +205,11 @@ public class Hyip extends Player {
 	public HyipOffert getFirstOffert() {
 		return hyipOfferts.get(0);
 	}
-	
+
 	public String getTypicalPercentage() {
 		return hyipOfferts.get(0).getPercent() * 100 + "%";
 	}
-	
+
 	public String getOffertType() {
 		return hyipOfferts.get(0).getForHowLong() >= 6 ? "w" : "d";
 	}
@@ -251,7 +253,8 @@ public class Hyip extends Player {
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 250)
 	public synchronized void payPercent() {
 		if (!getFrozen()) {
-			for (Iterator<Invest> i = hyipSoldInvestments.iterator(); i.hasNext();) {
+			for (Iterator<Invest> i = hyipSoldInvestments.iterator(); i
+					.hasNext();) {
 				Invest invest = i.next();
 				invest.incrementTickCount();
 				invest.calculateInterest();
@@ -262,7 +265,7 @@ public class Hyip extends Player {
 						invest.setTickCount(0);
 					} else {
 						// close and pay to client
-						//hyipSoldInvestments.remove(invest);
+						// hyipSoldInvestments.remove(invest);
 						i.remove();
 						transferFunds(invest);
 						// invest moved to archived
@@ -291,7 +294,7 @@ public class Hyip extends Player {
 	public void calculateIncome() {
 		if (!getFrozen()) {
 			logActivity("The HYIP " + this.id + " is calculating its income");
-			//this.income = hyipAccount.getIncome() - propablePayouts();
+			// this.income = hyipAccount.getIncome() - propablePayouts();
 			this.income = hyipAccount.getIncome();
 		}
 	}
@@ -357,13 +360,13 @@ public class Hyip extends Player {
 
 	public void setMarketing() {
 		double r = Math.random();
-		if (r > getE_use() + getP_use()) {  // without marketing
+		if (r > getE_use() + getP_use()) { // without marketing
 			marketing = 0;
 			hyipAccount.addMoney(0);
-		} else if (r < getE_use()) {  // marketing on "expert" level (middle)
+		} else if (r < getE_use()) { // marketing on "expert" level (middle)
 			marketing = 1;
 			hyipAccount.addMoney(-e_cost);
-		} else {  // marketing on professional level (highest)
+		} else { // marketing on professional level (highest)
 			marketing = 2;
 			hyipAccount.addMoney(-p_cost);
 		}
@@ -533,10 +536,14 @@ public class Hyip extends Player {
 		return frozen;
 	}
 
+	public double getBalance() {
+		return getCash();
+	}
+
 	public void setFrozen(Boolean frozen) {
 		this.frozen = frozen;
 	}
-	
+
 	public Integer getWhenFrozen() {
 		return whenFrozen;
 	}
