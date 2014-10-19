@@ -47,8 +47,8 @@ public class AcceptanceStrategy implements Strategy {
 				.getValue("consumer_acceptance_strategy");
 		if (acceptanceStrategy == -1) {
 			/**
-			 * consumer_acceptance_strategy 0 – BY_SIGNAL_ONLY 1 –
-			 * BY_REPUTATION_ONLY 2 – BY_SIGNAL_AND_REPUTATION 3 –
+			 * consumer_acceptance_strategy 0 - BY_SIGNAL_ONLY 1 -
+			 * BY_REPUTATION_ONLY 2 - BY_SIGNAL_AND_REPUTATION 3 -
 			 * BY_SIGNAL_OR_REPUTATION
 			 */
 			acceptanceStrategy = new Random().nextInt(4);

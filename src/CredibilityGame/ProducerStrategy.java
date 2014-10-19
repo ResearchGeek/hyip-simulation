@@ -19,7 +19,7 @@ public class ProducerStrategy implements Strategy{
 	
 	public ProducerStrategy(Hyip producer){
 		/*
-		 * TODO: Dodaæ losowanie wg rozk³adów!!!
+		 * TODO: Dodac losowanie wg rozkladow
 		 */
 		this.truthfulness = RandomHelper.createUniform(Hyip.getProducerTypeL(), Hyip.getProducerTypeH()).nextInt()>0?1.0:0.0;//producer.isHonest()?1:0;
 		this.look = random.nextInt(2);
@@ -82,7 +82,7 @@ public class ProducerStrategy implements Strategy{
 	
 	public void generateInformation(){
 		generatedInformation.add(new Information(this));
-		//TODO: Tu mo¿na modyfikowaæ szansê resetowania reputacji
+		//TODO: Tu mozna modyfikowac szanse resetowania reputacji
 		if (RandomHelper.createUniform(0, 100).nextInt()<resetThreshold){
 			producer.resetReputation();
 		}
