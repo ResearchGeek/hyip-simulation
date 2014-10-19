@@ -1,0 +1,42 @@
+<project name="hyip-simulation" basedir="." default="main">
+
+    <property name="src.dir" value="src"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="lib.ext.dir" value="lib_ext"/>
+    <property name="build.dir" value="bin"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir" value="output"/>
+    <property name="main-class" value="CredibilityGame.CredibilityGame"/>
+    
+    <path id="classpath">
+        <fileset dir="${lib.ext.dir}" includes="*.jar"/>
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="bin"/>
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${jar.dir}" />
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+    </target>
+    
+    <target name="clean-build" depends="clean,jar"/>
+    <target name="rebuild-all" depends="clean,compile,jar"/>
+    <target name="main" depends="clean,run"/>
+
+</project>
