@@ -21,17 +21,21 @@ Repast License: The Repast suite software and documentation is licensed under a 
 
 #### Simulation description
 
+In the simulator we use a simulation model which would indicate the most effective strategies for HYIP owners to maximize their profit when running away. It also investigates the influence of investing in proper script and advertisement on HYIP’s financial results. The model is, to a large extent, based on real-life data, acquired from HYIP monitors and forums.
+
 ![Simulation ecosystem](https://dl.dropboxusercontent.com/u/103068909/hyip-ecosystem.png "Simulation ecosystem")
 
 ##### Simulation workflow
 
+To investigate the phenomena of HYIPs (especially to analyse the strategies that HYIP owner can take to decide when run away with money), we designed a simulation which contains elements of evolution. After every generation of HYIPs, the effectiveness in terms of increasing balance account is verified and the best strategies are inherited by next generation.
+
 ![Workflow](https://dl.dropboxusercontent.com/u/103068909/hyip-sim-workflow.png "Workflow")
 
-##### Dictionary
+##### Dictionary (presenting most important actors, producers and artefacts)
 
 *Investor* - A person (agent) considering investing his money into HYIPs
 
-*Hyip* - High Yield Investment Program (producer)
+*HYIP* - High Yield Investment Program (producer)
 
 *Hyip offer* - An investment offered by a HYIP, when accepted an agreement between the Investor and the HYIP
 
