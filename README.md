@@ -3,15 +3,15 @@ hyip-simulation
 
 [![Build Status](https://drone.io/github.com/ResearchGeek/hyip-simulation/status.png)](https://drone.io/github.com/ResearchGeek/hyip-simulation/latest)
 
-**High Yield Investment Program multi-agent simulation**
+#### High Yield Investment Program multi-agent simulation
 
 A high-yield investment program (HYIP) is a type of Ponzi scheme, an investment scam that promises unsustainably high return on investment by paying previous investors with the money invested by new investors. Most of these scams work from anonymous offshore bases which make them hard to track down.
 
-**Acknowledgements**
+#### Acknowledgements
 
 Simulation was creating using parts of 'Credibility Game' (Paulina Adamska, PJWSTK 2013) and 2nd version of 'Credibility Game' project (Adamska, Kowalik, PJWSTK 2014). Plus some of the HYIP code creating in cooperation with Grzegorz Kowalik (PJWSTK, 2014).
 
-**Licence**
+#### Licence
 
 For code licence, please check LICENSE file.
 
@@ -19,33 +19,45 @@ The code is created to work with Repast Simphony 2.2 framework.
 
 Repast License: The Repast suite software and documentation is licensed under a "New BSD" style license. Please note that Repast Simphony uses a variety of tools and third party external libraries each having its own compatible license, including software released under the Eclipse Public License, the Common Public License, the GNU Library General Public License and other licenses.
 
-**Dictionary**
+#### Simulation description
 
-*Investor* - a person investing his money into HYIP-s
+![Simulation ecosystem](https://dl.dropboxusercontent.com/u/103068909/hyip-ecosystem.png "Simulation ecosystem")
 
-*Hyip* - High Yield Investment Program
+##### Simulation workflow
 
-*Hyip offer* - an investment offered by the HYIP, agreement between investor and HYIP
+![Workflow](https://dl.dropboxusercontent.com/u/103068909/hyip-sim-workflow.png "Workflow")
 
-*Investment* - an ongoing investment
+##### Dictionary
 
-**Parameters**
+*Investor* - A person (agent) considering investing his money into HYIPs
 
-*generation_number* - number of generations
+*Hyip* - High Yield Investment Program (producer)
 
-*iteration_number* - number of iterations in a generation
+*Hyip offer* - An investment offered by a HYIP, when accepted an agreement between the Investor and the HYIP
 
-*inv_0* - count of investors in part 1
+*Investment* - An ongoing investment, characterized by: duration (in days), interest (return in percentage)
 
-*inv_1* - count of investors in part 2
+*Exit strategy* - Heuristics which HYIPs assess to choose whether close themselve (run aways) or not
 
-*inv_2* - count of investors in part 3
+**Parameters** (most important are presented below)
 
-*income_eval_frompeek* - be default "false", tells how we want to assess next payouts
+*generation_number* - Number of generations
 
-*hyip_population_size* - number of HYIPs in a simulation
+*iteration_number* - Number of iterations in a generation
 
-**Outputs**
+*inv_0* - Count of investors (part 1)
+
+*inv_1* - Count of investors (part 2)
+
+*inv_2* - Count of investors (part 3)
+
+*mutate_chance* - Chances for enabling/disabling part of the exit-strategy
+
+*mutate_factor* - By how much all exit-strategy values change after an iteration
+
+*hyip_population_size* - Number of HYIPs in a simulation
+
+#### Outputs
 
 hyip_*.csv outputs results, state of every HYIP per every tick
 hyip_*params.csv outputs params used
@@ -54,7 +66,7 @@ simulation_logs.txt outputs diagnostic data
 
 /batch directory holds typical scenarios with proper parameters
 
-**Column description**
+##### Column description
 
 *run* - repast simulation run number
 
