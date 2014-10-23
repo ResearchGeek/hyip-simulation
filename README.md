@@ -1,7 +1,8 @@
 hyip-simulation
 ===============
 
-[![Build Status](https://drone.io/github.com/ResearchGeek/hyip-simulation/status.png)](https://drone.io/github.com/ResearchGeek/hyip-simulation/latest)
+[![Build Status](https://drone.io/github.com/ResearchGeek/hyip-simulation/status.png)](https://drone.io/github.com/ResearchGeek/hyip-simulation/latest) 
+[![Stories in Ready](https://badge.waffle.io/ResearchGeek/hyip-simulation.svg?label=ready&title=Ready)](http://waffle.io/ResearchGeek/hyip-simulation)
 
 #### High Yield Investment Program multi-agent simulation
 
