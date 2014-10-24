@@ -1,0 +1,11 @@
+For Windows:
+
+shorty.bat moduloFactor inputFileName outputFileName
+
+Example:
+
+shorty.bat 20 test-case\sample.csv wynik.csv
+
+For Linux:
+
+./short input output
