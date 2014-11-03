@@ -53,10 +53,17 @@ public class ExitStrategyUtilities {
 				hyipQuits = false;
 			}
 		}
-		
-		//bankructwo
-		if (hyip.getCash()<0) {if (hyip.setbankrupt(true)) {hyipQuits=true; considerationMade = true;}} else {hyip.setbankrupt(false);};
-		
+
+		// bankructwo
+		if (hyip.getCash() < 0) {
+			if (hyip.setbankrupt(true)) {
+				hyipQuits = true;
+				considerationMade = true;
+			}
+		} else {
+			hyip.setbankrupt(false);
+		}
+
 		// answer the ultimate question if to close a HYIP here
 		return ((considerationMade) && (hyipQuits));
 	}
