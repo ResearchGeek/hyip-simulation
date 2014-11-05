@@ -94,9 +94,9 @@ public class Hyip extends Player {
 		probable_payouts_by_tops = (Boolean) params
 				.getValue("income_eval_frompeek");
 		COUNT_HYIPS = 0;
-		e_eff = (Double) params.getValue("e_eff");
-		p_eff = (Double) params.getValue("p_eff");
-		inv_rec = (Double) params.getValue("inv_rec");
+		e_eff = Double.parseDouble( params.getValue("e_eff").toString() );
+		p_eff = Double.parseDouble( params.getValue("p_eff").toString() );
+		inv_rec = Double.parseDouble( params.getValue("inv_rec").toString() );
 	}
 
 	public Hyip(boolean isGoodLooking, int costFrom, int costTo,
