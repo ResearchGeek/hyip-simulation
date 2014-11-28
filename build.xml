@@ -6,7 +6,7 @@
     <property name="build.dir" value="bin"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir" value="output"/>
-    <property name="main-class" value="CredibilityGame.CredibilityGame"/>
+    <property name="main-class" value="HyipSimulator.HyipGame"/>
     
     <path id="classpath">
         <fileset dir="${lib.ext.dir}" includes="*.jar"/>

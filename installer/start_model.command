@@ -24,7 +24,7 @@ CP=$CP:$REPAST_SIMPHONY_LIB/xstream-1.3.jar
 CP=$CP:$REPAST_SIMPHONY_LIB/commons-cli-1.0.jar
 
 # Change to the Default Repast Simphony Directory
-cd CredibilityGame
+cd HyipSimulator
 
 # Start the Model
-java -Xss10M -Xmx400M -cp $CP repast.simphony.runtime.RepastMain  ./CredibilityGame.rs
+java -Xss10M -Xmx400M -cp $CP repast.simphony.runtime.RepastMain  ./HyipSimulator.rs

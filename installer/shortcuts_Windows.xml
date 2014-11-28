@@ -4,10 +4,10 @@
 
   <skipIfNotSupported/>
   
-  <programGroup defaultName="CredibilityGame" location="StartMenu"/>
+  <programGroup defaultName="HyipSimulator" location="StartMenu"/>
   
   <shortcut
-     name="CredibilityGame"
+     name="HyipSimulator"
      programGroup="yes"
      desktop="no"
      applications="no"
@@ -17,7 +17,7 @@
      commandLine=""
      workingDirectory="$INSTALL_PATH"
      description="Model"
-     iconFile="$INSTALL_PATH\CredibilityGame\icons\model.bmp"
+     iconFile="$INSTALL_PATH\HyipSimulator\icons\model.bmp"
      iconIndex="0"
      initialState="noShow">
      <createForPack name="Model"/>
@@ -30,7 +30,7 @@
      applications="no"
      startMenu="no"
      startup="no"
-     target="$INSTALL_PATH\CredibilityGame\docs\index.html"
+     target="$INSTALL_PATH\HyipSimulator\docs\index.html"
      commandLine=""
 	 iconFile="%SystemRoot%\system32\SHELL32.dll"
      iconIndex="23" 
@@ -40,7 +40,7 @@
   </shortcut>
   
   <shortcut
-     name="CredibilityGame Uninstaller"
+     name="HyipSimulator Uninstaller"
      programGroup="yes"
      desktop="no"
      applications="no"

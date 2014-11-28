@@ -1,5 +1,5 @@
 @ECHO OFF
-TITLE CredibilityGame
+TITLE HyipSimulator
 
 REM Repast Simphony Model Starter
 REM By Michael J. North
@@ -27,7 +27,7 @@ SET CP=%CP%;%REPAST_SIMPHONY_LIB%xstream-1.3.jar
 SET CP=%CP%;%REPAST_SIMPHONY_LIB%commons-cli-1.0.jar
 
 REM Change to the Default Repast Simphony Directory
-CD CredibilityGame
+CD HyipSimulator
 
 REM Start the Model
-START javaw -Xss10M -Xmx400M -cp %CP% repast.simphony.runtime.RepastMain ./CredibilityGame.rs
+START javaw -Xss10M -Xmx400M -cp %CP% repast.simphony.runtime.RepastMain ./HyipSimulator.rs
