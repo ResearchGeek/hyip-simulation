@@ -39,7 +39,7 @@ import Players.HyipType.GoodLooking;
  * @author Oskar Jarczyk
  * @since 1.0
  * @version 2.2
- * @update 11.10.2014
+ * @update 28.11.2014
  */
 public class Hyip extends Player {
 
@@ -111,10 +111,6 @@ public class Hyip extends Player {
 		x_p_use = RandomHelper.nextDoubleFromTo(0, 1);
 		epPair = new EpPair(HyipTools.interpretEP_use(x_e_use, x_p_use)[0],
 				HyipTools.interpretEP_use(x_e_use, x_p_use)[1]);
-		
-		// sensitivity testing
-		epPair.setP_use(0);
-		// delete it after using !
 		
 		hyipStatistics = new HyipStatistics();
 		probablePayouts = new PriorityQueue<Double>(
