@@ -2,24 +2,24 @@
 <registry>
 	<pack name="Model">
 		<key
-			keypath="SOFTWARE\CredibilityGame\$UNINSTALL_NAME\Base"  
+			keypath="SOFTWARE\HyipSimulator\$UNINSTALL_NAME\Base"  
 			root="HKLM" />
 		<value name="Path" 
-			keypath="SOFTWARE\CredibilityGame\$UNINSTALL_NAME"  
+			keypath="SOFTWARE\HyipSimulator\$UNINSTALL_NAME"  
 			root="HKLM" 
 			string="$INSTALL_PATH"/>
 		<value name="DWORD" 
-			keypath="SOFTWARE\CredibilityGame\$UNINSTALL_NAME"  
+			keypath="SOFTWARE\HyipSimulator\$UNINSTALL_NAME"  
 			root="HKLM" 
 			dword="42"/>
 		<value name="BIN" 
-			keypath="SOFTWARE\CredibilityGame\$UNINSTALL_NAME"  
+			keypath="SOFTWARE\HyipSimulator\$UNINSTALL_NAME"  
 			root="HKLM" >
 			<bin data="42, 49, 4e, 20, 54, 45, 53, 54" />
 			<bin data="42, 49, 4e, 20, 54, 45, 53, 54" />
 		</value>
 		<value name="MULTI" 
-			keypath="SOFTWARE\CredibilityGame\$UNINSTALL_NAME"  
+			keypath="SOFTWARE\HyipSimulator\$UNINSTALL_NAME"  
 			root="HKLM" >
 			<multi data="Element 1" />
 			<multi data="Element 2"/>
@@ -27,13 +27,13 @@
 		</value>
 	</pack>
 	<pack name="Base">
-			<key keypath="SOFTWARE\CredibilityGame\$UNINSTALL_NAME\Base" root="HKLM"/>
+			<key keypath="SOFTWARE\HyipSimulator\$UNINSTALL_NAME\Base" root="HKLM"/>
 	</pack>
 	<pack name="Documentation">
-			<key keypath="SOFTWARE\CredibilityGame\$UNINSTALL_NAME\Documentation" root="HKLM"/>
+			<key keypath="SOFTWARE\HyipSimulator\$UNINSTALL_NAME\Documentation" root="HKLM"/>
 	</pack>
 	<pack name="Sources">
-			<key keypath="SOFTWARE\CredibilityGame\$UNINSTALL_NAME\Sources" root="HKLM"/>
+			<key keypath="SOFTWARE\HyipSimulator\$UNINSTALL_NAME\Sources" root="HKLM"/>
 	</pack>
 </registry>
 

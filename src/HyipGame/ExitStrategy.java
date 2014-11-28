@@ -3,7 +3,7 @@ package HyipGame;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.parameter.Parameters;
 import repast.simphony.random.RandomHelper;
-import CredibilityGame.Strategy;
+import HyipSimulator.Strategy;
 
 public class ExitStrategy implements Strategy {
 
@@ -135,7 +135,7 @@ public class ExitStrategy implements Strategy {
 
 	@Override
 	public void copyStrategy(Strategy copyFrom) {
-		// this will never happen whatsoever - artifact from CredibilityGame
+		// this will never happen whatsoever - artifact from HyipSimulator
 		// proper method we have above
 		// throw new UnsupportedOperationException(
 		// "We don't use producer/consumer game in HYIP simulation");

@@ -3,9 +3,6 @@ package logger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import repast.simphony.engine.environment.RunEnvironment;
-import repast.simphony.parameter.Parameters;
-
 public class ValidationOutputter {
 
 	/**

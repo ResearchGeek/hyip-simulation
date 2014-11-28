@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Scenario>
-<repast.simphony.dataLoader.engine.ClassNameDataLoaderAction context="CredibilityGame" file="repast.simphony.dataLoader.engine.ClassNameDataLoaderAction_0.xml" />
-<repast.simphony.action.file_sink context="Players" file="repast.simphony.action.file_sink_1.xml" />
-<repast.simphony.action.data_set context="Players" file="repast.simphony.action.data_set_2.xml" />
-<repast.simphony.action.data_set context="Players" file="repast.simphony.action.data_set_3.xml" />
-</Scenario>

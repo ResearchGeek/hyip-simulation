@@ -3,9 +3,9 @@ package HyipGame;
 import java.util.ArrayList;
 
 import logger.PjiitOutputter;
-import CredibilityGame.GameController;
-import CredibilityGame.Hyip;
-import CredibilityGame.Player;
+import HyipSimulator.GameController;
+import HyipSimulator.Player;
+import Players.Hyip;
 
 public class HyipEvolve {
 

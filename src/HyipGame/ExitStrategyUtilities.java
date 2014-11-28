@@ -1,6 +1,6 @@
 package HyipGame;
 
-import CredibilityGame.Hyip;
+import Players.Hyip;
 
 public class ExitStrategyUtilities {
 
