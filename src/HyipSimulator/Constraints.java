@@ -37,6 +37,7 @@ public class Constraints {
 			.getInteger("panic_start_tick");
 	public static final int PANIC_LENGTH = (int) params
 			.getInteger("panic_length");
+	public static final int PANIC_END_TICK = PANIC_START_TICK + PANIC_LENGTH;
 	public static final double STAMPEDE_INV_REC = (double) params
 			.getDouble("panic_inv_rec");
 	public static final double START_INV_REC_GL = (double) params

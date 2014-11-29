@@ -11,6 +11,8 @@ import java.util.Set;
 import logger.PjiitOutputter;
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.schedule.ISchedule;
+import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.parameter.Parameters;
 import repast.simphony.random.RandomHelper;
@@ -123,6 +125,7 @@ public class Hyip extends Player {
 						return -o1.compareTo(o2);
 					}
 				});
+		buildMarket();
 	}
 
 	public boolean setbankrupt(boolean bankrupt) {
@@ -283,6 +286,29 @@ public class Hyip extends Player {
 					+ " is considering it's marketing");
 			setMarketing();
 		}
+	}
+
+	private void buildMarket() {
+		if (Constraints.ENABLE_PANIC_EFFECT) {
+			ISchedule schedule = RunEnvironment.getInstance()
+					.getCurrentSchedule();
+			ScheduleParameters params = ScheduleParameters.createOneTime(
+					Constraints.PANIC_START_TICK, 499);
+			schedule.schedule(params, this, "reactToMarket");
+			ScheduleParameters paramsEnding = ScheduleParameters.createOneTime(
+					Constraints.PANIC_END_TICK, 499);
+			schedule.schedule(paramsEnding, this, "dissatachFromMarket");
+			say("Market reactionism built and attached to HYIP object");
+		}
+	}
+
+	public void reactToMarket() {
+		this.inv_rec = Constraints.STAMPEDE_INV_REC;
+	}
+
+	public void dissatachFromMarket() {
+		this.inv_rec = (isGoodLooking ? Constraints.START_INV_REC_GL
+				: Constraints.START_INV_REC_BL);
 	}
 
 	@ScheduledMethod(start = 1.0, interval = 1.0, priority = 5)
