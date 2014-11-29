@@ -36,10 +36,10 @@ import Players.HyipType.GoodLooking;
  * have scheduled method for calculating percentage to pay. Also with evolution
  * model and exit strategies.
  * 
- * @author Oskar Jarczyk
+ * @author Oskar Jarczyk et.al.
  * @since 1.0
  * @version 2.2
- * @update 28.11.2014
+ * @update 29.11.2014
  */
 public class Hyip extends Player {
 
@@ -49,6 +49,8 @@ public class Hyip extends Player {
 	private long totalNumberOfInvestments = 0;
 	private Long id;
 	private boolean isGoodLooking;
+	private double inv_rec; // this is no longer static
+
 	private ExitStrategy exitStrategy;
 	private HyipStatistics hyipStatistics;
 	private HyipAccount hyipAccount;
@@ -64,15 +66,16 @@ public class Hyip extends Player {
 	private static boolean probable_payouts_by_tops;
 
 	private static boolean l_cost_rand;
-	private int marketing; // 0-basic 1-expert 2-proffesional
-	private double mktg_cumulated; // wzrost albo spadek wydajnosci mktg
-	// w zaleznosci od wydatkow w turze
+	private int marketing; // 0-basic 1-expert 2-professional
+	private double mktg_cumulated;
+	// increase or decrease in marketing efficiency
+	// depends on expenses in a tour
 	private static int e_cost; // marketing cost expert
-	private static int p_cost; // marketing cost prof
-	private static int l_cost; // marketing cost prof
-	private static double e_eff; // marketing efect expert
-	private static double p_eff; // marketing efect prof
-	private static double inv_rec;
+	private static int p_cost; // marketing cost professional
+	private static int l_cost; // marketing cost professional
+	private static double e_eff; // marketing effect expert
+	private static double p_eff; // marketing effect professional
+
 	private double x_e_use;
 	private double x_p_use;
 	public boolean bankrupt;
@@ -86,9 +89,8 @@ public class Hyip extends Player {
 		probable_payouts_by_tops = (Boolean) params
 				.getValue("income_eval_frompeek");
 		COUNT_HYIPS = 0;
-		e_eff = Double.parseDouble( params.getValue("e_eff").toString() );
-		p_eff = Double.parseDouble( params.getValue("p_eff").toString() );
-		inv_rec = Double.parseDouble( params.getValue("inv_rec").toString() );
+		e_eff = Double.parseDouble(params.getValue("e_eff").toString());
+		p_eff = Double.parseDouble(params.getValue("p_eff").toString());
 	}
 
 	public Hyip(boolean isGoodLooking, int costFrom, int costTo,
@@ -111,7 +113,9 @@ public class Hyip extends Player {
 		x_p_use = RandomHelper.nextDoubleFromTo(0, 1);
 		epPair = new EpPair(HyipTools.interpretEP_use(x_e_use, x_p_use)[0],
 				HyipTools.interpretEP_use(x_e_use, x_p_use)[1]);
-		
+		inv_rec = Constraints.ENABLE_PANIC_EFFECT ? (isGoodLooking ? Constraints.START_INV_REC_GL
+				: Constraints.START_INV_REC_BL)
+				: Constraints.INV_REC;
 		hyipStatistics = new HyipStatistics();
 		probablePayouts = new PriorityQueue<Double>(
 				Constraints.MemoryAllocForQueue, new Comparator<Double>() {
@@ -121,15 +125,13 @@ public class Hyip extends Player {
 				});
 	}
 
-	public boolean setbankrupt(boolean b) {
-
-		if (bankrupt && b)
-			return (true);
+	public boolean setbankrupt(boolean bankrupt) {
+		if (this.bankrupt && bankrupt)
+			return true;
 		else {
-			this.bankrupt = b;
-			return (false);
+			this.bankrupt = bankrupt;
+			return false;
 		}
-
 	}
 
 	public GameController initGameController() {

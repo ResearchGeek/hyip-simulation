@@ -27,7 +27,10 @@ public class Constraints {
 			.getBoolean("hyip_real_perc");
 	public static final double HYIP_PERC = (double) params
 			.getDouble("hyip_perc");
-	
+
+	public static final double INV_REC = Double.parseDouble(params.getValue(
+			"inv_rec").toString());
+
 	public static final boolean ENABLE_PANIC_EFFECT = (boolean) params
 			.getBoolean("inv_rec_stampede");
 	public static final int PANIC_START_TICK = (int) params
