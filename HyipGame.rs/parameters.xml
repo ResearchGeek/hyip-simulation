@@ -38,9 +38,28 @@
 		type="boolean" defaultValue="true" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
 
-	<parameter name="inv_rec" displayName="inv_rec" type="double"
-		defaultValue="10" isReadOnly="false"
+	<parameter name="inv_rec" displayName="inv_rec (prolonging investment)" 
+		type="double" defaultValue="0.1" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="inv_rec_stampede" displayName="Enabling market stampede (temporary panic effect)?"
+		type="boolean" defaultValue="true" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
+	<parameter name="panic_start_tick" displayName="When to start stampede?"
+		type="int" defaultValue="20" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
+	<parameter name="panic_length" displayName="Length of stampede (in ticks)"
+		type="int" defaultValue="3" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
+	<parameter name="panic_inv_rec" displayName="inv_rec (during panic)" 
+		type="double" defaultValue="0.75" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="start_inv_rec_gl" displayName="start inv_rec (good looking)" 
+		type="double" defaultValue="0.1" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="start_inv_rec_bl" displayName="start inv_rec (bad looking)" 
+		type="double" defaultValue="0.2" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	
 	<parameter name="hyip_perc" displayName="hyip_perc" type="double"
 		defaultValue="0.02" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
