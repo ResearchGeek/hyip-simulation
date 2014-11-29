@@ -54,7 +54,7 @@ public class ExitStrategyUtilities {
 			}
 		}
 
-		// bankructwo
+		// bankruptcy
 		if (hyip.getCash() < 0) {
 			if (hyip.setbankrupt(true)) {
 				hyipQuits = true;
