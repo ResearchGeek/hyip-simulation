@@ -16,9 +16,8 @@ import repast.simphony.random.RandomHelper;
 
 public class HyipGame extends DefaultContext<Object> implements
 		ContextBuilder<Object> {
-	public static Context<Object> STRATEGIES;
+	
 	public static Context<Player> PLAYERS;
-
 	public static int CURRENT_RUN = 0;
 
 	@Override
@@ -40,7 +39,6 @@ public class HyipGame extends DefaultContext<Object> implements
 				+ params.getValue("iteration_number"));
 
 
-		context.addSubContext(STRATEGIES);
 		PLAYERS = new Players();
 		context.addSubContext(PLAYERS);
 		context.add(new GameController());

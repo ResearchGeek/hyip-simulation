@@ -34,7 +34,7 @@ import Players.HyipType.BadLooking;
 import Players.HyipType.GoodLooking;
 
 /**
- * Represent a single instance of a Hyip, contains references to investments and
+ * Represent a single instance of a HYIP, contains references to investments and
  * have scheduled method for calculating percentage to pay. Also with evolution
  * model and exit strategies.
  * 

@@ -33,7 +33,7 @@ public class HyipEvolve {
 		say("P_use of 1st good hyip after evolution: " + g.get(0).getP_use());
 	}
 
-	private void logActivity(String s) {
+	private static void logActivity(String s) {
 		PjiitOutputter.log(s);
 	}
 

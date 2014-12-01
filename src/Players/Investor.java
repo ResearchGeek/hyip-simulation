@@ -17,8 +17,8 @@ import repast.simphony.random.RandomHelper;
 import repast.simphony.util.ContextUtils;
 
 /**
- * Represents a single investor willing to spend his money on one or more hyips
- * through all the Hyip game
+ * Represents a single investor willing to spend his money on one or more HYIPs
+ * through all the Hyip Game
  * 
  * @author Oskar
  * @updated 13.07.2014
