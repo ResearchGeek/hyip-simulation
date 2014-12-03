@@ -35,9 +35,9 @@
 
 <parameter name="inv_rec" type="constant" constant_type="number" value="0.1"/> <!-- OK -->
 <parameter name="inv_rec_stampede" type="constant" constant_type="java.lang.Boolean" value="true"/>
-<parameter name="panic_start_tick" type="constant" constant_type="number" value="20"/>
+<parameter name="panic_start_tick" type="constant" constant_type="number" value="30"/>
 <parameter name="panic_length" type="constant" constant_type="number" value="10"/>
-<parameter name="panic_inv_rec" type="constant" constant_type="number" value="0.75"/>
+<parameter name="panic_inv_rec" type="constant" constant_type="number" value="0.5"/>
 <parameter name="start_inv_rec_gl" type="constant" constant_type="number" value="0.1"/>
 <parameter name="start_inv_rec_bl" type="constant" constant_type="number" value="0.2"/>
 
